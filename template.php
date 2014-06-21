@@ -8,12 +8,6 @@
  *
  * The glacier base theme is designed to be easily extended by its sub-themes. You
  * shouldn't modify this or any of the CSS or PHP files in the root glacier/ folder.
- *
- * @todo fix weights of theme js files
- * @todo add normalize.css
- * @todo default styles for forms / menu / drupal elements (tabs, messages,...)
- * @todo ckeditor css
- * @todo ? Message that asks you to subsett font awesome ?
  */
 
 /**
