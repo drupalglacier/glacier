@@ -415,13 +415,26 @@ function glacier_preprocess_views_view_fields(&$vars) {
       'class="view__field__content view__field--' . $field_name . '__content"',
       $field->content
     );
-    // Display label inside the field wrapper
+    // Display the field label inside the field wrapper
     if (!empty($vars['fields'][$k]->label_html)) {
-      $pos = strpos($vars['fields'][$k]->content, '>');
-      if ($pos !== FALSE) {
-        $vars['fields'][$k]->content = substr_replace($vars['fields'][$k]->content, '>' . $vars['fields'][$k]->label_html, $pos, 1);
-      }
+      $vars['fields'][$k]->content = rm_theme_str_replace('>', '>' . $vars['fields'][$k]->label_html, $vars['fields'][$k]->content);
       $vars['fields'][$k]->label_html = '';
+    }
+    // Display links inside the field wrapper
+    if (strpos($vars['fields'][$k]->content, '<a ') === 0) {
+      preg_match('#\<a(.*?)\>#', $vars['fields'][$k]->content, $link);
+      $link = $link[0];
+      $vars['fields'][$k]->content = trim(str_replace(array($link, '</a>'), '', $vars['fields'][$k]->content));
+      $vars['fields'][$k]->content = rm_theme_str_replace('>', '>' . $link, $vars['fields'][$k]->content);
+      $vars['fields'][$k]->content = rm_theme_str_replace('<', '</a><', $vars['fields'][$k]->content, $pos = 'last');
+    }
+    // Add field formatter class
+    if (isset($field->handler->options['settings']['field_formatter_class'])) {
+      $vars['fields'][$k]->content = rm_theme_str_replace(
+        '">',
+        ' ' . $field->handler->options['settings']['field_formatter_class'] . '">',
+        $vars['fields'][$k]->content
+      );
     }
   }
 }
@@ -721,4 +734,28 @@ function glacier_html_minify($html) {
   }
 
   return $html;
+}
+
+/**
+ * Replace either the first or the last occurrence of the search string with the replacement string
+ * @param  string $search  The value being searched for, otherwise known as the needle. An array may be used to designate multiple needles.
+ * @param  string $replace The replacement value that replaces found search values. An array may be used to designate multiple replacements.
+ * @param  string $subject The string or array being searched and replaced on, otherwise known as the haystack.
+ * @param  string $pos     The occurrence which should be replaced - "first" or "last"
+ * @return string
+ */
+function rm_theme_str_replace($search = '', $replace = '', $subject = '', $pos = 'first') {
+  switch ($pos) {
+    case 'last':
+      $pos = strrpos($subject, $search);
+      break;
+
+    default:
+      $pos = strpos($subject, $search);
+      break;
+  }
+  if($pos !== FALSE) {
+    $subject = substr_replace($subject, $replace, $pos, strlen($search));
+  }
+  return $subject;
 }
