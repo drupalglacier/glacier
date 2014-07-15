@@ -28,9 +28,7 @@ function glacier_button($vars) {
     $element['#attributes']['class'][] = 'button--disabled';
   }
   // Get the value and set as content for the <button>
-  $value = $element['#value'];
-  unset($element['#attributes']['value']);
-  return '<button' . drupal_attributes($element['#attributes']) . '>' . $value . '</button>';
+  return '<button' . drupal_attributes($element['#attributes']) . '>' . $element['#value'] . '</button>';
 }
 
 /**
