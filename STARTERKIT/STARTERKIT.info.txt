@@ -24,6 +24,9 @@ regions[footer]      = Footer
 regions[page_top]    = Page top
 regions[page_bottom] = Page bottom
 
+; CSS
+stylesheets[all][] = css/style.css
+
 ; JS
 scripts[] = js/config.js
 scripts[] = js/script.js
@@ -69,6 +72,7 @@ settings[css_whitelist][] = sites/all/modules/contrib/colorbox/styles/default/co
 settings[css_whitelist][] = sites/all/modules/contrib/search_krumo/search_krumo.css
 settings[css_whitelist][] = sites/all/modules/custom/septem_menu/css/septem_menu.css
 settings[css_whitelist][] = sites/all/themes/glacier/css/style.css
+settings[css_whitelist][] = sites/all/themes/STARTERKIT/css/style.css
 
 ; JS
 settings[js_normalize] = 1
@@ -91,8 +95,8 @@ settings[js_whitelist][] = sites/all/modules/contrib/geolocation/modules/geoloca
 settings[js_whitelist][] = sites/all/modules/contrib/jquery_update/replace/jquery/1.10/jquery.min.js
 settings[js_whitelist][] = sites/all/modules/contrib/search_krumo/search_krumo.search.js
 settings[js_whitelist][] = sites/all/modules/contrib/search_krumo/search_krumo.trail.js
-settings[js_whitelist][] = sites/all/themes/profiletest/js/config.js
-settings[js_whitelist][] = sites/all/themes/profiletest/js/script.js
+settings[js_whitelist][] = sites/all/themes/STARTERKIT/js/config.js
+settings[js_whitelist][] = sites/all/themes/STARTERKIT/js/script.js
 settings[js_whitelist][] = sites/all/themes/glacier/js/console.js
 settings[js_whitelist][] = sites/all/themes/glacier/js/fix/admin_menu.js
 settings[js_whitelist][] = sites/all/themes/glacier/js/fix/jquery.drilldown.js

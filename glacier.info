@@ -3,9 +3,6 @@ description = Ice cold Drupal base theme
 screenshot  = screenshot.png
 core        = 7.x
 
-; CSS
-stylesheets[all][] = css/style.css
-
 ; JS
 scripts[] = js/console.js
 scripts[] = js/skiplinks.js
