@@ -84,6 +84,10 @@ function glacier_preprocess_html(&$vars) {
 function glacier_preprocess_page(&$vars, $hook) {
   // Include libraries
   $libraries = theme_get_setting('libraries');
+  // normalize.css
+  if ($libraries['normalize']) {
+    drupal_add_css(libraries_get_path('normalize') . '/normalize.css', array('every_page' => TRUE));
+  }
   // Font Awesome
   if ($libraries['font_awesome']) {
     drupal_add_css(libraries_get_path('font-awesome') . '/css/font-awesome.min.css', array('every_page' => TRUE));

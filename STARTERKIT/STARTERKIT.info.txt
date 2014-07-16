@@ -51,6 +51,7 @@ settings[grid][sidebar1] = 4
 settings[grid][sidebar2] = 4
 
 ; libraries
+settings[libraries][normalize]    = 1
 settings[libraries][modernizr]    = 1
 settings[libraries][respondjs]    = 0
 settings[libraries][selectivizr]  = 0
@@ -73,6 +74,7 @@ settings[css_whitelist][] = sites/all/modules/contrib/search_krumo/search_krumo.
 settings[css_whitelist][] = sites/all/modules/custom/septem_menu/css/septem_menu.css
 settings[css_whitelist][] = sites/all/themes/glacier/css/style.css
 settings[css_whitelist][] = sites/all/themes/STARTERKIT/css/style.css
+settings[css_whitelist][] = sites/all/libraries/normalize/normalize.css
 
 ; JS
 settings[js_normalize] = 1
