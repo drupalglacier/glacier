@@ -421,7 +421,7 @@ function glacier_preprocess_views_view_fields(&$vars) {
     );
     // Display the field label inside the field wrapper
     if (!empty($vars['fields'][$k]->label_html)) {
-      $vars['fields'][$k]->content = rm_theme_str_replace('>', '>' . $vars['fields'][$k]->label_html, $vars['fields'][$k]->content);
+      $vars['fields'][$k]->content = glacier_str_replace('>', '>' . $vars['fields'][$k]->label_html, $vars['fields'][$k]->content);
       $vars['fields'][$k]->label_html = '';
     }
     // Display links inside the field wrapper
@@ -429,12 +429,12 @@ function glacier_preprocess_views_view_fields(&$vars) {
       preg_match('#\<a(.*?)\>#', $vars['fields'][$k]->content, $link);
       $link = $link[0];
       $vars['fields'][$k]->content = trim(str_replace(array($link, '</a>'), '', $vars['fields'][$k]->content));
-      $vars['fields'][$k]->content = rm_theme_str_replace('>', '>' . $link, $vars['fields'][$k]->content);
-      $vars['fields'][$k]->content = rm_theme_str_replace('<', '</a><', $vars['fields'][$k]->content, $pos = 'last');
+      $vars['fields'][$k]->content = glacier_str_replace('>', '>' . $link, $vars['fields'][$k]->content);
+      $vars['fields'][$k]->content = glacier_str_replace('<', '</a><', $vars['fields'][$k]->content, $pos = 'last');
     }
     // Add field formatter class
     if (isset($field->handler->options['settings']['field_formatter_class'])) {
-      $vars['fields'][$k]->content = rm_theme_str_replace(
+      $vars['fields'][$k]->content = glacier_str_replace(
         '">',
         ' ' . $field->handler->options['settings']['field_formatter_class'] . '">',
         $vars['fields'][$k]->content
@@ -748,7 +748,7 @@ function glacier_html_minify($html) {
  * @param  string $pos     The occurrence which should be replaced - "first" or "last"
  * @return string
  */
-function rm_theme_str_replace($search = '', $replace = '', $subject = '', $pos = 'first') {
+function glacier_str_replace($search = '', $replace = '', $subject = '', $pos = 'first') {
   switch ($pos) {
     case 'last':
       $pos = strrpos($subject, $search);
