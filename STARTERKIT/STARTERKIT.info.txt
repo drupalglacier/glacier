@@ -75,6 +75,7 @@ settings[css_whitelist][] = sites/all/modules/custom/septem_menu/css/septem_menu
 settings[css_whitelist][] = sites/all/themes/glacier/css/style.css
 settings[css_whitelist][] = sites/all/themes/STARTERKIT/css/style.css
 settings[css_whitelist][] = sites/all/libraries/normalize/normalize.css
+settings[css_whitelist][] = sites/all/libraries/font-awesome/css/font-awesome.min.css
 
 ; JS
 settings[js_normalize] = 1
