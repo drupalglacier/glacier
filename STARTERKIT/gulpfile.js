@@ -26,7 +26,7 @@ gulp.task('clean', function () {
 // Watch
 gulp.task('watch', function () {
   // Watch .scss files
-  gulp.watch('scss/*.scss', ['styles']);
+  gulp.watch('scss/**/*.scss', ['styles']);
   gulp.watch('../../libraries/avalanche/src/**/*.scss', ['styles']);
 });
 
