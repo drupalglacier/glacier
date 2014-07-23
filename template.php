@@ -419,26 +419,29 @@ function glacier_preprocess_views_view_fields(&$vars) {
       'class="view__field__content view__field--' . $field_name . '__content"',
       $field->content
     );
-    // Display the field label inside the field wrapper
-    if (!empty($vars['fields'][$k]->label_html)) {
-      $vars['fields'][$k]->content = glacier_str_replace('>', '>' . $vars['fields'][$k]->label_html, $vars['fields'][$k]->content);
-      $vars['fields'][$k]->label_html = '';
-    }
-    // Display links inside the field wrapper
-    if (strpos($vars['fields'][$k]->content, '<a ') === 0) {
-      preg_match('#\<a(.*?)\>#', $vars['fields'][$k]->content, $link);
-      $link = $link[0];
-      $vars['fields'][$k]->content = trim(str_replace(array($link, '</a>'), '', $vars['fields'][$k]->content));
-      $vars['fields'][$k]->content = glacier_str_replace('>', '>' . $link, $vars['fields'][$k]->content);
-      $vars['fields'][$k]->content = glacier_str_replace('<', '</a><', $vars['fields'][$k]->content, $pos = 'last');
-    }
-    // Add field formatter class
-    if (isset($field->handler->options['settings']['field_formatter_class'])) {
-      $vars['fields'][$k]->content = glacier_str_replace(
-        '">',
-        ' ' . $field->handler->options['settings']['field_formatter_class'] . '">',
-        $vars['fields'][$k]->content
-      );
+    // Optimizations if field template is used
+    if ($vars['fields']['title_field']->handler->options['field_api_classes']) {
+      // Display the field label inside the field wrapper
+      if (!empty($vars['fields'][$k]->label_html)) {
+        $vars['fields'][$k]->content = glacier_str_replace('>', '>' . $vars['fields'][$k]->label_html, $vars['fields'][$k]->content);
+        $vars['fields'][$k]->label_html = '';
+      }
+      // Display links inside the field wrapper
+      if (strpos($vars['fields'][$k]->content, '<a ') === 0) {
+        preg_match('#\<a(.*?)\>#', $vars['fields'][$k]->content, $link);
+        $link = $link[0];
+        $vars['fields'][$k]->content = trim(str_replace(array($link, '</a>'), '', $vars['fields'][$k]->content));
+        $vars['fields'][$k]->content = glacier_str_replace('>', '>' . $link, $vars['fields'][$k]->content);
+        $vars['fields'][$k]->content = glacier_str_replace('<', '</a><', $vars['fields'][$k]->content, $pos = 'last');
+      }
+      // Add field formatter class
+      if (isset($field->handler->options['settings']['field_formatter_class'])) {
+        $vars['fields'][$k]->content = glacier_str_replace(
+          '">',
+          ' ' . $field->handler->options['settings']['field_formatter_class'] . '">',
+          $vars['fields'][$k]->content
+        );
+      }
     }
   }
 }
