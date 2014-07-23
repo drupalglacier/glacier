@@ -420,7 +420,7 @@ function glacier_preprocess_views_view_fields(&$vars) {
       $field->content
     );
     // Optimizations if field template is used
-    if ($vars['fields']['title_field']->handler->options['field_api_classes']) {
+    if (isset($vars['fields'][$k]->handler->options['field_api_classes']) && $vars['fields'][$k]->handler->options['field_api_classes']) {
       // Display the field label inside the field wrapper
       if (!empty($vars['fields'][$k]->label_html)) {
         $vars['fields'][$k]->content = glacier_str_replace('>', '>' . $vars['fields'][$k]->label_html, $vars['fields'][$k]->content);
