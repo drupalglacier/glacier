@@ -458,10 +458,8 @@ function glacier_preprocess_field(&$vars, $hook) {
     '-',
     $vars['element']['#field_type']
   );
-  $vars['classes_array'] = array(
-    'field--' . $bem_field_name,
-    'field--type-' . $bem_field_type,
-  );
+  $vars['classes_array'][] = 'field--' . $bem_field_name;
+  $vars['classes_array'][] = 'field--type-' . $bem_field_type;
   if (isset($vars['element']['#entity_type'])) {
     $vars['classes_array'][] = 'field--' . $vars['element']['#entity_type'] . '-' . $vars['element']['#bundle'] . '--' . $bem_field_name;
   }
