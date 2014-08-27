@@ -1,10 +1,14 @@
 // Load plugins
+var path         = require('path');
 var gulp         = require('gulp');
-var sass         = require('gulp-ruby-sass');
 var autoprefixer = require('gulp-autoprefixer');
-var clean        = require('gulp-clean');
-var gutil        = require('gulp-util');
+var cssshrink    = require('gulp-cssshrink');
 var livereload   = require('gulp-livereload');
+var minifyCSS    = require('gulp-minify-css');
+var rename       = require('gulp-rename');
+var sass         = require('gulp-ruby-sass');
+var gutil        = require('gulp-util');
+var penthouse    = require('penthouse');
 
 // Styles
 gulp.task('styles', function () {
@@ -13,24 +17,52 @@ gulp.task('styles', function () {
     .on('error', gutil.log)
     .pipe(autoprefixer('last 2 versions', 'safari 5', 'ie 8', 'ie 9', 'ios 6', 'android 4'))
     .on('error', gutil.log)
+    .pipe(gulp.dest('css'));
+});
+
+// Minify
+gulp.task('minify', ['styles'], function () {
+  return gulp.src('css/style.css')
+    .pipe(minifyCSS())
+    .pipe(cssshrink())
+    .pipe(rename(function (path) {
+      path.basename += '.min';
+    }))
     .pipe(gulp.dest('css'))
     .pipe(livereload());
 });
 
-// Clean
-gulp.task('clean', function () {
-  return gulp.src(['css'], {read: false})
-    .pipe(clean());
+// Critical
+gulp.task('critical', ['minify'], function () {
+  console.warn('Set penthouse url in gulpfile.js and delete this message!');
+  penthouse({
+    url : 'http://website.com/',
+    css : path.join('css/style.min.css'),
+    width : 480,
+    height : 640
+  }, function(err, criticalCss) {
+    string_src('critical.min.css', criticalCss)
+      .pipe(gulp.dest('css'));
+  });
 });
 
-// Watch
+// Watch Styles
 gulp.task('watch', function () {
-  // Watch .scss files
-  gulp.watch('scss/**/*.scss', ['styles']);
-  gulp.watch('../../libraries/avalanche/src/**/*.scss', ['styles']);
+  gulp.watch('scss/**/*.scss', ['styles', 'minify', 'critical']);
+  gulp.watch('../../libraries/avalanche/src/**/*.scss', ['styles', 'minify', 'critical']);
 });
 
 // Default task
-gulp.task('default', ['clean'], function () {
-  gulp.start('styles');
+gulp.task('default', function () {
+  gulp.start('watch');
 });
+
+//
+function string_src(filename, string) {
+  var src = require('stream').Readable({ objectMode: true })
+  src._read = function () {
+    this.push(new gutil.File({ cwd: "", base: "", path: filename, contents: new Buffer(string) }));
+    this.push(null);
+  }
+  return src;
+}
