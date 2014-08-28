@@ -46,18 +46,18 @@ gulp.task('critical', ['minify'], function () {
   });
 });
 
-// Watch Styles
+// Watch
 gulp.task('watch', function () {
   gulp.watch('scss/**/*.scss', ['styles', 'minify', 'critical']);
   gulp.watch('../../libraries/avalanche/src/**/*.scss', ['styles', 'minify', 'critical']);
 });
 
-// Default task
+// Default
 gulp.task('default', function () {
   gulp.start('watch');
 });
 
-//
+// Create a stream from a string
 function string_src(filename, string) {
   var src = require('stream').Readable({ objectMode: true })
   src._read = function () {
