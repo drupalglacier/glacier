@@ -325,11 +325,26 @@ function glacier_preprocess_views_view(&$vars) {
     $vars['pager']
   );
 
-  // Check if grid class is attached to view
-  if (FALSE !== $key = array_search('grid', $vars['classes_array'])) {
-    // Remove the grid class...
-    unset($vars['classes_array'][$key]);
-    // ...and use a dedicated tpl instead
+  // Check if a grid class is attached to the view
+  if ($matches = preg_grep('#(.*)grid(.*)#', $vars['classes_array'])) {
+    // Temporary remove all manually added classes
+    // and generate an array of the classes string
+    unset($vars['classes_array'][key($matches)]);
+    $view_classes = explode(' ', array_shift($matches));
+
+    // Extract all grid classes and Remove the
+    // grid classes from the general classes array
+    $grid_classes = preg_grep('#(.*)grid(.*)#', $view_classes);
+    foreach ($grid_classes as $k => $grid_class) {
+      unset($view_classes[$k]);
+    }
+
+    // Add the general classes back to the
+    // view classes array and add the grid classes
+    $vars['classes_array'] = array_merge($vars['classes_array'], $view_classes);
+    $vars['grid_classes'] = ' ' . implode(' ', $grid_classes);
+
+    // Use a dedicated tpl for views with grid classes
     $vars['theme_hook_suggestions'][] = 'views_view__grid';
   }
 

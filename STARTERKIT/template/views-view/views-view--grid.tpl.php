@@ -27,7 +27,7 @@
  * @ingroup views_templates
  */
 ?>
-<div class="<?php print $classes; ?>">
+<div class="<?php print $classes; ?>"<?php print drupal_attributes($attributes_array); ?>>
   <?php print render($title_prefix); ?>
   <?php if ($title): ?>
     <?php print $title; ?>
@@ -53,7 +53,7 @@
   <?php endif; ?>
 
   <?php if ($rows): ?>
-    <div class="view__content view--<?php print $css_name . '--' . $css_display; ?>__content grid">
+    <div class="view__content view--<?php print $css_name . '--' . $css_display; ?>__content<?php print $grid_classes; ?>">
       <?php print $rows; ?>
     </div>
   <?php elseif ($empty): ?>
