@@ -332,7 +332,7 @@ function glacier_preprocess_views_view(&$vars) {
     unset($vars['classes_array'][key($matches)]);
     $view_classes = explode(' ', array_shift($matches));
 
-    // Extract all grid classes and Remove the
+    // Extract all grid classes and remove the
     // grid classes from the general classes array
     $grid_classes = preg_grep('#(.*)grid(.*)#', $view_classes);
     foreach ($grid_classes as $k => $grid_class) {
