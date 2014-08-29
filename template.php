@@ -222,6 +222,20 @@ function glacier_css_alter(&$css) {
   if (!empty($blocked_files) && theme_get_setting('css_whitelist_show_blocked_files')) {
     drupal_set_message('<strong>Blocked css files</strong><br />' . implode('<br />', $blocked_files), 'warning', FALSE);
   }
+
+  // Switch style.css with style.min.css
+  // if CSS aggregating is activated
+  if (variable_get('preprocess_css')) {
+    global $theme;
+    $path_to_theme  = drupal_get_path('theme', $theme);
+    $style_path     = $path_to_theme . '/css/style.css';
+    $style_path_min = $path_to_theme . '/css/style.min.css';
+    // Add minified version of the main stylesheet
+    $css[$style_path_min] = $css[$style_path];
+    $css[$style_path_min]['data'] = $style_path_min;
+    // Remove the unminified version
+    unset($css[$style_path]);
+  }
 }
 
 /**
