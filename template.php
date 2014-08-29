@@ -185,8 +185,10 @@ function glacier_html_head_alter(&$head) {
   }
 
   // Remove the useless generator metatag, sorry Drupal
-  if (isset($head['metatag_generator'])) {
-    unset($head['metatag_generator']);
+  foreach ($head as $k => $v) {
+    if (strpos($k, 'metatag_generator') !== FALSE) {
+      unset($head[$k]);
+    }
   }
 }
 
