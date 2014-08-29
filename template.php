@@ -249,7 +249,6 @@ function glacier_js_alter(&$js) {
   // Blocked files
   $blocked_files = array();
   // Better grouping and whitelisting
-  // Fix some jQuery compatibility issues
   uasort($js, 'drupal_sort_css_js');
   $i = 0;
   foreach ($js as $file => $value) {
@@ -262,41 +261,16 @@ function glacier_js_alter(&$js) {
     // Enable a better grouping mechanism
     if (theme_get_setting('js_normalize')) {
       // Repair groups
-      // Only two groups are allowed
-      // Group -100 for "every_page" assets
-      // Group 0 for page specific assets
+      // only two groups are allowed
+      // group -100 for "every_page" assets
+      // group 0 for page specific assets
       $js[$file]['group'] = $js[$file]['every_page'] ? -100 : 0;
-      // set scope for all files to footer
+      // Set scope for all files to footer
       $js[$file]['scope'] = 'footer';
-      // set weight
+      // Set weight
       $js[$file]['weight'] = $i++;
-      // preprocess everything
+      // Preprocess everything
       $js[$file]['preprocess'] = TRUE;
-    }
-
-    // Load compatible versions of some jQuery scripts
-    // Remove incompatible versions
-    $glacier_path = drupal_get_path('theme', 'glacier');
-    // original jquery.form.js not compatible with jquery >= 1.8
-    if (strpos($file, 'misc/jquery.form.js') !== FALSE) {
-      // remove old version
-      unset($js[$file]);
-      // include new version
-      drupal_add_js($glacier_path . '/js/fix/jquery.form.js');
-    }
-    // original admin_menu.js not compatible with jquery >= 1.8
-    if (strpos($file, drupal_get_path('module', 'admin_menu') . '/admin_menu.js') !== FALSE) {
-      // remove old version
-      unset($js[$file]);
-      // include new version
-      drupal_add_js($glacier_path . '/js/fix/admin_menu.js');
-    }
-    // original jquery.drilldown.js not compatible with jquery >= 1.8
-    if (strpos($file, drupal_get_path('module', 'admin') . '/includes/jquery.drilldown.js') !== FALSE) {
-      // remove old version
-      unset($js[$file]);
-      // include new version
-      drupal_add_js($glacier_path . '/js/fix/jquery.drilldown.js');
     }
   }
   if (!empty($blocked_files) && theme_get_setting('js_whitelist_show_blocked_files')) {
