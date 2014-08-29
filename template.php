@@ -20,15 +20,22 @@ function glacier_button($vars) {
   $element['#attributes']['type'] = 'submit';
   // Sets HTML attributes based on element properties.
   element_set_attributes($element, array('id', 'name', 'value'));
-  // Add classes
-  $element['#attributes']['class'][] = 'button';
-  $element['#attributes']['class'][] = 'form__' . $element['#button_type'];
-  // check if button is disabled
-  if (!empty($element['#attributes']['disabled'])) {
-    $element['#attributes']['class'][] = 'button--disabled';
-  }
   // Get the value and set as content for the <button>
+  $element['#attributes']['value'] = strip_tags($element['#value']);
   return '<button' . drupal_attributes($element['#attributes']) . '>' . $element['#value'] . '</button>';
+}
+
+/**
+ * Implements template_preprocess_button().
+ */
+function glacier_preprocess_button(&$vars) {
+  // Add classes
+  $vars['element']['#attributes']['class'][] = 'button';
+  $vars['element']['#attributes']['class'][] = 'form__' . $vars['element']['#button_type'];
+  // check if button is disabled
+  if (!empty($vars['element']['#attributes']['disabled'])) {
+    $vars['element']['#attributes']['class'][] = 'button--disabled';
+  }
 }
 
 /**
