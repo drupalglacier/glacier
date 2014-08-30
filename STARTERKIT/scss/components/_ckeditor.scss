@@ -1,7 +1,7 @@
-@if $u-skiplinks {
+@if $cmp-ckeditor {
 
 /*------------------------------------*\
-  SKIPLINKS
+  CKEDITOR
 \*------------------------------------*/
 /**
  * CONTENTS
@@ -14,10 +14,8 @@
   $BASE
 \*------------------------------------*/
 
-.skiplinks__list {
-  margin: 0;
-  padding: 0;
-  height: 0;
+.cke_show_borders {
+  margin: $spacing-s;
 }
 
 } // endif

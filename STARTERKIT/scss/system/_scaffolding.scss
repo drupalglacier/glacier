@@ -5,7 +5,7 @@
  * CONTENTS
  * SYSTEM..............
  * BASE................
- * UTILITY.............
+ * COMPONENTS..........
  */
 
 
@@ -23,9 +23,9 @@
 
 
 /*------------------------------------*\
-  $UTILITY
+  $COMPONENTS
 \*------------------------------------*/
 
-@import '../utility/skiplinks';
-@import '../utility/pager';
-@import '../utility/ckeditor';
+@import '../components/skiplinks';
+@import '../components/pager';
+@import '../components/ckeditor';
