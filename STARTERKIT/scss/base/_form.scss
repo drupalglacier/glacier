@@ -13,9 +13,15 @@
   $BASE
 \*------------------------------------*/
 
-.form__field,
-.form__wrapper {
+.form__item {
   margin-bottom: $spacing-xs;
+  .form__item {
+    margin-bottom: 0;
+  }
+}
+
+.form__wrapper {
+  margin-bottom: 0;
 }
 
 .form__label,
@@ -33,6 +39,7 @@
   .form__item {
     display: inline-block;
     margin-right: $spacing-xs;
+    margin-bottom: 0;
   }
   .form__label {
     font-weight: $font-a-weight-normal;
