@@ -1,0 +1,40 @@
+/*------------------------------------*\
+  FORM
+\*------------------------------------*/
+/**
+ * CONTENTS
+ * BASE................
+ * DATE................
+ */
+
+
+
+/*------------------------------------*\
+  $BASE
+\*------------------------------------*/
+
+.form__field,
+.form__wrapper {
+  margin-bottom: $spacing-xs;
+}
+
+.form__label,
+.form__fieldset-legend {
+  font-weight: $font-a-weight-medium;
+}
+
+
+
+/*------------------------------------*\
+  $DATE
+\*------------------------------------*/
+
+.form__item--date-select {
+  .form__item {
+    display: inline-block;
+    margin-right: $spacing-xs;
+  }
+  .form__label {
+    font-weight: $font-a-weight-normal;
+  }
+}

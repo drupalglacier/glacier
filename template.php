@@ -11,66 +11,6 @@
  */
 
 /**
- * Implements theme_button().
- *
- * Use the more flexible <button> instead of <input type="submit">
- */
-function glacier_button($vars) {
-  $element = $vars['element'];
-  $element['#attributes']['type'] = 'submit';
-  // Sets HTML attributes based on element properties.
-  element_set_attributes($element, array('id', 'name', 'value'));
-  // Get the value and set as content for the <button>
-  $element['#attributes']['value'] = strip_tags($element['#value']);
-  return '<button' . drupal_attributes($element['#attributes']) . '>' . $element['#value'] . '</button>';
-}
-
-/**
- * Implements template_preprocess_button().
- */
-function glacier_preprocess_button(&$vars) {
-  // Add classes
-  $vars['element']['#attributes']['class'][] = 'button';
-  $vars['element']['#attributes']['class'][] = 'form__' . $vars['element']['#button_type'];
-  // check if button is disabled
-  if (!empty($vars['element']['#attributes']['disabled'])) {
-    $vars['element']['#attributes']['class'][] = 'button--disabled';
-  }
-}
-
-/**
- * Implements theme_status_messages().
- */
-function glacier_status_messages($vars) {
-  $display = $vars['display'];
-  $output = '';
-
-  $status_heading = array(
-    'status' => t('Status message'),
-    'error' => t('Error message'),
-    'warning' => t('Warning message'),
-  );
-  foreach (drupal_get_messages($display) as $type => $messages) {
-    $output .= "<div class=\"message message--$type\">\n";
-    if (!empty($status_heading[$type])) {
-      $output .= '<h2 class="element-invisible">' . $status_heading[$type] . "</h2>\n";
-    }
-    if (count($messages) > 1) {
-      $output .= " <ul>\n";
-      foreach ($messages as $message) {
-        $output .= '  <li>' . $message . "</li>\n";
-      }
-      $output .= " </ul>\n";
-    }
-    else {
-      $output .= $messages[0];
-    }
-    $output .= "</div>\n";
-  }
-  return $output;
-}
-
-/**
  * Implements template_preprocess_html().
  */
 function glacier_preprocess_html(&$vars) {
@@ -315,6 +255,13 @@ function glacier_js_alter(&$js) {
   if (!empty($blocked_files) && theme_get_setting('js_whitelist_show_blocked_files')) {
     drupal_set_message('<strong>Blocked js files</strong><br />' . implode('<br />', $blocked_files), 'warning', FALSE);
   }
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function glacier_form_alter(&$form, &$form_state, $form_id) {
+  $form['#attributes']['class'] = array('form');
 }
 
 /**
@@ -742,6 +689,443 @@ function glacier_preprocess_block(&$vars, $hook) {
       }
       break;
   }
+}
+
+/**
+ * Implements theme_form_element().
+ */
+function glacier_form_element($vars) {
+  $element = &$vars['element'];
+
+  // This function is invoked as theme wrapper, but the rendered form element
+  // may not necessarily have been processed by form_builder().
+  $element += array(
+    '#title_display' => 'before',
+  );
+
+  // Add element #id for #type 'item'.
+  if (isset($element['#markup']) && !empty($element['#id'])) {
+    $attributes['id'] = $element['#id'];
+  }
+  // Add element's #type and #name as class to aid with JS/CSS selectors.
+  $attributes['class'] = array('form__item');
+  if (!empty($element['#type'])) {
+    $attributes['class'][] = 'form__item--' . strtr($element['#type'], '_', '-');
+  }
+  if (!empty($element['#name'])) {
+    $attributes['class'][] = 'form__item--' . strtr($element['#name'], array(' ' => '-', '_' => '-', '[' => '-', ']' => ''));
+  }
+  // Add a class for disabled elements to facilitate cross-browser styling.
+  if (!empty($element['#attributes']['disabled'])) {
+    $attributes['class'][] = 'form__item--disabled';
+  }
+  $output = '<div' . drupal_attributes($attributes) . '>' . "\n";
+
+  // If #title is not set, we don't display any label or required marker.
+  if (!isset($element['#title'])) {
+    $element['#title_display'] = 'none';
+  }
+  $prefix = isset($element['#field_prefix']) ? '<span class="form__prefix">' . $element['#field_prefix'] . '</span> ' : '';
+  $suffix = isset($element['#field_suffix']) ? ' <span class="form__suffix">' . $element['#field_suffix'] . '</span>' : '';
+
+  switch ($element['#title_display']) {
+    case 'before':
+    case 'invisible':
+      $output .= ' ' . theme('form_element_label', $vars);
+      $output .= ' ' . $prefix . $element['#children'] . $suffix . "\n";
+      break;
+
+    case 'after':
+      $output .= ' ' . $prefix . $element['#children'] . $suffix;
+      $output .= ' ' . theme('form_element_label', $vars) . "\n";
+      break;
+
+    case 'none':
+    case 'attribute':
+      // Output no label and no required marker, only the children.
+      $output .= ' ' . $prefix . $element['#children'] . $suffix . "\n";
+      break;
+  }
+
+  if (!empty($element['#description'])) {
+    $output .= '<small class="form__description u-display-block">' . $element['#description'] . "</small>\n";
+  }
+
+  $output .= "</div>\n";
+
+  return $output;
+}
+
+/**
+ * Implements theme_form_element_label().
+ */
+function glacier_form_element_label($vars) {
+  $element = $vars['element'];
+  // This is also used in the installer, pre-database setup.
+  $t = get_t();
+
+  // If title and required marker are both empty, output no label.
+  if ((!isset($element['#title']) || $element['#title'] === '') && empty($element['#required'])) {
+    return '';
+  }
+
+  // If the element is required, a required marker is appended to the label.
+  $required = !empty($element['#required']) ? theme('form_required_marker', array('element' => $element)) : '';
+
+  $title = filter_xss_admin($element['#title']);
+
+  $attributes = array();
+  // Style the label as class option to display inline with the element.
+  if ($element['#title_display'] == 'after') {
+    $attributes['class'] = 'form__option';
+  }
+  else {
+    $attributes['class'] = 'form__label';
+    // Show label only to screen readers to avoid disruption in visual flows.
+    if ($element['#title_display'] == 'invisible') {
+      $attributes['class'] = 'element-invisible';
+    }
+  }
+
+  if (!empty($element['#id'])) {
+    $attributes['for'] = $element['#id'];
+  }
+
+  // The leading whitespace helps visually separate fields from inline labels.
+  return ' <label' . drupal_attributes($attributes) . '>' . $t('!title !required', array('!title' => $title, '!required' => $required)) . "</label>\n";
+}
+
+/**
+ * Implements theme_checkbox().
+ */
+function glacier_checkbox($vars) {
+  $element = $vars['element'];
+  $element['#attributes']['type'] = 'checkbox';
+  element_set_attributes($element, array('id', 'name','#return_value' => 'value'));
+
+  // Unchecked checkbox has #value of integer 0.
+  if (!empty($element['#checked'])) {
+    $element['#attributes']['checked'] = 'checked';
+  }
+  _glacier_form_set_class($element, array('form__element', 'form__element--checkbox'));
+
+  return '<input' . drupal_attributes($element['#attributes']) . ' />';
+}
+
+/**
+ * Implements theme_checkboxes().
+ */
+function glacier_checkboxes($vars) {
+  $element = $vars['element'];
+  $attributes = array();
+  if (isset($element['#id'])) {
+    $attributes['id'] = $element['#id'];
+  }
+  $attributes['class'][] = 'form__element';
+  $attributes['class'][] = 'form__element--checkboxes';
+  if (!empty($element['#attributes']['class'])) {
+    $attributes['class'] = array_merge($attributes['class'], $element['#attributes']['class']);
+  }
+  if (isset($element['#attributes']['title'])) {
+    $attributes['title'] = $element['#attributes']['title'];
+  }
+  return '<div' . drupal_attributes($attributes) . '>' . (!empty($element['#children']) ? $element['#children'] : '') . '</div>';
+}
+
+/**
+ * Implements theme_container().
+ */
+function glacier_container($vars) {
+  $element = $vars['element'];
+
+  // Special handling for form elements.
+  if (isset($element['#array_parents'])) {
+    // Assign an html ID.
+    if (!isset($element['#attributes']['id'])) {
+      $element['#attributes']['id'] = $element['#id'];
+    }
+    // Add the 'form-wrapper' class.
+    array_unshift($element['#attributes']['class'], 'form__field');
+  }
+
+  $element['#attributes']['class'] = preg_replace('#^field-#', 'form__field--', $element['#attributes']['class']);
+
+  return '<div' . drupal_attributes($element['#attributes']) . '>' . $element['#children'] . '</div>';
+}
+
+/**
+ * Implements theme_date().
+ */
+function glacier_date($vars) {
+  $element = $vars['element'];
+
+  $attributes = array();
+  if (isset($element['#id'])) {
+    $attributes['id'] = $element['#id'];
+  }
+  if (!empty($element['#attributes']['class'])) {
+    $attributes['class'] = (array) $element['#attributes']['class'];
+  }
+  $attributes['class'][] = 'u-display-inline';
+
+  return '<div' . drupal_attributes($attributes) . '>' . drupal_render_children($element) . '</div>';
+}
+
+/**
+ * Implements theme_fieldset().
+ */
+function glacier_fieldset($vars) {
+  $element = $vars['element'];
+  element_set_attributes($element, array('id'));
+  _glacier_form_set_class($element, array('form__wrapper'));
+
+  $output = '<fieldset' . drupal_attributes($element['#attributes']) . '>';
+  if (!empty($element['#title'])) {
+    // Always wrap fieldset legends in a SPAN for CSS positioning.
+    $output .= '<legend><span class="form__fieldset-legend">' . $element['#title'] . '</span></legend>';
+  }
+  $output .= '<div class="form__fieldset-wrapper">';
+  if (!empty($element['#description'])) {
+    $output .= '<small class="form__fieldset-description u-display-block">' . $element['#description'] . '</small>';
+  }
+  $output .= $element['#children'];
+  if (isset($element['#value'])) {
+    $output .= $element['#value'];
+  }
+  $output .= '</div>';
+  $output .= "</fieldset>\n";
+  return $output;
+}
+
+/**
+ * Implements theme_file().
+ */
+function glacier_file($vars) {
+  $element = $vars['element'];
+  $element['#attributes']['type'] = 'file';
+  element_set_attributes($element, array('id', 'name', 'size'));
+  _glacier_form_set_class($element, array('form__element', 'form__element--file'));
+
+  return '<input' . drupal_attributes($element['#attributes']) . ' />';
+}
+
+/**
+ * Implements theme_form_required_marker().
+ */
+function glacier_form_required_marker($vars) {
+  // This is also used in the installer, pre-database setup.
+  $t = get_t();
+  $attributes = array(
+    'class' => 'form__required-marker',
+    'title' => $t('This field is required.'),
+  );
+  return '<span' . drupal_attributes($attributes) . '>*</span>';
+}
+
+/**
+ * Implements theme_password().
+ */
+function glacier_password($vars) {
+  $element = $vars['element'];
+  $element['#attributes']['type'] = 'password';
+  element_set_attributes($element, array('id', 'name', 'size', 'maxlength'));
+  _glacier_form_set_class($element, array('form__element', 'form__element--text', 'form__element--password'));
+
+  return '<input' . drupal_attributes($element['#attributes']) . ' />';
+}
+
+/**
+ * Implements theme_radio().
+ */
+function glacier_radio($vars) {
+  $element = $vars['element'];
+  $element['#attributes']['type'] = 'radio';
+  element_set_attributes($element, array('id', 'name','#return_value' => 'value'));
+
+  if (isset($element['#return_value']) && $element['#value'] !== FALSE && $element['#value'] == $element['#return_value']) {
+    $element['#attributes']['checked'] = 'checked';
+  }
+  _glacier_form_set_class($element, array('form__element', 'form__element--radio'));
+
+  return '<input' . drupal_attributes($element['#attributes']) . ' />';
+}
+
+/**
+ * Implements theme_radios().
+ */
+function glacier_radios($vars) {
+  $element = $vars['element'];
+  $attributes = array();
+  if (isset($element['#id'])) {
+    $attributes['id'] = $element['#id'];
+  }
+  $attributes['class'] = 'form__element';
+  $attributes['class'] = 'form__element--radios';
+  if (!empty($element['#attributes']['class'])) {
+    $attributes['class'] .= ' ' . implode(' ', $element['#attributes']['class']);
+  }
+  if (isset($element['#attributes']['title'])) {
+    $attributes['title'] = $element['#attributes']['title'];
+  }
+  return '<div' . drupal_attributes($attributes) . '>' . (!empty($element['#children']) ? $element['#children'] : '') . '</div>';
+}
+
+/**
+ * Implements theme_select().
+ */
+function glacier_select($vars) {
+  $element = $vars['element'];
+  element_set_attributes($element, array('id', 'name', 'size'));
+  _glacier_form_set_class($element, array('form__element', 'form__element--select'));
+
+  return '<select' . drupal_attributes($element['#attributes']) . '>' . form_select_options($element) . '</select>';
+}
+
+/**
+ * Implements theme_textarea().
+ */
+function glacier_textarea($vars) {
+  $element = $vars['element'];
+  element_set_attributes($element, array('id', 'name', 'cols', 'rows'));
+  _glacier_form_set_class($element, array('form__element', 'form__element--textarea'));
+
+  $wrapper_attributes = array(
+    'class' => array('form__textarea-wrapper'),
+  );
+
+  // Add resizable behavior.
+  if (!empty($element['#resizable'])) {
+    drupal_add_library('system', 'drupal.textarea');
+    $wrapper_attributes['class'][] = 'is-resizable';
+  }
+
+  $output = '<div' . drupal_attributes($wrapper_attributes) . '>';
+  $output .= '<textarea' . drupal_attributes($element['#attributes']) . '>' . check_plain($element['#value']) . '</textarea>';
+  $output .= '</div>';
+  return $output;
+}
+
+/**
+ * Implements theme_textfield().
+ */
+function glacier_textfield($vars) {
+  $element = $vars['element'];
+  $element['#attributes']['type'] = 'text';
+  element_set_attributes($element, array('id', 'name', 'value', 'size', 'maxlength'));
+  _glacier_form_set_class($element, array('form__element', 'form__element--textfield'));
+
+  $extra = '';
+  if ($element['#autocomplete_path'] && drupal_valid_path($element['#autocomplete_path'])) {
+    drupal_add_library('system', 'drupal.autocomplete');
+    $element['#attributes']['class'][] = 'form__autocomplete';
+
+    $attributes = array();
+    $attributes['type'] = 'hidden';
+    $attributes['id'] = $element['#attributes']['id'] . '-autocomplete';
+    $attributes['value'] = url($element['#autocomplete_path'], array('absolute' => TRUE));
+    $attributes['disabled'] = 'disabled';
+    $attributes['class'][] = 'js-autocomplete';
+    $extra = '<input' . drupal_attributes($attributes) . ' />';
+  }
+
+  $output = '<input' . drupal_attributes($element['#attributes']) . ' />';
+
+  return $output . $extra;
+}
+
+/**
+ * Implements theme_vertical_tabs().
+ */
+function glacier_vertical_tabs($vars) {
+  $element = $vars['element'];
+  // Add required JavaScript and Stylesheet.
+  drupal_add_library('system', 'drupal.vertical-tabs');
+
+  $output = '<h2 class="element-invisible">' . t('Vertical Tabs') . '</h2>';
+  $output .= '<div class="tabs tabs--vertical">' . $element['#children'] . '</div>';
+  return $output;
+}
+
+/**
+ * Adapted version of _form_set_class() core function
+ * add's is- prefixed state classes
+ */
+function _glacier_form_set_class(&$element, $class = array()) {
+  if (!empty($class)) {
+    if (!isset($element['#attributes']['class'])) {
+      $element['#attributes']['class'] = array();
+    }
+    $element['#attributes']['class'] = array_merge($element['#attributes']['class'], $class);
+  }
+  // This function is invoked from form element theme functions, but the
+  // rendered form element may not necessarily have been processed by
+  // form_builder().
+  if (!empty($element['#required'])) {
+    $element['#attributes']['class'][] = 'is-required';
+  }
+  if (isset($element['#parents']) && form_get_error($element) !== NULL && !empty($element['#validated'])) {
+    $element['#attributes']['class'][] = 'is-incorrect';
+  }
+}
+
+/**
+ * Implements theme_button().
+ *
+ * Use the more flexible <button> instead of <input type="submit">
+ */
+function glacier_button($vars) {
+  $element = $vars['element'];
+  $element['#attributes']['type'] = 'submit';
+  // Sets HTML attributes based on element properties.
+  element_set_attributes($element, array('id', 'name', 'value'));
+  // Get the value and set as content for the <button>
+  $element['#attributes']['value'] = strip_tags($element['#value']);
+  return '<button' . drupal_attributes($element['#attributes']) . '>' . $element['#value'] . '</button>';
+}
+
+/**
+ * Implements template_preprocess_button().
+ */
+function glacier_preprocess_button(&$vars) {
+  // Add classes
+  $vars['element']['#attributes']['class'][] = 'button';
+  $vars['element']['#attributes']['class'][] = 'form__' . $vars['element']['#button_type'];
+  // check if button is disabled
+  if (!empty($vars['element']['#attributes']['disabled'])) {
+    $vars['element']['#attributes']['class'][] = 'button--disabled';
+  }
+}
+
+/**
+ * Implements theme_status_messages().
+ */
+function glacier_status_messages($vars) {
+  $display = $vars['display'];
+  $output = '';
+
+  $status_heading = array(
+    'status' => t('Status message'),
+    'error' => t('Error message'),
+    'warning' => t('Warning message'),
+  );
+  foreach (drupal_get_messages($display) as $type => $messages) {
+    $output .= "<div class=\"message message--$type\">\n";
+    if (!empty($status_heading[$type])) {
+      $output .= '<h2 class="element-invisible">' . $status_heading[$type] . "</h2>\n";
+    }
+    if (count($messages) > 1) {
+      $output .= " <ul>\n";
+      foreach ($messages as $message) {
+        $output .= '  <li>' . $message . "</li>\n";
+      }
+      $output .= " </ul>\n";
+    }
+    else {
+      $output .= $messages[0];
+    }
+    $output .= "</div>\n";
+  }
+  return $output;
 }
 
 /**
