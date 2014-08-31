@@ -15,7 +15,7 @@
 \*------------------------------------*/
 
 .pager {
-  @extend .list--unstyled;
+  @extend .u-list-reset;
   text-align: center;
   a {
     text-decoration: none;
