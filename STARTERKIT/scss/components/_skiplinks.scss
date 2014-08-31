@@ -20,4 +20,24 @@
   height: 0;
 }
 
+.skiplinks__skiplink {
+  &.u-focusable {
+    &:active,
+    &:focus {
+      position: fixed;
+      left: 50%;
+      z-index: 9999;
+      margin-left: -7em;
+      padding: 0.25em 0 0.35em 0;
+      width: 14em;
+      height: auto;
+      outline: 0;
+      background: $selection-background;
+      box-shadow: 0 0 0.75em #666;
+      color: $selection-color;
+      text-align: center;
+    }
+  }
+}
+
 } // endif
