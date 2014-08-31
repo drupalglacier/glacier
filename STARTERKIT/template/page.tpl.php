@@ -26,15 +26,11 @@
   </div>
 </header>
 
-<?php if (drupal_is_front_page()): ?>
-  <div id="cmp--slideshow" class="cmp cmp--slideshow">
+<?php if (render($page['hero'])): ?>
+  <div id="cmp--hero" class="cmp cmp--hero">
     <div class="container">
-      <div id="region--slideshow" class="region region--slideshow aspect-ratio aspect-ratio--slideshow">
-        <div id="region--slideshow__holder" class="region--slideshow__holder aspect-ratio__inner">
-          <div id="region--slideshow__holder__inner" class="region--slideshow__holder__inner">
-            <div class="slideshow-loader"></div>
-          </div>
-        </div>
+      <div id="region--hero" class="region region--hero">
+        <?php print render($page['hero']); ?>
       </div>
     </div>
   </div>
