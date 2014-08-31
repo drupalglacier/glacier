@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Implements hook_form_alter().
+ */
 function STARTERKIT_form_search_block_form_alter(&$form, &$form_state, $form_id) {
   // HTML5 placeholder attribute
   $form['search_block_form']['#attributes']['placeholder'] = t('Your search term') . '...';

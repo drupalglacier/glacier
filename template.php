@@ -38,6 +38,9 @@ function glacier_preprocess_button(&$vars) {
   }
 }
 
+/**
+ * Implements theme_status_messages().
+ */
 function glacier_status_messages($vars) {
   $display = $vars['display'];
   $output = '';
