@@ -1,0 +1,41 @@
+@if $cmp-message {
+
+/*------------------------------------*\
+  MESSAGE
+\*------------------------------------*/
+/**
+ * CONTENTS
+ * BASE................
+ */
+
+
+
+/*------------------------------------*\
+  $BASE
+\*------------------------------------*/
+
+.message {
+  margin-bottom: $spacing-s;
+  padding: $spacing-m;
+  border-left: 5px solid $cs-neutral;
+  background: mix($cs-neutral, #fff, 15%);
+  color: $cs-neutral;
+  ul {
+    margin: 0;
+    padding-left: 1.5em;
+  }
+}
+
+.message--error {
+  border-color: $cs-negative;
+  background: mix($cs-negative, #fff, 15%);
+  color: $cs-negative;
+}
+
+.message--warning {
+  border-color: $cs-cautious;
+  background: mix($cs-cautious, #fff, 15%);
+  color: $cs-cautious;
+}
+
+} // endif
