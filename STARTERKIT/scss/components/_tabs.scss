@@ -1,0 +1,38 @@
+@if $cmp-tabs {
+
+/*------------------------------------*\
+  TABS
+\*------------------------------------*/
+/**
+ * CONTENTS
+ * BASE................
+ */
+
+
+
+/*------------------------------------*\
+  $BASE
+\*------------------------------------*/
+
+.tabs {
+  @extend .u-cf;
+  @extend .u-list-reset;
+  li {
+    @media (min-width: $breakpoint-s) {
+      float: left;
+    }
+  }
+  a {
+    display: block;
+    padding: 0.5em 0.75em;
+    border-bottom: 1px solid $cs-grey;
+    color: $font-base-color;
+    text-decoration: none;
+  }
+  .is-active {
+    border: 1px solid $cs-grey;
+    border-bottom: none;
+  }
+}
+
+} // endif

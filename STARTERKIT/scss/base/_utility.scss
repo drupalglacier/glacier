@@ -1,0 +1,19 @@
+/*------------------------------------*\
+  UTILITY
+\*------------------------------------*/
+/**
+ * CONTENTS
+ * VISIBILITY..........
+ */
+
+
+
+/*------------------------------------*\
+  $VISIBILITY
+\*------------------------------------*/
+/**
+ * Hide only visually, but have it available for screenreaders: h5bp.com/v
+ */
+.element-invisible {
+  @extend .u-visuallyhidden;
+}

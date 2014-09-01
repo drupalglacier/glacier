@@ -12,7 +12,7 @@
 <body class="<?php print $classes; ?>" <?php print $attributes;?>>
   <nav class="skiplinks" role="navigation">
     <ul class="skiplinks__list">
-      <li><a id="skiplinks__skiplink--main" href="#main-content" class="skiplinks__skiplink visuallyhidden focusable"><?php print t('Skip to main content'); ?></a></li>
+      <li><a id="skiplinks__skiplink--main" href="#main-content" class="skiplinks__skiplink element-invisible u-focusable"><?php print t('Skip to main content'); ?></a></li>
     </ul>
   </nav>
   <?php print $page_top; ?>
