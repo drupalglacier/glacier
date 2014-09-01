@@ -694,6 +694,26 @@ function glacier_preprocess_block(&$vars, $hook) {
 /**
  * Implements theme_form_element().
  */
+function glacier_menu_local_tasks(&$vars) {
+  $output = '';
+  if (!empty($vars['primary'])) {
+    $vars['primary']['#prefix'] = '<h2 class="element-invisible">' . t('Primary tabs') . '</h2>';
+    $vars['primary']['#prefix'] .= '<ul class="tabs tabs--primary">';
+    $vars['primary']['#suffix'] = '</ul>';
+    $output .= drupal_render($vars['primary']);
+  }
+  if (!empty($vars['secondary'])) {
+    $vars['secondary']['#prefix'] = '<h2 class="element-invisible">' . t('Secondary tabs') . '</h2>';
+    $vars['secondary']['#prefix'] .= '<ul class="tabs tabs--secondary">';
+    $vars['secondary']['#suffix'] = '</ul>';
+    $output .= drupal_render($vars['secondary']);
+  }
+  return str_replace(array('li class="active"', 'class="active'), array('li', 'class="is-active'), $output);
+}
+
+/**
+ * Implements theme_form_element().
+ */
 function glacier_form_element($vars) {
   $element = &$vars['element'];
 
