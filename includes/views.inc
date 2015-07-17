@@ -39,5 +39,5 @@ function glacier_preprocess_views_view_grid(&$vars) {
  */
 function glacier_preprocess_views_exposed_form(&$vars) {
   // Create variable for SMACSS theme setting.
-  $vars['smacss'] = theme_get_setting('smacss');
+  $vars['bem_only'] = theme_get_setting('bem_only');
 }

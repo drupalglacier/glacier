@@ -8,7 +8,7 @@
  * Implements hook_preprocess_taxonomy_term().
  */
 function glacier_preprocess_taxonomy_term(&$vars) {
-  $smacss = theme_get_setting('smacss');
+  $bem_only = theme_get_setting('bem_only');
 
   // Add default taxonomy term attributes.
   $vars['attributes_array']['class'] = array(
@@ -21,7 +21,7 @@ function glacier_preprocess_taxonomy_term(&$vars) {
   $vars['content_attributes_array']['class'][] = 'taxonomy-term__content';
 
   // Add default core attributes if wanted.
-  if (!$smacss) {
+  if (!$bem_only) {
     $vars['attributes_array']['class'][] = 'vocabulary-' . drupal_html_class($vars['vocabulary_machine_name']);
     $vars['content_attributes_array']['class'][] = 'content';
   }

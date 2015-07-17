@@ -12,7 +12,7 @@ function glacier_date_combo($vars) {
   $field = field_info_field($element['#field_name']);
   $instance = field_info_instance($element['#entity_type'], $element['#field_name'], $element['#bundle']);
   $type = $element['value']['#type'];
-  $smacss = theme_get_setting('smacss');
+  $bem_only = theme_get_setting('bem_only');
 
   $title = t($element['#title']) . ' ' . ($element['#delta'] > 0 ? intval($element['#delta'] + 1) : '');
 
@@ -42,7 +42,7 @@ function glacier_date_combo($vars) {
   $required = !empty($element['#required']) ? theme('form_required_marker', array('element' => $element)) : '';
 
   // Set markup for description.
-  if ($smacss) {
+  if ($bem_only) {
     $description = !empty($element['#fieldset_description']) ? '<div class="form-item__description">' . $element['#fieldset_description'] . '</div>' : '';
   }
   else {

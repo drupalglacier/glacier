@@ -8,10 +8,10 @@
  * Implements hook_preprocess_field().
  */
 function glacier_preprocess_field(&$vars) {
-  $smacss = theme_get_setting('smacss');
+  $bem_only = theme_get_setting('bem_only');
 
   // Remove some default field classes.
-  if ($smacss) {
+  if ($bem_only) {
     $vars['classes_array'] = array_values(array_diff($vars['classes_array'], array(
       'field-name-' . $vars['field_name_css'],
       'field-type-' . $vars['field_type_css'],
@@ -32,7 +32,7 @@ function glacier_preprocess_field(&$vars) {
  * Returns HTML for the Display Suite minimal field style.
  */
 function glacier_field__minimal($vars) {
-  $smacss = theme_get_setting('smacss');
+  $bem_only = theme_get_setting('bem_only');
   $output = '';
   $config = $vars['ds-config'];
   $classes = isset($config['classes']) ? ' ' . $config['classes'] : '';
@@ -43,16 +43,16 @@ function glacier_field__minimal($vars) {
   if ($vars['element']['#label_display'] == 'inline') {
     $field_label_class = ' field__label--inline';
 
-    if (!$smacss) {
+    if (!$bem_only) {
       $field_label_class .= ' label-inline';
     }
   }
-  elseif (!$smacss) {
+  elseif (!$bem_only) {
     $field_label_class .= ' label-above';
   }
 
   // Add default field class if wanted.
-  if (!$smacss) {
+  if (!$bem_only) {
     $classes .= ' field-name-' . $field_name_class;
   }
 
@@ -81,7 +81,7 @@ function glacier_field__minimal($vars) {
  * Returns HTML for the Display Suite expert field style.
  */
 function glacier_field__expert($vars) {
-  $smacss = theme_get_setting('smacss');
+  $bem_only = theme_get_setting('bem_only');
   $output = '';
 
   $config = $vars['ds-config'];
@@ -92,7 +92,7 @@ function glacier_field__expert($vars) {
     $class = array('field__label field__label--' . $vars['element']['#label_display']);
 
     // Add original label class if wanted.
-    if (!$smacss) {
+    if (!$bem_only) {
       $class[] = 'label-' . $vars['element']['#label_display'];
     }
 

@@ -8,12 +8,12 @@
  * Implements hook_preprocess_node().
  */
 function glacier_preprocess_node(&$vars) {
-  $smacss = theme_get_setting('smacss');
+  $bem_only = theme_get_setting('bem_only');
   $node_type_class = drupal_html_class($vars['node']->type);
   $view_mode_class = drupal_html_class($vars['view_mode']);
 
   // Remove some default node classes.
-  if ($smacss) {
+  if ($bem_only) {
     $vars['classes_array'] = array_values(array_diff($vars['classes_array'], array(
       'node-' . $node_type_class,
       'node-' . $view_mode_class,
@@ -30,7 +30,7 @@ function glacier_preprocess_node(&$vars) {
   $vars['content_attributes_array']['class'][] = 'node__content';
 
   // Add default core attributes if wanted.
-  if (!$smacss) {
+  if (!$bem_only) {
     $vars['title_attributes_array']['class'][] = 'title node-title';
     $vars['content_attributes_array']['class'][] = 'content';
   }

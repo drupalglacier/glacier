@@ -12,16 +12,16 @@ function glacier_preprocess_block(&$vars) {
   $module_class = drupal_html_class($module);
   $delta = $vars['block']->delta;
   $delta_class = drupal_html_class($delta);
-  $smacss = theme_get_setting('smacss');
-  $smacss_block_classes = theme_get_setting('smacss_block_classes');
-  $smacss_prefix_component = theme_get_setting('smacss_prefix_component');
+  $bem_only = theme_get_setting('bem_only');
+  $bem_block_classes = theme_get_setting('bem_block_classes');
+  $bem_prefix_component = theme_get_setting('bem_prefix_component');
 
   // Add new default block classes.
-  if ($smacss_block_classes) {
-    $vars['classes_array'][] = $smacss_prefix_component . 'block';
-    $vars['classes_array'][] = $smacss_prefix_component . 'block--' . drupal_html_class($module_class);
-    $vars['title_attributes_array']['class'][] = $smacss_prefix_component . 'block__title';
-    $vars['content_attributes_array']['class'][] = $smacss_prefix_component . 'block__content';
+  if ($bem_block_classes) {
+    $vars['classes_array'][] = $bem_prefix_component . 'block';
+    $vars['classes_array'][] = $bem_prefix_component . 'block--' . drupal_html_class($module_class);
+    $vars['title_attributes_array']['class'][] = $bem_prefix_component . 'block__title';
+    $vars['content_attributes_array']['class'][] = $bem_prefix_component . 'block__content';
   }
 
   // Add Aria Roles via attributes.
@@ -39,8 +39,8 @@ function glacier_preprocess_block(&$vars) {
 
         default:
           // Any other "system" block is a menu block.
-          $vars['classes_array'][] = $smacss_prefix_component . 'menu';
-          $vars['classes_array'][] = $smacss_prefix_component . 'menu--horizontal';
+          $vars['classes_array'][] = $bem_prefix_component . 'menu';
+          $vars['classes_array'][] = $bem_prefix_component . 'menu--horizontal';
           $vars['attributes_array']['role'] = 'navigation';
           break;
       }
@@ -96,7 +96,7 @@ function glacier_preprocess_block(&$vars) {
   }
 
   // Remove some default block classes.
-  if ($smacss) {
+  if ($bem_only) {
     $vars['classes_array'] = array_values(array_diff($vars['classes_array'], array(
       'block',
       'block-' . $module_class,
@@ -105,9 +105,9 @@ function glacier_preprocess_block(&$vars) {
   }
 
   // Add component classes
-  $vars['classes_array'][] = $smacss_prefix_component . drupal_html_class($delta_class);
-  $vars['title_attributes_array']['class'][] =$smacss_prefix_component . drupal_html_class($delta_class) . '__title';
-  $vars['content_attributes_array']['class'][] =$smacss_prefix_component . drupal_html_class($delta_class) . '__content';
+  $vars['classes_array'][] = $bem_prefix_component . drupal_html_class($delta_class);
+  $vars['title_attributes_array']['class'][] =$bem_prefix_component . drupal_html_class($delta_class) . '__title';
+  $vars['content_attributes_array']['class'][] =$bem_prefix_component . drupal_html_class($delta_class) . '__content';
 
   // Add attributes if using Clean Markup Blocks module.
   if (module_exists('clean_markup_blocks')) {
@@ -125,7 +125,7 @@ function glacier_preprocess_block(&$vars) {
       $vars['content']['#attributes'] = array_merge_recursive($vars['content']['#attributes'], $vars['content_attributes_array']);
 
       // Remove unwanted classes.
-      if ($smacss) {
+      if ($bem_only) {
         $vars['content']['#attributes']['class'] = array_values(array_diff($vars['content']['#attributes']['class'], array(
           'content',
         )));

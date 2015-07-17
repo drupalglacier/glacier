@@ -32,7 +32,7 @@ function glacier_form_element($vars) {
   $element_type_class = drupal_html_class($element_type);
   $element_name = !empty($element['#name']) ? $element['#name'] : '';
   $element_name_class = drupal_html_class($element_name);
-  $smacss = theme_get_setting('smacss');
+  $bem_only = theme_get_setting('bem_only');
 
   // This function is invoked as theme wrapper, but the rendered form element
   // may not necessarily have been processed by form_builder().
@@ -50,7 +50,7 @@ function glacier_form_element($vars) {
     $attributes['class'][] = 'form-item--' . $element_type_class;
 
     // Add default core class if wanted.
-    if (!$smacss) {
+    if (!$bem_only) {
       $attributes['class'][] = 'form-type-' . $element_type_class;
     }
   }
@@ -58,7 +58,7 @@ function glacier_form_element($vars) {
     $attributes['class'][] = 'form-item--' . $element_name_class;
 
     // Add default core class if wanted.
-    if (!$smacss) {
+    if (!$bem_only) {
       $attributes['class'][] = 'form-item-' . $element_name_class;
     }
   }
@@ -73,7 +73,7 @@ function glacier_form_element($vars) {
     $attributes['class'][] = 'is-disabled';
 
     // Add default core class if wanted.
-    if (!$smacss) {
+    if (!$bem_only) {
       $attributes['class'][] = 'form-disabled';
     }
   }
@@ -91,7 +91,7 @@ function glacier_form_element($vars) {
   }
 
   // Add prefix and suffix.
-  if ($smacss) {
+  if ($bem_only) {
     $prefix = isset($element['#field_prefix']) ? '<span class="form-item__prefix">' . $element['#field_prefix'] . '</span> ' : '';
     $suffix = isset($element['#field_suffix']) ? ' <span class="form-item__suffix">' . $element['#field_suffix'] . '</span>' : '';
   }
@@ -120,7 +120,7 @@ function glacier_form_element($vars) {
   }
 
   if (!empty($element['#description'])) {
-    if ($smacss) {
+    if ($bem_only) {
       $output .= '<div class="form-item__description">' . $element['#description'] . "</div>\n";
     }
     else {
@@ -163,7 +163,7 @@ function glacier_form_element_label($vars) {
   $attributes['class'][] = 'form-item__label';
 
   // Style the label as class option to display inline with the element.
-  if (!theme_get_setting('smacss') && $element['#title_display'] == 'after') {
+  if (!theme_get_setting('bem_only') && $element['#title_display'] == 'after') {
     $attributes['class'] = 'option';
   }
 
@@ -189,7 +189,7 @@ function glacier_form_required_marker($vars) {
   $attributes = array('class' => array('form-item__required-marker'));
 
   // Add default class if wanted.
-  if (!theme_get_setting('smacss')) {
+  if (!theme_get_setting('bem_only')) {
     $attributes['class'][] = 'form-required';
   }
 
@@ -203,7 +203,7 @@ function glacier_button($vars) {
   $element = $vars['element'];
   $element['#attributes']['type'] = $element['#button_type'];
   element_set_attributes($element, array('id', 'name', 'value'));
-  $smacss = theme_get_setting('smacss');
+  $bem_only = theme_get_setting('bem_only');
 
   // Add button classes.
   $element['#attributes']['class'][] = 'button';
@@ -217,7 +217,7 @@ function glacier_button($vars) {
   }
 
   // Add default class if wanted.
-  if (!$smacss) {
+  if (!$bem_only) {
     $element['#attributes']['class'][] = 'form-' . $element['#button_type'];
   }
 
@@ -225,7 +225,7 @@ function glacier_button($vars) {
     $element['#attributes']['class'][] = 'is-disabled';
 
     // Add default class if wanted.
-    if (!$smacss) {
+    if (!$bem_only) {
       $element['#attributes']['class'][] = 'form-button-disabled';
     }
   }
@@ -298,7 +298,7 @@ function glacier_container($vars) {
   }
 
   // Add default class if wanted.
-  if (!theme_get_setting('smacss')) {
+  if (!theme_get_setting('bem_only')) {
     $element['#attributes']['class'][] = 'form-wrapper';
   }
 
@@ -337,7 +337,7 @@ function glacier_date($vars) {
 function glacier_fieldset($vars) {
   $element = $vars['element'];
   element_set_attributes($element, array('id'));
-  $smacss = theme_get_setting('smacss');
+  $bem_only = theme_get_setting('bem_only');
 
   if (isset($element['#attributes']['class'])) {
     if (!is_array($element['#attributes']['class'])) {
@@ -349,7 +349,7 @@ function glacier_fieldset($vars) {
   }
 
   // Remove default collapsible classes.
-  if ($smacss) {
+  if ($bem_only) {
     $element['#attributes']['class'] = array_values(array_diff($element['#attributes']['class'], array(
       'collapsible',
       'collapsed',
@@ -366,7 +366,7 @@ function glacier_fieldset($vars) {
     }
   }
 
-  if ($smacss) {
+  if ($bem_only) {
     _glacier_form_set_class($element, array('fieldset'));
   }
   else {
@@ -377,7 +377,7 @@ function glacier_fieldset($vars) {
   $output = '<fieldset' . drupal_attributes($element['#attributes']) . '>';
   if (!empty($element['#title'])) {
     // Always wrap fieldset legends in a SPAN for CSS positioning.
-    if ($smacss) {
+    if ($bem_only) {
       $output .= '<legend class="fieldset__legend"><span class="fieldset__legend-text">' . $element['#title'] . '</span></legend>';
     }
     else {
@@ -385,7 +385,7 @@ function glacier_fieldset($vars) {
     }
   }
 
-  if ($smacss) {
+  if ($bem_only) {
     $output .= '<div class="fieldset__content">';
   }
   else {
@@ -393,7 +393,7 @@ function glacier_fieldset($vars) {
   }
 
   if (!empty($element['#description'])) {
-    if ($smacss) {
+    if ($bem_only) {
       $output .= '<div class="fieldset__description">' . $element['#description'] . '</div>';
     }
     else {
@@ -432,7 +432,7 @@ function glacier_image_button($vars) {
   $element = $vars['element'];
   $element['#attributes']['type'] = 'image';
   element_set_attributes($element, array('id', 'name', 'value'));
-  $smacss = theme_get_setting('smacss');
+  $bem_only = theme_get_setting('bem_only');
 
   $element['#attributes']['src'] = file_create_url($element['#src']);
   if (!empty($element['#title'])) {
@@ -443,7 +443,7 @@ function glacier_image_button($vars) {
   $element['#attributes']['class'][] = 'button--image';
 
   // Add default core class if wanted.
-  if (!$smacss) {
+  if (!$bem_only) {
     $element['#attributes']['class'][] = 'form-' . $element['#button_type'];
   }
 
@@ -451,7 +451,7 @@ function glacier_image_button($vars) {
     $element['#attributes']['class'][] = 'is-disabled';
 
     // Add default core class if wanted.
-    if (!$smacss) {
+    if (!$bem_only) {
       $element['#attributes']['class'][] = 'form-button-disabled';
     }
   }
@@ -644,7 +644,7 @@ function glacier_textfield($vars) {
  *   Array of new class names to be added.
  */
 function _glacier_form_set_class(&$element, $class = array()) {
-  $smacss = theme_get_setting('smacss');
+  $bem_only = theme_get_setting('bem_only');
 
   if (!empty($class)) {
     if (!isset($element['#attributes']['class'])) {
@@ -659,7 +659,7 @@ function _glacier_form_set_class(&$element, $class = array()) {
     $element['#attributes']['class'][] = 'is-required';
 
     // Add default core class if wanted.
-    if (!$smacss) {
+    if (!$bem_only) {
       $element['#attributes']['class'][] = 'required';
     }
   }
@@ -667,7 +667,7 @@ function _glacier_form_set_class(&$element, $class = array()) {
     $element['#attributes']['class'][] = 'is-error';
 
     // Add default core class if wanted.
-    if (!$smacss) {
+    if (!$bem_only) {
       $element['#attributes']['class'][] = 'error';
     }
   }
