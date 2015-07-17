@@ -28,9 +28,13 @@ function STARTERKIT_menu_tree__main_menu(&$vars) {
  * Implements template_preprocess_block().
  */
 function STARTERKIT_preprocess_block(&$vars, $hook) {
-  if ($vars['elements']['#block']->delta == 'main-menu') {
-    $vars['classes_array'][] = $bem_prefix_component . 'menu--horizontal';
-    $vars['classes_array'][] = $bem_prefix_component . 'menu--horizontal-responsive';
-    $vars['classes_array'][] = $bem_prefix_component . 'menu--horizontal-responsive--dropdown';
+  $bem_prefix_component = theme_get_setting('bem_prefix_component');
+
+  switch ($vars['elements']['#block']->delta) {
+    case 'main-menu':
+      $vars['classes_array'][] = $bem_prefix_component . 'menu--horizontal';
+      $vars['classes_array'][] = $bem_prefix_component . 'menu--horizontal-responsive';
+      $vars['classes_array'][] = $bem_prefix_component . 'menu--horizontal-responsive--dropdown';
+      break;
   }
 }
