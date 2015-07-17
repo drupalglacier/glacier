@@ -212,15 +212,26 @@ function glacier_menu_tree__menu_block($vars) {
 }
 
 /**
+ * Implements template_preprocess_menu_tree().
+ */
+function glacier_preprocess_menu_tree(&$vars) {
+  // Add a level variable to the menu
+  if (preg_match('#menu__item--level([0-9])#', $vars['tree'], $match)) {
+    $vars['menu_level'] = $match[1];
+  }
+}
+
+/**
  * Implements hook_preprocess_menu_link().
  */
 function glacier_preprocess_menu_link(&$vars) {
   $element = $vars['element'];
-  $bem_only = theme_get_setting('bem_only');
   $show_first_last = theme_get_setting('show_first_last');
   $show_collapsed_expanded = theme_get_setting('show_collapsed_expanded');
   $menu = '';
   $mlid = '';
+  $bem_only = theme_get_setting('bem_only');
+  $bem_prefix_component = theme_get_setting('bem_prefix_component');
 
   if (isset($element['#original_link'])) {
     $menu = $element['#original_link']['menu_name'];
@@ -272,11 +283,11 @@ function glacier_preprocess_menu_link(&$vars) {
 
   // Update list item classes.
   if (empty($item_classes)) {
-    $item_classes[] = 'nav__item';
+    $item_classes[] = $bem_prefix_component . 'menu__item';
   }
   else {
-    if (!in_array('nav__item', $item_classes)) {
-      array_unshift($item_classes, 'nav__item');
+    if (!in_array($bem_prefix_component . 'menu__item', $item_classes)) {
+      array_unshift($item_classes, $bem_prefix_component . 'menu__item');
     }
 
     if ($bem_only) {
@@ -304,28 +315,29 @@ function glacier_preprocess_menu_link(&$vars) {
 
     if ($show_first_last) {
       if ($bem_only) {
-        $item_classes = preg_replace('/^first$/', 'nav__item--first', $item_classes);
-        $item_classes = preg_replace('/^last$/', 'nav__item--last', $item_classes);
+        $item_classes = preg_replace('/^first$/', $bem_prefix_component . 'menu__item--first', $item_classes);
+        $item_classes = preg_replace('/^last$/', $bem_prefix_component . 'menu__item--last', $item_classes);
       }
       else {
         if (in_array('first', $item_classes)) {
-          $item_classes[] = 'nav__item--first';
+          $item_classes[] = $bem_prefix_component . 'menu__item--first';
         }
 
         if (in_array('last', $item_classes)) {
-          $item_classes[] = 'nav__item--last';
+          $item_classes[] = $bem_prefix_component . 'menu__item--last';
         }
       }
     }
   }
+  $item_classes[] = $bem_prefix_component . 'menu__item--level' . $element['#original_link']['depth'];
 
   // Update link classes.
   if (empty($link_classes)) {
-    $link_classes[] = 'nav__link';
+    $link_classes[] = $bem_prefix_component . 'menu__link';
   }
   else {
-    if (!in_array('nav__link', $link_classes)) {
-      array_unshift($link_classes, 'nav__link');
+    if (!in_array($bem_prefix_component . 'menu__link', $link_classes)) {
+      array_unshift($link_classes, $bem_prefix_component . 'menu__link');
     }
 
     if ($bem_only) {
@@ -335,6 +347,7 @@ function glacier_preprocess_menu_link(&$vars) {
       $link_classes[] = 'is-active-trail';
     }
   }
+  $link_classes[] = $bem_prefix_component . 'menu__link--level' . $element['#original_link']['depth'];
 
   // Uncomment if you want to add mlid classes.
   // $item_classes[] = 'nav__item--mlid-' . $mlid;
