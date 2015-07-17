@@ -84,6 +84,20 @@ function glacier_preprocess_html(&$vars, $hook) {
   )));
   $vars['classes_array'] = preg_grep('/^page-node/', $vars['classes_array'], PREG_GREP_INVERT);
 
+  foreach ($vars['classes_array'] as $k => $class) {
+    switch ($class) {
+      case 'front':
+      case 'not-front':
+        $vars['classes_array'][$k] = 'is-' . $class;
+        break;
+
+      case 'logged-in':
+      case 'not-logged-in':
+        $vars['classes_array'][$k] = 'user-' . $class;
+        break;
+    }
+  }
+
   if (!$vars['is_front']) {
     // Add path class.
     $path = drupal_get_path_alias($_GET['q']);
@@ -130,6 +144,34 @@ function glacier_preprocess_html(&$vars, $hook) {
       }
     }
   }
+
+  // Deactivate automatic iOS / Android phone number detection
+  drupal_add_html_head(array(
+    '#tag' => 'meta',
+    '#attributes' => array(
+      'name' => 'format-detection',
+      'content' => 'telephone=no',
+    )
+  ), 'tel_detection');
+
+  // Viewport
+  drupal_add_html_head(array(
+    '#tag' => 'meta',
+    '#attributes' => array(
+      'name' => 'viewport',
+      'content' => 'width=device-width,initial-scale=1',
+    )
+  ), 'viewport');
+
+  // Deactivate IE compatibility mode
+  drupal_add_html_head(array(
+    '#tag' => 'meta',
+    '#attributes' => array(
+      'http-equiv' => 'X-UA-Compatible',
+      'content' => 'IE=edge,chrome=1',
+    ),
+    '#weight' => '-9999',
+  ), 'http_equiv');
 }
 
 /**
@@ -159,14 +201,20 @@ function glacier_process_html_tag(&$vars) {
  * Implements hook_html_head_alter().
  */
 function glacier_html_head_alter(&$head_elements) {
-  // Remove empty conditional comment that is added by advagg
-  // we don't care about IE
-  if (isset($head_elements['fix_blocking_css_ie'])) {
-    unset($head_elements['fix_blocking_css_ie']);
-  }
-
-  // Remove the Drupal generator tag, it's pointless
-  if (isset($head_elements['system_meta_generator'])) {
-    unset($head_elements['system_meta_generator']);
+  foreach ($head_elements as $k => $element) {
+    if (strpos($k, 'generator') !== FALSE) {
+      // Remove the Drupal generator tag, it's pointless
+      unset($head_elements[$k]);
+    }
+    else if (strpos($k, 'fix_blocking_css_ie') !== FALSE) {
+      // Remove empty conditional comment that is added by advagg
+      // we don't care about IE
+      unset($head_elements[$k]);
+    }
+    else if (drupal_is_front_page() && (strpos($k, 'canonical') !== FALSE || strpos($k, 'shortlink') !== FALSE)) {
+      // Remove the canonical and shortlink tags
+      // they aren't necessary on the front page
+      unset($head_elements[$k]);
+    }
   }
 }

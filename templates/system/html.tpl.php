@@ -9,8 +9,6 @@
   <head>
     <?php print $head; ?>
     <title><?php print $head_title; ?></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <?php print $styles; ?>
     <?php print $scripts; ?>
   </head>

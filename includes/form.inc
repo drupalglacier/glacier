@@ -24,6 +24,14 @@ function glacier_form($vars) {
 }
 
 /**
+ * Implements hook_form_alter().
+ */
+function glacier_form_alter(&$form, &$form_state, $form_id) {
+  $bem_prefix_component = theme_get_setting('bem_prefix_component');
+  $form['#attributes']['class'] = array($bem_prefix_component . 'form');
+}
+
+/**
  * Returns HTML for a form element.
  */
 function glacier_form_element($vars) {
