@@ -80,6 +80,8 @@ function drush_glacier($name = NULL, $machine_name = NULL) {
   drush_op('glacier_file_str_replace', $subtheme_path . '/template.php', 'STARTERKIT', $machine_name);
   drush_op('glacier_file_str_replace', $subtheme_path . '/' . $machine_name . '.info', 'STARTERKIT', $machine_name);
   drush_op('glacier_file_str_replace', $subtheme_path . '/js/script.js', 'STARTERKIT', $machine_name);
+  drush_op('glacier_file_str_replace', $subtheme_path . '/scss/style.scss', 'STARTERKIT', $machine_name);
+  drush_op('glacier_file_str_replace', $subtheme_path . '/bower.json', 'STARTERKIT', $machine_name);
   drush_op('glacier_file_str_replace', $subtheme_path . '/package.json', 'STARTERKIT', $machine_name);
 
   // Notify user of the newly created theme.

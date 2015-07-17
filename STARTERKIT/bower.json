@@ -1,0 +1,20 @@
+{
+  "name": "STARTERKIT",
+  "version": "1.0.0",
+  "main": "css/style.css",
+  "license": "GPL v2",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "avalanche_base_default": "^2.0.0",
+    "avalanche_base_form": "^2.0.0",
+    "avalanche_base_layout": "^2.0.0",
+    "avalanche_base_typography": "^2.0.0",
+    "normalize.css": "~3.0.3"
+  }
+}
