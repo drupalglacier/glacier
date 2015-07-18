@@ -50,7 +50,7 @@ gulp.task('bower', function () {
 // Inject
 gulp.task('move', ['bower'], function () {
   gulp.start('clean:vendor');
-  return gulp.src('vendor/avalanche_*/scss/*.scss')
+  return gulp.src('../../libraries/avalanche_*/scss/*.scss')
     .pipe(rename(function (path) {
       var packageType = path.dirname
         .replace('avalanche_', '')
@@ -68,8 +68,8 @@ gulp.task('clean:vendor', ['move'], function () {
   // the timeput function is a ugly hack to prevent to early deleting of the package files
   setTimeout(function () {
     del([
-      'vendor/avalanche_*'
-    ]);
+      '../../libraries/avalanche_*'
+    ], {force: true});
   }, 2000);
 });
 

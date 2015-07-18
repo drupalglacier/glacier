@@ -27,6 +27,7 @@ regions[page_bottom] = 'Page bottom'
 ; Stylesheets
 ; ========================================
 
+stylesheets[all][] = ../../libraries/normalize.css/normalize.css
 stylesheets[all][] = css/style.css
 
 
