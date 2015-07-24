@@ -64,39 +64,39 @@ function glacier_form_system_theme_settings_alter(&$form, &$form_state, $form_id
   );
   $form['options_settings']['bem_only'] = array(
     '#type' => 'checkbox',
-    '#title' => t("Output only SMACSS classes."),
-    '#description'   => t("Remove core classes that don't follow the Drupal 8 SMACSS naming convention. Unchecking this will add a TON of classes everywhere, but it might fix problems caused by modules depending on those classes."),
+    '#title' => t('Output only SMACSS classes.'),
+    '#description'   => t('Remove core classes that don\'t follow the Drupal 8 SMACSS naming convention. Unchecking this will add a TON of classes everywhere, but it might fix problems caused by modules depending on those classes.'),
     '#default_value' => theme_get_setting('bem_only'),
   );
   $form['options_settings']['bem_block_classes'] = array(
     '#type' => 'checkbox',
-    '#title' => t("Output SMACSS styled block classes."),
-    '#description'   => t("Output default block classes like 'block block--system'."),
+    '#title' => t('Output SMACSS styled block classes.'),
+    '#description'   => t('Output default block classes like \'block block--system\'.'),
     '#default_value' => theme_get_setting('bem_block_classes'),
   );
   $form['options_settings']['bem_prefix_component'] = array(
     '#type' => 'textfield',
-    '#title' => t("Component class prefix"),
+    '#title' => t('Component class prefix'),
     '#default_value' => theme_get_setting('bem_prefix_component'),
   );
   $form['options_settings']['bem_prefix_object'] = array(
     '#type' => 'textfield',
-    '#title' => t("Object class prefix"),
+    '#title' => t('Object class prefix'),
     '#default_value' => theme_get_setting('bem_prefix_object'),
   );
   $form['options_settings']['bem_prefix_utility'] = array(
     '#type' => 'textfield',
-    '#title' => t("Utility class prefix"),
+    '#title' => t('Utility class prefix'),
     '#default_value' => theme_get_setting('bem_prefix_utility'),
   );
   $form['options_settings']['show_first_last'] = array(
     '#type' => 'checkbox',
-    '#title' => t("Add first/last classes to menu items."),
+    '#title' => t('Add first/last classes to menu items.'),
     '#default_value' => theme_get_setting('show_first_last'),
   );
   $form['options_settings']['show_collapsed_expanded'] = array(
     '#type' => 'checkbox',
-    '#title' => t("Add collapsed/expanded classes to menu items."),
+    '#title' => t('Add collapsed/expanded classes to menu items.'),
     '#default_value' => theme_get_setting('show_collapsed_expanded'),
   );
 }
@@ -170,7 +170,7 @@ function glacier_recommended_modules() {
         array(
           '!modernizr' => l(
             t('Modernizr'),
-            "http://modernizr.com/",
+            'http://modernizr.com/',
             array('attributes' => array('target' => '_blank'))
           ),
         )
