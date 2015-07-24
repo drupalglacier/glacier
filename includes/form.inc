@@ -9,6 +9,7 @@
  */
 function glacier_form($vars) {
   $element = $vars['element'];
+  $bem_prefix_component = theme_get_setting('bem_prefix_component');
 
   if (isset($element['#action'])) {
     $element['#attributes']['action'] = drupal_strip_dangerous_protocols($element['#action']);
@@ -19,6 +20,12 @@ function glacier_form($vars) {
   if (empty($element['#attributes']['accept-charset'])) {
     $element['#attributes']['accept-charset'] = "UTF-8";
   }
+
+  $element['#attributes']['class'] = preg_replace(
+    array('/entityform/', '/entitytype-(.*?)(?=-form)/e'),
+    array($bem_prefix_component . 'entityform', 'str_replace(\'_\', \'-\', $bem_prefix_component . $1)'),
+    $element['#attributes']['class']
+  );
 
   return '<form' . drupal_attributes($element['#attributes']) . '>' . $element['#children'] . '</form>';
 }
