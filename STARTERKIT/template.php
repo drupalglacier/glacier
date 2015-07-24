@@ -32,7 +32,6 @@ function STARTERKIT_preprocess_block(&$vars, $hook) {
 
   switch ($vars['elements']['#block']->delta) {
     case 'main-menu':
-      $vars['classes_array'][] = $bem_prefix_component . 'menu--horizontal';
       $vars['classes_array'][] = $bem_prefix_component . 'menu--horizontal-responsive';
       $vars['classes_array'][] = $bem_prefix_component . 'menu--horizontal-responsive--dropdown';
       break;

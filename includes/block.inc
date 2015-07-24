@@ -40,7 +40,6 @@ function glacier_preprocess_block(&$vars) {
         default:
           // Any other "system" block is a menu block.
           $vars['classes_array'][] = $bem_prefix_component . 'menu';
-          $vars['classes_array'][] = $bem_prefix_component . 'menu--horizontal';
           $vars['attributes_array']['role'] = 'navigation';
           break;
       }
