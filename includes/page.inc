@@ -8,6 +8,14 @@
  * Implements hook_preprocess_page().
  */
 function glacier_preprocess_page(&$vars, $hook) {
+  // Add js enhancements
+  if (theme_get_setting('js_enhancement_console')) {
+    drupal_add_js(drupal_get_path('theme', 'glacier') . '/js/console.js', array('every_page' => TRUE, 'weight' => -100));
+  }
+  if (theme_get_setting('js_enhancement_skiplink')) {
+    drupal_add_js(drupal_get_path('theme', 'glacier') . '/js/skiplink.js', array('every_page' => TRUE, 'weight' => -100));
+  }
+
   // Determine if Panels is rendering this page.
   $vars['is_panel'] = FALSE;
   if (module_exists('page_manager') && count(page_manager_get_current_page())) {

@@ -99,6 +99,16 @@ function glacier_form_system_theme_settings_alter(&$form, &$form_state, $form_id
     '#title' => t('Add collapsed/expanded classes to menu items.'),
     '#default_value' => theme_get_setting('show_collapsed_expanded'),
   );
+  $form['options_settings']['js_enhancement_console'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Avoid \'console\' errors in browsers that lack a console.'),
+    '#default_value' => theme_get_setting('js_enhancement_console'),
+  );
+  $form['options_settings']['js_enhancement_skiplink'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Normalize skiplink behaviour for all mandatory browsers.'),
+    '#default_value' => theme_get_setting('js_enhancement_skiplink'),
+  );
 }
 
 /**
