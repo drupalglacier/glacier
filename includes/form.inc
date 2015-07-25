@@ -38,6 +38,53 @@ function glacier_form_alter(&$form, &$form_state, $form_id) {
   $form['#attributes']['class'] = array($bem_prefix_component . 'form');
 }
 
+function glacier_theme($existing, $type, $theme, $path) {
+  return array(
+    // 'form_element' => array(
+    //   'variables' => array(
+    //     'attributes' => NULL,
+    //   ),
+    //   'template' => 'templates/form/form-element',
+    // ),
+    'form_field__textfield' => array(
+      'variables' => array(
+        'attributes' => NULL,
+        'extra_attributes' => NULL,
+      ),
+      'template' => 'templates/form/form-field--textfield',
+    ),
+  );
+}
+
+/**
+ * Returns HTML to wrap child elements in a container.
+ *
+ * Implements theme_container().
+ */
+function glacier_container($vars) {
+  $element = $vars['element'];
+  $bem_prefix_component = theme_get_setting('bem_prefix_component');
+
+  // Special handling for form elements.
+  if (isset($element['#array_parents'])) {
+    // Assign an html ID.
+    if (!isset($element['#attributes']['id'])) {
+      $element['#attributes']['id'] = $element['#id'];
+    }
+    // Add the 'form-wrapper' class.
+    array_unshift($element['#attributes']['class'], $bem_prefix_component . 'form__field');
+  }
+
+  $element['#attributes']['class'] = preg_replace('#^field-#', $bem_prefix_component . 'form__field--', $element['#attributes']['class']);
+
+  // Add default class if wanted.
+  if (!theme_get_setting('bem_only')) {
+    $element['#attributes']['class'][] = 'form-wrapper';
+  }
+
+  return '<div' . drupal_attributes($element['#attributes']) . '>' . $element['#children'] . '</div>';
+}
+
 /**
  * Returns HTML for a form element.
  */
@@ -303,35 +350,6 @@ function glacier_checkboxes($vars) {
   $legend = isset($element['#title']) ? '<legend class="' . $bem_prefix_component . 'form__legend">' . $element['#title'] . ' ' . $required . '</legend>' : '';
 
   return '<fieldset' . drupal_attributes($attributes) . '>' . $legend . (!empty($element['#children']) ? $element['#children'] : '') . '</fieldset>';
-}
-
-/**
- * Returns HTML to wrap child elements in a container.
- * 
- * Implements theme_container().
- */
-function glacier_container($vars) {
-  $element = $vars['element'];
-  $bem_prefix_component = theme_get_setting('bem_prefix_component');
-
-  // Special handling for form elements.
-  if (isset($element['#array_parents'])) {
-    // Assign an html ID.
-    if (!isset($element['#attributes']['id'])) {
-      $element['#attributes']['id'] = $element['#id'];
-    }
-    // Add the 'form-wrapper' class.
-    array_unshift($element['#attributes']['class'], $bem_prefix_component . 'form__field');
-  }
-
-  $element['#attributes']['class'] = preg_replace('#^field-#', $bem_prefix_component . 'form__field--', $element['#attributes']['class']);
-
-  // Add default class if wanted.
-  if (!theme_get_setting('bem_only')) {
-    $element['#attributes']['class'][] = 'form-wrapper';
-  }
-
-  return '<div' . drupal_attributes($element['#attributes']) . '>' . $element['#children'] . '</div>';
 }
 
 /**
@@ -604,20 +622,6 @@ function glacier_textarea($vars) {
   return '<textarea' . drupal_attributes($element['#attributes']) . '>' . check_plain($element['#value']) . '</textarea>';
 }
 
-function glacier_theme($existing, $type, $theme, $path) {
-  $bem_prefix_component = theme_get_setting('bem_prefix_component');
-
-  return array(
-    'glacier_textfield' => array(
-      'variables' => array(
-        'attributes' => NULL,
-        'extra_attributes' => NULL,
-      ),
-      'template' => 'templates/form/form-field--textfield',
-    ),
-  );
-}
-
 /**
  * Returns HTML for a textfield form element.
  */
@@ -650,7 +654,7 @@ function glacier_textfield($vars) {
     $extra_attributes['class'][] = 'autocomplete';
   }
 
-  return theme('glacier_textfield', array(
+  return theme('form_field__textfield', array(
     'attributes' => drupal_attributes($element['#attributes']),
     'extra_attributes' => drupal_attributes($extra_attributes),
   ));
