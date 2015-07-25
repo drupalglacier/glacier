@@ -604,10 +604,26 @@ function glacier_textarea($vars) {
   return '<textarea' . drupal_attributes($element['#attributes']) . '>' . check_plain($element['#value']) . '</textarea>';
 }
 
+function glacier_theme($existing, $type, $theme, $path) {
+  $bem_prefix_component = theme_get_setting('bem_prefix_component');
+
+  return array(
+    'glacier_textfield' => array(
+      'variables' => array(
+        'attributes' => NULL,
+        'extra_attributes' => NULL,
+      ),
+      'template' => 'templates/form/form-field--textfield',
+    ),
+  );
+}
+
 /**
  * Returns HTML for a textfield form element.
  */
 function glacier_textfield($vars) {
+  $bem_prefix_component = theme_get_setting('bem_prefix_component');
+
   $element = $vars['element'];
   $element['#attributes']['type'] = 'text';
   $element['#attributes']['autocapitalize'] = 'off';
@@ -619,27 +635,25 @@ function glacier_textfield($vars) {
     'size',
     'maxlength',
   ));
-  $bem_prefix_component = theme_get_setting('bem_prefix_component');
 
   _glacier_form_set_class($element, array($bem_prefix_component . 'form__text'));
 
-  $extra = '';
+  $extra_attributes = array();
   if ($element['#autocomplete_path'] && drupal_valid_path($element['#autocomplete_path'])) {
     drupal_add_library('system', 'drupal.autocomplete');
     $element['#attributes']['class'][] = 'form-autocomplete';
 
-    $attributes = array();
-    $attributes['type'] = 'hidden';
-    $attributes['id'] = $element['#attributes']['id'] . '-autocomplete';
-    $attributes['value'] = url($element['#autocomplete_path'], array('absolute' => TRUE));
-    $attributes['disabled'] = 'disabled';
-    $attributes['class'][] = 'autocomplete';
-    $extra = '<input' . drupal_attributes($attributes) . '>';
+    $extra_attributes['type'] = 'hidden';
+    $extra_attributes['id'] = $element['#attributes']['id'] . '-autocomplete';
+    $extra_attributes['value'] = url($element['#autocomplete_path'], array('absolute' => TRUE));
+    $extra_attributes['disabled'] = 'disabled';
+    $extra_attributes['class'][] = 'autocomplete';
   }
 
-  $output = '<input' . drupal_attributes($element['#attributes']) . '>';
-
-  return $output . $extra;
+  return theme('glacier_textfield', array(
+    'attributes' => drupal_attributes($element['#attributes']),
+    'extra_attributes' => drupal_attributes($extra_attributes),
+  ));
 }
 
 /**
