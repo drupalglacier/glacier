@@ -179,6 +179,9 @@ function glacier_form_element_label($vars) {
   // Add default label class.
   $attributes['class'][] = $bem_prefix_component . 'form__label';
 
+  // Add label position class
+  $attributes['class'][] = $bem_prefix_component . 'form__label--' . $vars['element']['#title_display'];
+
   // Style the label as class option to display inline with the element.
   if (!theme_get_setting('bem_only') && $element['#title_display'] == 'after') {
     $attributes['class'] = 'option';
