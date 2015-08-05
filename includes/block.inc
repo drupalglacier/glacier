@@ -149,6 +149,13 @@ function glacier_preprocess_block(&$vars) {
       )),
     );
 
+    $path_svg = str_replace(array('.png', '.jpg', '.jpeg', '.gif'), '.svg', $path);
+    $path_svg = str_replace('http://' . $_SERVER['HTTP_HOST'] . '/', '', $path_svg);
+    if (file_exists($path_svg)) {
+      $image['#path'] = base_path() . $path_svg;
+      $image['#attributes'] = array('onerror' => 'this.src=\'' . $path . '\'');
+    }
+
     $vars['logo'] = $image;
     $vars['site_name'] = $site_name;
     $vars['front_page'] = url();
