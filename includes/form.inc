@@ -398,7 +398,7 @@ function glacier_date_combo($vars) {
   // Define wrapper attributes.
   $wrapper_attributes = array();
   $wrapper_attributes['class'] = array('form-item');
-  $wrapper_attributes['class'][] = $bem_prefix_component . 'form--' . drupal_html_class($type);
+  $wrapper_attributes['class'][] = $bem_prefix_component . 'form__' . drupal_html_class($type);
 
   if ($element['#required']) {
     $wrapper_attributes['class'][] = 'is-required';
