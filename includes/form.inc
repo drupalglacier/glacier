@@ -148,7 +148,6 @@ function glacier_form_element($vars) {
 
     case 'none':
     case 'attribute':
-kpr($vars);
       // Output no label and no required marker, only the children.
       $output .= ' ' . $prefix . $element['#children'] . $suffix . "\n";
       break;
