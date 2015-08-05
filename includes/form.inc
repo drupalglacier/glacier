@@ -126,6 +126,14 @@ function glacier_form_element($vars) {
     $suffix = isset($element['#field_suffix']) ? ' <span class="' . $bem_prefix_component . 'form__suffix field-suffix">' . $element['#field_suffix'] . '</span>' : '';
   }
 
+  // Set title display for a date field if todate is set
+  if (isset($element['#field']) && $element['#field']['settings']['todate']) {
+    $element['#title_display'] = 'before';
+    if (empty($vars['element']['#title'])) {
+      $vars['element']['#title'] = t('from:');
+    }
+  }
+
   switch ($element['#title_display']) {
     case 'before':
     case 'invisible':
@@ -140,6 +148,7 @@ function glacier_form_element($vars) {
 
     case 'none':
     case 'attribute':
+kpr($vars);
       // Output no label and no required marker, only the children.
       $output .= ' ' . $prefix . $element['#children'] . $suffix . "\n";
       break;
@@ -372,6 +381,57 @@ function glacier_date($vars) {
   $legend = isset($element['#title']) ? '<legend class="' . $bem_prefix_component . 'form__legend">' . $element['#title'] . ' ' . $required . '</legend>' : '';
 
   return '<fieldset' . drupal_attributes($attributes) . '>' . $legend . drupal_render_children($element) . '</fieldset>';
+}
+
+/**
+ * Returns HTML for a start/end date combination on form.
+ */
+function glacier_date_combo($vars) {
+  $element = $vars['element'];
+  $field = field_info_field($element['#field_name']);
+  $instance = field_info_instance($element['#entity_type'], $element['#field_name'], $element['#bundle']);
+  $type = $element['value']['#type'];
+  $bem_only = theme_get_setting('bem_only');
+  $bem_prefix_component = theme_get_setting('bem_prefix_component');
+
+  $title = t($element['#title']) . ' ' . ($element['#delta'] > 0 ? intval($element['#delta'] + 1) : '');
+
+  // Define wrapper attributes.
+  $wrapper_attributes = array();
+  $wrapper_attributes['class'] = array('form-item');
+  $wrapper_attributes['class'][] = $bem_prefix_component . 'form--' . drupal_html_class($type);
+
+  if ($element['#required']) {
+    $wrapper_attributes['class'][] = 'is-required';
+  }
+
+  // Define fieldset attributes.
+  $fieldset_attributes = array();
+
+  if (isset($element['#id'])) {
+    $fieldset_attributes['id'] = $element['#id'];
+  }
+
+  if (!empty($element['#attributes']['class'])) {
+    $fieldset_attributes['class'] = (array) $element['#attributes']['class'];
+  }
+
+  $fieldset_attributes['class'][] = $bem_prefix_component . 'form__fieldset';
+
+  // If the element is required, a required marker is appended to the label.
+  $required = !empty($element['#required']) ? theme('form_required_marker', array('element' => $element)) : '';
+
+  // Set markup for description.
+  if ($bem_only) {
+    $description = !empty($element['#fieldset_description']) ? '<div class="' . $bem_prefix_component . 'form__description">' . $element['#fieldset_description'] . '</div>' : '';
+  }
+  else {
+    $description = !empty($element['#fieldset_description']) ? '<div class="' . $bem_prefix_component . 'form__description description">' . $element['#fieldset_description'] . '</div>' : '';
+  }
+
+  $legend = isset($element['#title']) ? '<legend class="' . $bem_prefix_component . 'form__legend">' . $title . ' ' . $required . '</legend>' : '';
+
+  return '<div' . drupal_attributes($wrapper_attributes) . '><fieldset' . drupal_attributes($fieldset_attributes) . '>' . $legend . $element['#children'] . '</fieldset>' . $description . '</div>';
 }
 
 /**
