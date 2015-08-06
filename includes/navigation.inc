@@ -119,6 +119,11 @@ function glacier_links($vars) {
         $class = array($key);
       }
 
+      // Add extra language switcher classes
+      if ($vars['theme_hook_original'] == 'links__locale_block') {
+        $class[] = $bem_prefix_component . 'language-switcher__item';
+      }
+
       $class[] = $bem_prefix_component . 'menu__item';
       $class[] = $bem_prefix_component . 'menu__item--' . $key;
       $class[] = $bem_prefix_component . 'menu__item--level1';
@@ -191,10 +196,11 @@ function glacier_links($vars) {
 function glacier_links__locale_block(&$vars) {
   $bem_prefix_component = theme_get_setting('bem_prefix_component');
 
-  $vars['attributes']['class'][0] = $bem_prefix_component . $vars['attributes']['class'][0];
+  $vars['attributes']['class'][0] = $bem_prefix_component . 'language-switcher';
   foreach ($vars['links'] as $lang => $v) {
     $vars['links'][$lang]['attributes']['class'] = array();
   }
+
   $content = glacier_links($vars);
   return $content;
 }
