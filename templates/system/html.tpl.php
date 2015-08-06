@@ -14,7 +14,7 @@
   </head>
   <body class="<?php print $classes; ?>"<?php print $body_attributes; ?>>
     <div class="c-skiplink">
-      <a href="#main" class="c-skiplink__link is-focusable"><?php print t('Skip to main content'); ?></a>
+      <a href="#main" class="c-skiplink__link element-invisible is-focusable"><?php print t('Skip to main content'); ?></a>
     </div>
     <?php print $page_top; ?>
     <?php print $page; ?>
