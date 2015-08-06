@@ -60,9 +60,13 @@ function glacier_preprocess_block(&$vars) {
       $vars['attributes_array']['role'] = 'search';
       break;
 
+    case 'locale':
+      $vars['classes_array'][] = $bem_prefix_component . 'menu';
+      $vars['attributes_array']['role'] = 'complementary';
+      break;
+
     case 'help':
     case 'aggregator':
-    case 'locale':
     case 'poll':
     case 'profile':
       $vars['attributes_array']['role'] = 'complementary';

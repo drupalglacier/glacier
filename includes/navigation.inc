@@ -28,6 +28,7 @@ function glacier_link($vars) {
  */
 function glacier_preprocess_links(&$vars) {
   $bem_only = theme_get_setting('bem_only');
+  $bem_prefix_component = theme_get_setting('bem_prefix_component');
 
   // Add theme hook suggestion based on classes.
   if (isset($vars['attributes']['class'])) {
@@ -57,12 +58,16 @@ function glacier_preprocess_links(&$vars) {
         'links',
       )));
     }
+    else {
+      // Add default class.
+      $vars['attributes']['class'][] = 'nav';
+    }
 
-    // Add default class.
-    $vars['attributes']['class'][] = 'nav';
+    $vars['attributes']['class'][] = $bem_prefix_component . 'menu__list';
+    $vars['attributes']['class'][] = $bem_prefix_component . 'menu__list--level1';
 
     // Modify classes to follow SMACSS naming convention.
-    $vars['attributes']['class'] = preg_replace('/^inline$/', 'nav--inline', $vars['attributes']['class']);
+    $vars['attributes']['class'] = preg_replace('/^inline$/', $bem_prefix_component . 'menu--inline', $vars['attributes']['class']);
   }
 }
 
@@ -74,8 +79,8 @@ function glacier_links($vars) {
   $attributes = $vars['attributes'];
   $heading = $vars['heading'];
   $bem_only = theme_get_setting('bem_only');
+  $bem_prefix_component = theme_get_setting('bem_prefix_component');
   $show_first_last = theme_get_setting('show_first_last');
-  global $language_url;
   $output = '';
 
   if (count($links) > 0) {
@@ -108,13 +113,15 @@ function glacier_links($vars) {
     $i = 1;
 
     foreach ($links as $key => $link) {
+      $class = array();
       // Add default core classes if wanted.
       if (!$bem_only) {
         $class = array($key);
       }
 
-      $class[] = 'nav__item';
-      $class[] = 'nav__item--' . $key;
+      $class[] = $bem_prefix_component . 'menu__item';
+      $class[] = $bem_prefix_component . 'menu__item--' . $key;
+      $class[] = $bem_prefix_component . 'menu__item--level1';
 
       // Make sure link attributes array exists.
       if (!isset($link) || !is_array($link)) {
@@ -132,11 +139,11 @@ function glacier_links($vars) {
       else {
         $link['attributes']['class'] = array();
       }
-      $link['attributes']['class'][] = 'nav__link';
+      $link['attributes']['class'][] = $bem_prefix_component . 'menu__link';
 
       // Add first, last, and active classes to the list of links.
       if ($show_first_last && $i == 1) {
-        $class[] = 'nav__item--first';
+        $class[] = $bem_prefix_component . 'menu__item--first';
 
         // Add default core class if wanted.
         if (!$bem_only) {
@@ -144,20 +151,11 @@ function glacier_links($vars) {
         }
       }
       if ($show_first_last && $i == $num_links) {
-        $class[] = 'nav__item--last';
+        $class[] = $bem_prefix_component . 'menu__item--last';
 
         // Add default core class if wanted.
         if (!$bem_only) {
           $class[] = 'last';
-        }
-      }
-      if (isset($link['href']) && ($link['href'] == $_GET['q'] || ($link['href'] == '<front>' && drupal_is_front_page()))
-          && (empty($link['language']) || $link['language']->language == $language_url->language)) {
-        $link['attributes']['class'][] = 'is-active';
-
-        // Add default core class if wanted.
-        if (!$bem_only) {
-          $link['attributes']['class'][] = 'active';
         }
       }
 
@@ -188,6 +186,17 @@ function glacier_links($vars) {
   }
 
   return $output;
+}
+
+function glacier_links__locale_block(&$vars) {
+  $bem_prefix_component = theme_get_setting('bem_prefix_component');
+
+  $vars['attributes']['class'][0] = $bem_prefix_component . $vars['attributes']['class'][0];
+  foreach ($vars['links'] as $lang => $v) {
+    $vars['links'][$lang]['attributes']['class'] = array();
+  }
+  $content = glacier_links($vars);
+  return $content;
 }
 
 /**
@@ -350,8 +359,8 @@ function glacier_preprocess_menu_link(&$vars) {
   $link_classes[] = $bem_prefix_component . 'menu__link--level' . $element['#original_link']['depth'];
 
   // Uncomment if you want to add mlid classes.
-  // $item_classes[] = 'nav__item--mlid-' . $mlid;
-  // $link_classes[] = 'nav__link--mlid-' . $mlid;
+  // $item_classes[] = 'menu__item--mlid-' . $mlid;
+  // $link_classes[] = 'menu__link--mlid-' . $mlid;
 }
 
 /**
@@ -438,6 +447,7 @@ function glacier_menu_local_task($vars) {
   $link = $vars['element']['#link'];
   $link_text = $link['title'];
   $link_classes = &$link['localized_options']['attributes']['class'];
+  $bem_prefix_component = theme_get_setting('bem_prefix_component');
 
   if (!empty($vars['element']['#active'])) {
     // Add text to indicate active tab for non-visual users.
@@ -454,10 +464,10 @@ function glacier_menu_local_task($vars) {
 
   // Update link classes.
   if (empty($link_classes)) {
-    $link_classes[] = 'nav__link';
+    $link_classes[] = $bem_prefix_component . 'menu__link';
   }
   else {
-    array_unshift($link_classes, 'nav__link');
+    array_unshift($link_classes, $bem_prefix_component . 'menu__link');
 
     if (theme_get_setting('bem_only')) {
       $link_classes = preg_replace('/^active$/', 'is-active', $link_classes);
@@ -467,7 +477,7 @@ function glacier_menu_local_task($vars) {
     }
   }
 
-  return '<li class="nav__item' . (!empty($vars['element']['#active']) ? ' is-active' : '') . '">' . l($link_text, $link['href'], $link['localized_options']) . "</li>\n";
+  return '<li class="' . $bem_prefix_component . 'menu__item' . (!empty($vars['element']['#active']) ? ' is-active' : '') . '">' . l($link_text, $link['href'], $link['localized_options']) . "</li>\n";
 }
 
 /**
