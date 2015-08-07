@@ -186,7 +186,7 @@ function glacier_preprocess_block(&$vars) {
 
   // Markup for blockify page title block.
   elseif ($delta == 'blockify-page-title') {
-    $vars['classes_array'][0] = 'c-page-title';
+    $vars['classes_array'][0] = $bem_prefix_component . 'page-title';
     $vars['theme_hook_suggestions'][] = 'block__page_title';
 
     $vars['title'] = drupal_get_title();
