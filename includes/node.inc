@@ -78,5 +78,5 @@ function glacier_preprocess_node(&$vars) {
 
   // Add theme hook suggestions based on view mode.
   $vars['theme_hook_suggestions'][] = 'node__' . $vars['view_mode'];
-  $vars['theme_hook_suggestions'][] = 'node__' . $vars['view_mode'] . '__' . $vars['type'];
+  $vars['theme_hook_suggestions'][] = 'node__' . $vars['type']  . '__' . $vars['view_mode'];
 }
