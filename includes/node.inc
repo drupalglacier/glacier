@@ -9,6 +9,7 @@
  */
 function glacier_preprocess_node(&$vars) {
   $bem_only = theme_get_setting('bem_only');
+  $bem_prefix_component = theme_get_setting('bem_prefix_component');
   $node_type_class = drupal_html_class($vars['node']->type);
   $view_mode_class = drupal_html_class($vars['view_mode']);
 
@@ -24,10 +25,10 @@ function glacier_preprocess_node(&$vars) {
   }
 
   // Add default node attributes.
-  $vars['classes_array'][] = 'node--' . $node_type_class;
+  $vars['classes_array'][] = $bem_prefix_component . 'node--' . $node_type_class;
   $vars['attributes_array']['role'][] = 'article';
-  $vars['title_attributes_array']['class'][] = 'node__title';
-  $vars['content_attributes_array']['class'][] = 'node__content';
+  $vars['title_attributes_array']['class'][] = $bem_prefix_component . 'node__title';
+  $vars['content_attributes_array']['class'][] = $bem_prefix_component . 'node__content';
 
   // Add default core attributes if wanted.
   if (!$bem_only) {
@@ -37,7 +38,7 @@ function glacier_preprocess_node(&$vars) {
 
   // Change attributes for view modes.
   if (isset($vars['view_mode'])) {
-    $vars['classes_array'][] = 'node--' . $view_mode_class;
+    $vars['classes_array'][] = $bem_prefix_component . 'node--' . $view_mode_class;
   }
 
   // Add promoted class.
@@ -68,7 +69,7 @@ function glacier_preprocess_node(&$vars) {
   // Create unpublished variable and add unpublished class.
   $vars['unpublished'] = '';
   if (!$vars['status']) {
-    $vars['unpublished'] = '<div class="node__unpublished">' . t('Unpublished') . '</div>';
+    $vars['unpublished'] = '<div class="' . $bem_prefix_component . 'node__unpublished">' . t('Unpublished') . '</div>';
     $vars['classes_array'][] = 'is-unpublished';
   }
 
