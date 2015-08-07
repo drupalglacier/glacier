@@ -9,6 +9,7 @@
  */
 function glacier_preprocess_field(&$vars) {
   $bem_only = theme_get_setting('bem_only');
+  $bem_prefix_component = theme_get_setting('bem_prefix_component');
 
   // Remove some default field classes.
   if ($bem_only) {
@@ -22,10 +23,10 @@ function glacier_preprocess_field(&$vars) {
   }
 
   // Add new default field classes.
-  $vars['classes_array'][] = 'field--' . str_replace('field-', '', $vars['field_name_css']);
+  $vars['classes_array'][] = $bem_prefix_component . 'field--' . str_replace('field-', '', $vars['field_name_css']);
 
   // Uncomment the following if you want a class for the field type.
-  //$vars['classes_array'][] = 'field--' . $vars['field_type_css'];
+  //$vars['classes_array'][] = $bem_prefix_component . 'field--' . $vars['field_type_css'];
 }
 
 /**
@@ -33,6 +34,7 @@ function glacier_preprocess_field(&$vars) {
  */
 function glacier_field__minimal($vars) {
   $bem_only = theme_get_setting('bem_only');
+  $bem_prefix_component = theme_get_setting('bem_prefix_component');
   $output = '';
   $config = $vars['ds-config'];
   $classes = isset($config['classes']) ? ' ' . $config['classes'] : '';
@@ -41,7 +43,7 @@ function glacier_field__minimal($vars) {
 
   // Add field label class.
   if ($vars['element']['#label_display'] == 'inline') {
-    $field_label_class = ' field__label--inline';
+    $field_label_class = ' ' . $bem_prefix_component . 'field__label--inline';
 
     if (!$bem_only) {
       $field_label_class .= ' label-inline';
@@ -57,11 +59,11 @@ function glacier_field__minimal($vars) {
   }
 
   // Add a simple wrapper.
-  $output .= '<div class="field field--' . str_replace('field-', '', $field_name_class) . $classes . '">';
+  $output .= '<div class="field ' . $bem_prefix_component . 'field--' . str_replace('field-', '', $field_name_class) . $classes . '">';
 
   // Render the label.
   if (!$vars['label_hidden']) {
-    $output .= '<div class="field__label' . $field_label_class . '">' . $vars['label'];
+    $output .= '<div class="' . $bem_prefix_component . 'field__label' . $field_label_class . '">' . $vars['label'];
     if (!isset($config['lb-col'])) {
       $output .= ':&nbsp;';
     }
@@ -82,6 +84,7 @@ function glacier_field__minimal($vars) {
  */
 function glacier_field__expert($vars) {
   $bem_only = theme_get_setting('bem_only');
+  $bem_prefix_component = theme_get_setting('bem_prefix_component');
   $output = '';
 
   $config = $vars['ds-config'];
@@ -89,7 +92,7 @@ function glacier_field__expert($vars) {
   // Render the label if it's not hidden.
   if (!$vars['label_hidden']) {
     $label_wrapper = isset($config['lb-el']) ? $config['lb-el'] : 'div';
-    $class = array('field__label field__label--' . $vars['element']['#label_display']);
+    $class = array($bem_prefix_component . 'field__label ' . $bem_prefix_component . 'field__label--' . $vars['element']['#label_display']);
 
     // Add original label class if wanted.
     if (!$bem_only) {
