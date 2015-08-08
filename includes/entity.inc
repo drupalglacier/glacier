@@ -31,7 +31,7 @@ function glacier_preprocess_entity(&$vars, $hook) {
 
   $function = 'glacier_' . $vars['entity_type'] . '_bundle_class_alter';
   if (function_exists($function)) {
-    $bundle_class= $function($vars, $hook);
+    $bundle_class = $function($vars, $hook);
   }
 
   $function = 'glacier_' . $vars['entity_type'] . '_view_mode_class_alter';
@@ -49,6 +49,7 @@ function glacier_preprocess_entity(&$vars, $hook) {
   $vars['classes_array'][] = $bem_prefix_component . $type_class;
   $vars['classes_array'][] = $bem_prefix_component . $type_class . '--' . $bundle_class;
   $vars['classes_array'][] = $bem_prefix_component . $type_class . '--' . $view_mode_class;
+  $vars['classes_array'][] = $bem_prefix_component . $bundle_class;
   $vars['title_attributes_array']['class'][] = $bem_prefix_component . $type_class . '__title';
   $vars['content_attributes_array']['class'][] = $bem_prefix_component . $type_class . '__content';
 }
