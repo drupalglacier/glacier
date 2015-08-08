@@ -21,7 +21,7 @@ hide($content['links']);
   <?php if ($display_submitted): ?>
     <footer>
       <?php print $user_picture; ?>
-      <p class="node__submitted"><?php print $submitted; ?></p>
+      <p class="<?php print $bem_prefix_component; ?>node__submitted"><?php print $submitted; ?></p>
     </footer>
   <?php endif; ?>
 

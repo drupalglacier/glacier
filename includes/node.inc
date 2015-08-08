@@ -13,6 +13,9 @@ function glacier_preprocess_node(&$vars) {
   $node_type_class = drupal_html_class($vars['node']->type);
   $view_mode_class = drupal_html_class($vars['view_mode']);
 
+  // Add BEM prefix component variable
+  $vars['bem_prefix_component'] = $bem_prefix_component;
+
   // Remove some default node classes.
   if ($bem_only) {
     $vars['classes_array'] = array_values(array_diff($vars['classes_array'], array(
