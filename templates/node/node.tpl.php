@@ -6,7 +6,7 @@
 hide($content['comments']);
 hide($content['links']);
 ?>
-<article<?php print $attributes; ?>>
+<article role="article"<?php print $attributes; ?>>
   <?php print render($title_prefix); ?>
 
   <?php if (!$page): ?>

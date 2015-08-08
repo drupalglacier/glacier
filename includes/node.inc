@@ -29,7 +29,6 @@ function glacier_preprocess_node(&$vars) {
 
   // Add default node attributes.
   $vars['classes_array'][] = $bem_prefix_component . 'node--' . $node_type_class;
-  $vars['attributes_array']['role'][] = 'article';
   $vars['title_attributes_array']['class'][] = $bem_prefix_component . 'node__title';
   $vars['content_attributes_array']['class'][] = $bem_prefix_component . 'node__content';
 
