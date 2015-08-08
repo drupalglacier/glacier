@@ -9,7 +9,7 @@ hide($content['links']);
 <article role="article"<?php print $attributes; ?>>
   <?php print render($title_prefix); ?>
 
-  <?php if (!$page): ?>
+  <?php if (!$page && !empty($title)): ?>
     <h2<?php print $title_attributes; ?>>
       <a href="<?php print $node_url; ?>" rel="bookmark"><?php print $title; ?></a>
     </h2>
