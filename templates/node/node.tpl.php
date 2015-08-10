@@ -3,29 +3,59 @@
  * @file
  * Theme implementation to display a single node.
  */
+
+$classes = glacier_classes(
+  array(
+    // $prefix_component . 'node',
+    // $prefix_component . 'node--' . $node_type_class,
+    // $prefix_component . 'node--' . $view_mode_class,
+    $prefix_component . $node_type_class,
+  ),
+  $default_classes,
+  $state_classes
+);
+
+$title_classes = glacier_classes(
+  array(
+    // $prefix_component . 'node__title',
+    $prefix_component . $node_type_class . '__title',
+  ),
+  $default_title_classes
+);
+
+$content_classes = glacier_classes(
+  array(
+    // $prefix_component . 'node__content',
+    $prefix_component . $node_type_class . '__content',
+  ),
+  $default_content_classes
+);
+
 hide($content['comments']);
 hide($content['links']);
-?>
-<article role="article"<?php print $attributes; ?>>
-  <?php print render($title_prefix); ?>
 
+?>
+<article class="<?php print $classes; ?>" role="article"<?php print $attributes; ?>>
+  <?php print render($title_prefix); ?>
   <?php if (!$page && !empty($title)): ?>
-    <h2<?php print $title_attributes; ?>>
+    <h2 class="<?php print $title_classes; ?>"<?php print $title_attributes; ?>>
       <a href="<?php print $node_url; ?>" rel="bookmark"><?php print $title; ?></a>
     </h2>
   <?php endif; ?>
-
   <?php print render($title_suffix); ?>
-  <?php print $unpublished; ?>
+
+  <?php if (!$status): ?>
+    <div class="<?php print $prefix_component . $node_type_class; ?>__unpublished"><?php print t('Unpublished'); ?></div>
+  <?php endif; ?>
 
   <?php if ($display_submitted): ?>
-    <footer>
+    <footer class="<?php print $prefix_component . $node_type_class; ?>__submitted">
       <?php print $user_picture; ?>
-      <p class="<?php print $bem_prefix_component; ?>node__submitted"><?php print $submitted; ?></p>
+      <p><?php print $submitted; ?></p>
     </footer>
   <?php endif; ?>
 
-  <div<?php print $content_attributes; ?>>
+  <div class="<?php print $content_classes; ?>"<?php print $content_attributes; ?>>
     <?php print render($content); ?>
   </div>
 

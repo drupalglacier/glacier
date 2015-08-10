@@ -8,50 +8,53 @@
  * Implements hook_preprocess_node().
  */
 function glacier_preprocess_node(&$vars) {
-  $bem_only = theme_get_setting('bem_only');
-  $bem_prefix_component = theme_get_setting('bem_prefix_component');
-  $node_type_class = drupal_html_class($vars['node']->type);
-  $view_mode_class = drupal_html_class($vars['view_mode']);
+  // Add setting variables.
+  $vars['classes_default'] = theme_get_setting('classes_default');
+  $vars['prefix_component'] = theme_get_setting('prefix_component');
 
-  // Add BEM prefix component variable
-  $vars['bem_prefix_component'] = $bem_prefix_component;
+  // Add node type and view mode classes.
+  $vars['node_type_class'] = drupal_html_class($vars['node']->type);
+  $vars['view_mode_class'] = drupal_html_class($vars['view_mode']);
 
   // Remove some default node classes.
-  if ($bem_only) {
+  if (!$vars['classes_default']) {
     $vars['classes_array'] = array_values(array_diff($vars['classes_array'], array(
-      'node-' . $node_type_class,
-      'node-' . $view_mode_class,
+      'node',
+      'node-' . $vars['node_type_class'],
+      'node-' . $vars['view_mode_class'],
       'node-promoted',
       'node-sticky',
       'node-unpublished',
     )));
   }
 
-  // Add default node attributes.
-  $vars['classes_array'][] = $bem_prefix_component . 'node--' . $node_type_class;
-  $vars['title_attributes_array']['class'][] = $bem_prefix_component . 'node__title';
-  $vars['content_attributes_array']['class'][] = $bem_prefix_component . 'node__content';
+  // Add default classes.
+  $vars['default_classes'] = $vars['classes_array'];
 
-  // Add default core attributes if wanted.
-  if (!$bem_only) {
-    $vars['title_attributes_array']['class'][] = 'title node-title';
-    $vars['content_attributes_array']['class'][] = 'content';
-  }
-
-  // Change attributes for view modes.
-  if (isset($vars['view_mode'])) {
-    $vars['classes_array'][] = $bem_prefix_component . 'node--' . $view_mode_class;
-  }
-
-  // Add promoted class.
+  // Add state classes.
+  $vars['state_classes'] = array();
   if ($vars['promote']) {
-    $vars['classes_array'][] = 'is-promoted';
+    // Add promoted class.
+    $vars['state_classes']['promoted'] = 'is-promoted';
   }
-
-  // Add sticky class.
   if ($vars['sticky']) {
-    $vars['classes_array'][] = 'is-sticky';
+    // Add sticky class.
+    $vars['state_classes']['sticky'] = 'is-sticky';
   }
+  if (!$vars['status']) {
+    // Add unpublished class.
+    $vars['state_classes']['unpublished'] = 'is-unpublished';
+  }
+  
+  // Add defaul title classes.
+  $vars['title_attributes_array']['class'] = isset($vars['title_attributes_array']['class']) ? $vars['title_attributes_array']['class'] : array();
+  $vars['default_title_classes'] = $vars['title_attributes_array']['class'];
+  unset($vars['title_attributes_array']['class']);
+
+  // Add defaul content classes.
+  $vars['content_attributes_array']['class'] = isset($vars['content_attributes_array']['class']) ? $vars['content_attributes_array']['class'] : array();
+  $vars['default_content_classes'] = $vars['content_attributes_array']['class'];
+  unset($vars['content_attributes_array']['class']);
 
   // Create submitted info using time element.
   $vars['datetime'] = format_date($vars['created'], 'custom', 'c');
@@ -67,16 +70,6 @@ function glacier_preprocess_node(&$vars) {
   else {
     $vars['submitted'] = '';
   }
-
-  // Create unpublished variable and add unpublished class.
-  $vars['unpublished'] = '';
-  if (!$vars['status']) {
-    $vars['unpublished'] = '<div class="' . $bem_prefix_component . 'node__unpublished">' . t('Unpublished') . '</div>';
-    $vars['classes_array'][] = 'is-unpublished';
-  }
-
-  // Add classes array to attributes array.
-  $vars['attributes_array']['class'] = $vars['classes_array'];
 
   // Add theme hook suggestions based on view mode.
   $vars['theme_hook_suggestions'][] = 'node__' . $vars['view_mode'];
