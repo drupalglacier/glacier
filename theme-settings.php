@@ -58,53 +58,61 @@ function glacier_form_system_theme_settings_alter(&$form, &$form_state, $form_id
 
   $form['options_settings'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Theme Specific Settings'),
+    '#title' => t('Theme specific settings'),
     '#collapsible' => FALSE,
     '#collapsed' => FALSE,
   );
-  $form['options_settings']['bem_only'] = array(
+  $form['options_settings']['classes'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Enable or disable the output of core classes'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+  );
+  $form['options_settings']['classes']['classes_default'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Output only SMACSS classes.'),
-    '#description'   => t('Remove core classes that don\'t follow the Drupal 8 SMACSS naming convention. Unchecking this will add a TON of classes everywhere, but it might fix problems caused by modules depending on those classes.'),
-    '#default_value' => theme_get_setting('bem_only'),
+    '#title' => t('Output Drupal default classes.'),
+    '#description'   => t('Output core classes. Checking this will add a TON of classes everywhere, but it might fix problems caused by modules depending on those classes.'),
+    '#default_value' => theme_get_setting('classes_default'),
   );
-  $form['options_settings']['bem_block_classes'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Output SMACSS styled block classes.'),
-    '#description'   => t('Output default block classes like \'block block--system\'.'),
-    '#default_value' => theme_get_setting('bem_block_classes'),
-  );
-  $form['options_settings']['bem_prefix_component'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Component class prefix'),
-    '#default_value' => theme_get_setting('bem_prefix_component'),
-  );
-  $form['options_settings']['bem_prefix_object'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Object class prefix'),
-    '#default_value' => theme_get_setting('bem_prefix_object'),
-  );
-  $form['options_settings']['bem_prefix_utility'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Utility class prefix'),
-    '#default_value' => theme_get_setting('bem_prefix_utility'),
-  );
-  $form['options_settings']['show_first_last'] = array(
+  $form['options_settings']['classes']['classes_first_last'] = array(
     '#type' => 'checkbox',
     '#title' => t('Add first/last classes to menu items.'),
-    '#default_value' => theme_get_setting('show_first_last'),
+    '#default_value' => theme_get_setting('classes_first_last'),
   );
-  $form['options_settings']['show_collapsed_expanded'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Add collapsed/expanded classes to menu items.'),
-    '#default_value' => theme_get_setting('show_collapsed_expanded'),
+
+  $form['options_settings']['prefix'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Set prefixes for different types of classes'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
   );
-  $form['options_settings']['js_enhancement_console'] = array(
+  $form['options_settings']['prefix']['prefix_component'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Component class prefix'),
+    '#default_value' => theme_get_setting('prefix_component'),
+  );
+  $form['options_settings']['prefix']['prefix_object'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Object class prefix'),
+    '#default_value' => theme_get_setting('prefix_object'),
+  );
+  $form['options_settings']['prefix']['prefix_utility'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Utility class prefix'),
+    '#default_value' => theme_get_setting('prefix_utility'),
+  );
+  $form['options_settings']['js_enhancement'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('JS enhancements'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+  );
+  $form['options_settings']['js_enhancement']['js_enhancement_console'] = array(
     '#type' => 'checkbox',
     '#title' => t('Avoid \'console\' errors in browsers that lack a console.'),
     '#default_value' => theme_get_setting('js_enhancement_console'),
   );
-  $form['options_settings']['js_enhancement_skiplink'] = array(
+  $form['options_settings']['js_enhancement']['js_enhancement_skiplink'] = array(
     '#type' => 'checkbox',
     '#title' => t('Normalize skiplink behaviour for all mandatory browsers.'),
     '#default_value' => theme_get_setting('js_enhancement_skiplink'),

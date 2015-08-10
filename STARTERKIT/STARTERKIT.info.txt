@@ -45,15 +45,17 @@ scripts[] = js/script.js
 ; ========================================
 
 settings[hide_recommended_modules] = 1
-settings[bem_only]                 = 1
-settings[bem_block_classes]        = 0
-settings[bem_prefix_component]     = 'c-'
-settings[bem_prefix_object]        = 'o-'
-settings[bem_prefix_utility]       = 'u-'
-settings[show_first_last]          = 0
-settings[show_collapsed_expanded]  = 1
+
 settings[js_enhancement_console]   = 1
 settings[js_enhancement_skiplink]  = 1
+
+settings[classes_default]      = 0
+settings[classes_first_last]   = 0
+
+settings[prefix_component]     = 'c-'
+settings[prefix_object]        = 'o-'
+settings[prefix_utility]       = 'u-'
+
 settings[magic_css_excludes]       = ':all
 ~sites/all/themes/*'
 settings[magic_footer_js]          = 0
