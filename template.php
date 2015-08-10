@@ -15,6 +15,7 @@ require_once dirname(__FILE__) . '/includes/field.inc';
 require_once dirname(__FILE__) . '/includes/field-collection.inc';
 require_once dirname(__FILE__) . '/includes/file.inc';
 require_once dirname(__FILE__) . '/includes/form.inc';
+require_once dirname(__FILE__) . '/includes/glacier.inc';
 require_once dirname(__FILE__) . '/includes/html.inc';
 require_once dirname(__FILE__) . '/includes/lists.inc';
 require_once dirname(__FILE__) . '/includes/messages.inc';
