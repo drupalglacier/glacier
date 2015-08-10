@@ -8,167 +8,52 @@
  * Implements hook_preprocess_field().
  */
 function glacier_preprocess_field(&$vars) {
-  $bem_only = theme_get_setting('bem_only');
-  $bem_prefix_component = theme_get_setting('bem_prefix_component');
+  // Add setting variables.
+  $vars['classes_default'] = theme_get_setting('classes_default');
+  $vars['prefix_component'] = theme_get_setting('prefix_component');
+  $vars['prefix_utility'] = theme_get_setting('prefix_utility');
 
   // Remove some default field classes.
-  if ($bem_only) {
+  if (!$vars['classes_default']) {
     $vars['classes_array'] = array_values(array_diff($vars['classes_array'], array(
+      $vars['field_name_css'],
       'field-name-' . $vars['field_name_css'],
       'field-type-' . $vars['field_type_css'],
       'field-label-above',
       'field-label-hidden',
       'field-label-inline',
+      'inline',
     )));
   }
 
-  // Add new default field classes.
-  $vars['classes_array'][] = $bem_prefix_component . 'field--' . str_replace('field-', '', $vars['field_name_css']);
+  // Add bundle class variable.
+  $bundle_name = preg_replace('/^field_/', '', $vars['element']['#bundle']); // Remove 'field_' prefix from field collection bundles.
+  $vars['bundle_class'] = drupal_html_class($bundle_name);
 
-  // Uncomment the following if you want a class for the field type.
-  //$vars['classes_array'][] = $bem_prefix_component . 'field--' . $vars['field_type_css'];
-}
+  // Add label display variable.
+  $vars['label_display'] = $vars['element']['#label_display'];
 
-/**
- * Returns HTML for the Display Suite minimal field style.
- */
-function glacier_field__minimal($vars) {
-  $bem_only = theme_get_setting('bem_only');
-  $bem_prefix_component = theme_get_setting('bem_prefix_component');
-  $output = '';
-  $config = $vars['ds-config'];
-  $classes = isset($config['classes']) ? ' ' . $config['classes'] : '';
-  $field_name_class = drupal_html_class($vars['element']['#field_name']);
-  $field_label_class = '';
-
-  // Add field label class.
-  if ($vars['element']['#label_display'] == 'inline') {
-    $field_label_class = ' ' . $bem_prefix_component . 'field__label--inline';
-
-    if (!$bem_only) {
-      $field_label_class .= ' label-inline';
-    }
-  }
-  elseif (!$bem_only) {
-    $field_label_class .= ' label-above';
+  // Add wrapper hidden variable.
+  $vars['wrapper_hidden'] = FALSE;
+  if ($vars['label_hidden']) {
+    $vars['wrapper_hidden'] = TRUE;
   }
 
-  // Add default field class if wanted.
-  if (!$bem_only) {
-    $classes .= ' field-name-' . $field_name_class;
+  // Remove 'field-' prefix from field name css.
+  $vars['field_name_css'] = preg_replace('/^field-/', '', $vars['field_name_css']);
+
+  // Add default classes.
+  $vars['default_classes'] = $vars['classes_array'];
+
+  // Add default field label classes.
+  $vars['default_label_classes'] = array();
+  if ($vars['classes_default']) {
+    $vars['default_label_classes'][] = 'field-label';
   }
 
-  // Add a simple wrapper.
-  $output .= '<div class="field ' . $bem_prefix_component . 'field--' . str_replace('field-', '', $field_name_class) . $classes . '">';
-
-  // Render the label.
-  if (!$vars['label_hidden']) {
-    $output .= '<div class="' . $bem_prefix_component . 'field__label' . $field_label_class . '">' . $vars['label'];
-    if (!isset($config['lb-col'])) {
-      $output .= ':&nbsp;';
-    }
-    $output .= '</div>';
+  // Add default field item classes.
+  $vars['default_item_classes'] = array();
+  if ($vars['classes_default']) {
+    $vars['default_label_classes'][] = 'field-item';
   }
-
-  // Render the items.
-  foreach ($vars['items'] as $delta => $item) {
-    $output .= drupal_render($item);
-  }
-  $output .= '</div>';
-
-  return $output;
-}
-
-/**
- * Returns HTML for the Display Suite expert field style.
- */
-function glacier_field__expert($vars) {
-  $bem_only = theme_get_setting('bem_only');
-  $bem_prefix_component = theme_get_setting('bem_prefix_component');
-  $output = '';
-
-  $config = $vars['ds-config'];
-
-  // Render the label if it's not hidden.
-  if (!$vars['label_hidden']) {
-    $label_wrapper = isset($config['lb-el']) ? $config['lb-el'] : 'div';
-    $class = array($bem_prefix_component . 'field__label ' . $bem_prefix_component . 'field__label--' . $vars['element']['#label_display']);
-
-    // Add original label class if wanted.
-    if (!$bem_only) {
-      $class[] = 'label-' . $vars['element']['#label_display'];
-    }
-
-    if (!empty($config['lb-cl'])) $class[] = $config['lb-cl'];
-    $class = !empty($class) ? ' class="' . implode(' ', $class) . '"' : '';
-    $attributes = array();
-    if (!empty($config['lb-at'])) $attributes[] = $config['lb-at'];
-    if (!empty($config['lb-def-at'])) $attributes[] = $vars['title_attributes'];
-    $attributes = (!empty($attributes)) ? ' ' . implode(' ', $attributes) : '';
-    $output .= '<' . $label_wrapper . $class . $attributes . '>' . $vars['label'];
-    if (!isset($config['lb-col'])) $output .= ':&nbsp;';
-    $output .= '</' . $label_wrapper . '>';
-  }
-
-  // Field items wrapper
-  if (isset($config['fis'])) {
-    $class = (!empty($config['fis-cl'])) ? ' class="' . $config['fis-cl'] . '"' : '';
-    $attributes = array();
-    if (!empty($config['fis-at'])) $attributes[] = $config['fis-at'];
-    if (!empty($config['fis-def-at'])) $attributes[] = $vars['content_attributes'];
-    $attributes = (!empty($attributes)) ? ' ' . implode(' ', $attributes) : '';
-    $output .= '<' . $config['fis-el'] . $class . $attributes . '>';
-  }
-
-  // Render items.
-  foreach ($vars['items'] as $delta => $item) {
-    // Field item wrapper.
-    if (isset($config['fi'])) {
-      $class = array();
-      if (!empty($config['fi-odd-even'])) {
-        $class[] = $delta % 2 ? 'odd' : 'even';
-      }
-      if (!empty($config['fi-cl'])) {
-        $class[] = $config['fi-cl'];
-      }
-      $class = !empty($class) ? ' class="'. implode(' ', $class)  .'"' : '';
-      $attributes = array();
-      if (!empty($config['fi-at'])) {
-        $attributes[] = token_replace($config['fi-at'], array($vars['element']['#entity_type'] => $vars['element']['#object']), array('clear' => TRUE));
-      }
-      if (!empty($config['fi-def-at'])) {
-        $attributes[] = $vars['item_attributes'][$delta];
-      }
-      $attributes = (!empty($attributes)) ? ' ' . implode(' ', $attributes) : '';
-      $output .= '<' . $config['fi-el'] . $class . $attributes .'>';
-    }
-
-    // Render field content.
-    $output .= drupal_render($item);
-
-    // Closing field item wrapper.
-    if (isset($config['fi'])) {
-      $output .= '</' . $config['fi-el'] . '>';
-    }
-  }
-
-  // Closing field items wrapper.
-  if (isset($config['fis'])) {
-    $output .= '</' . $config['fis-el'] . '>';
-  }
-
-  // Outer wrapper.
-  if (isset($config['ow'])) {
-    $class = array();
-    if (!empty($config['ow-cl'])) $class[] = $config['ow-cl'];
-    if (!empty($config['ow-def-cl'])) $class[] = $vars['classes'];
-    $class = (!empty($class)) ? ' class="' . implode(' ', $class) . '"' : '';
-    $attributes = array();
-    if (!empty($config['ow-at'])) $attributes[] = $config['ow-at'];
-    if (!empty($config['ow-def-at'])) $attributes[] = $vars['attributes'];
-    $attributes = (!empty($attributes)) ? ' ' . implode(' ', $attributes) : '';
-    $output = '<' . $config['ow-el'] . $class . $attributes . '>' . $output . '</' . $config['ow-el'] . '>';
-  }
-
-  return $output;
 }
