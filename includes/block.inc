@@ -98,7 +98,7 @@ function glacier_preprocess_block(&$vars) {
   }
 
   // Remove some default block classes.
-  if ($bem_only) {
+  if (!$classes_default) {
     $vars['classes_array'] = array_values(array_diff($vars['classes_array'], array(
       'block',
       'block-' . $module_class,
