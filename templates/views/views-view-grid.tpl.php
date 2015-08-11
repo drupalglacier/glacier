@@ -12,7 +12,7 @@
   <?php foreach ($rows as $row_number => $columns): ?>
     <?php foreach ($columns as $column_number => $item): ?>
       <?php if (!empty($item)): ?>
-        <div class="<?php print $bem_prefix_object; ?>grid__item<?php print ($column_classes[$row_number][$column_number]) ? ' ' . $column_classes[$row_number][$column_number] : '' ?>">
+        <div class="o-grid__item<?php print ($column_classes[$row_number][$column_number]) ? ' ' . $column_classes[$row_number][$column_number] : '' ?>">
           <?php print $item; ?>
         </div>
       <?php endif; ?>

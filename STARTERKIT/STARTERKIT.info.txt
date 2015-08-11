@@ -52,10 +52,6 @@ settings[js_enhancement_skiplink]  = 1
 settings[classes_default]      = 0
 settings[classes_first_last]   = 0
 
-settings[prefix_component]     = 'c-'
-settings[prefix_object]        = 'o-'
-settings[prefix_utility]       = 'u-'
-
 settings[magic_css_excludes]       = ':all
 ~sites/all/themes/*'
 settings[magic_footer_js]          = 0

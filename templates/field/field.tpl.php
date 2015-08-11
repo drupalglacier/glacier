@@ -6,28 +6,28 @@
 
 $classes = glacier_classes(
   array(
-    // $prefix_component . 'field',
-    // $prefix_component . 'field--' . $field_name_css,
-    // $prefix_component . 'field--' . $field_type_css,
-    $prefix_component . $bundle_class . '__' . $field_name_css,
+    // 'c-field',
+    // 'c-field--' . $field_name_css,
+    // 'c-field--' . $field_type_css,
+    'c-' . $bundle_class . '__' . $field_name_css,
   ),
   $default_classes
 );
 
 $label_classes = glacier_classes(
   array(
-    // $prefix_component . 'field--' . $field_name_css . '__label',
-    // $prefix_component . 'field--' . $field_type_css . '__label',
-    $prefix_component . $bundle_class . '__' . $field_name_css . '__label',
+    // 'c-field--' . $field_name_css . '__label',
+    // 'c-field--' . $field_type_css . '__label',
+    'c-' . $bundle_class . '__' . $field_name_css . '__label',
   ),
   $default_label_classes
 );
 
 $item_classes = glacier_classes(
   array(
-    // $prefix_component . 'field--' . $field_name_css . '__item',
-    // $prefix_component . 'field--' . $field_type_css . '__item',
-    $prefix_component . $bundle_class . '__' . $field_name_css . '__item',
+    // 'c-field--' . $field_name_css . '__item',
+    // 'c-field--' . $field_type_css . '__item',
+    'c-' . $bundle_class . '__' . $field_name_css . '__item',
   ),
   $default_item_classes
 );

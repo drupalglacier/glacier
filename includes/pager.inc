@@ -216,5 +216,5 @@ function glacier_pager_link($vars) {
   //   possible to use l() here.
   // @see http://drupal.org/node/1410574
   $attributes['href'] = url($_GET['q'], array('query' => $query));
-  return '<a' . drupal_attributes($attributes) . '>' . '<span class="element-invisible">' . check_plain($a11y_text) . '</span>' . check_plain($text) . '</a>';
+  return '<a' . drupal_attributes($attributes) . '><span class="element-invisible">' . check_plain($a11y_text) . '</span>' . check_plain($text) . '</a>';
 }

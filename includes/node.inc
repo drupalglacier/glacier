@@ -10,7 +10,6 @@
 function glacier_preprocess_node(&$vars) {
   // Add setting variables.
   $vars['classes_default'] = theme_get_setting('classes_default');
-  $vars['prefix_component'] = theme_get_setting('prefix_component');
 
   // Add node type and view mode classes.
   $vars['node_type_class'] = drupal_html_class($vars['node']->type);

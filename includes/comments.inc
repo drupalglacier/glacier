@@ -8,18 +8,16 @@
  * Implements hook_preprocess_comment_wrapper().
  */
 function glacier_preprocess_comment_wrapper(&$vars) {
-  $bem_prefix_component = theme_get_setting('bem_prefix_component');
-
   // Add a HTML id so it can be used as an anchor target.
   $vars['attributes_array']['id'] = 'comments';
 
   // Add the component class.
-  $vars['attributes_array']['class'][] = $bem_prefix_component . 'comments';
+  $vars['attributes_array']['class'][] = 'c-comments';
 
   // Add classes to subcomponents.
-  $vars['title_attributes_array']['class'][] = $bem_prefix_component . 'comments__title';
-  $vars['form_title_attributes_array']['class'][] = $bem_prefix_component . 'comments__title';
-  $vars['form_title_attributes_array']['class'][] = $bem_prefix_component . 'comments__title--form';
+  $vars['title_attributes_array']['class'][] = 'c-comments__title';
+  $vars['form_title_attributes_array']['class'][] = 'c-comments__title';
+  $vars['form_title_attributes_array']['class'][] = 'c-comments__title--form';
 }
 
 /**
@@ -34,11 +32,10 @@ function glacier_process_comment_wrapper(&$vars) {
  * Implements hook_preprocess_comment().
  */
 function glacier_preprocess_comment(&$vars) {
-  $bem_prefix_component = theme_get_setting('bem_prefix_component');
   $comment = $vars['elements']['#comment'];
 
   // Fix original classes.
-  $vars['classes_array'] = preg_replace('/^comment-(?!-)/', $bem_prefix_component . 'comment--', $vars['classes_array']);
+  $vars['classes_array'] = preg_replace('/^comment-(?!-)/', 'c-comment--', $vars['classes_array']);
 
   // Add original classes to attributes array.
   $vars['attributes_array']['class'] = $vars['classes_array'];
@@ -47,15 +44,15 @@ function glacier_preprocess_comment(&$vars) {
   $vars['user_picture'] = theme_get_setting('toggle_comment_user_picture') ? theme('user_picture', array('account' => $comment)) : '';
 
   // Add sub component classes.
-  $vars['title_attributes_array']['class'][] = $bem_prefix_component . 'comment__title';
-  $vars['content_attributes_array']['class'][] = $bem_prefix_component . 'comment__content';
-  $vars['content']['links']['#attributes']['class'][] = $bem_prefix_component . 'nav--comment';
+  $vars['title_attributes_array']['class'][] = 'c-comment__title';
+  $vars['content_attributes_array']['class'][] = 'c-comment__content';
+  $vars['content']['links']['#attributes']['class'][] = 'c-nav--comment';
 
   // Format created date.
   $vars['datetime'] = format_date($vars['comment']->created, 'custom', 'c');
   $vars['date'] = format_date($vars['comment']->created, 'custom', 'F j, Y g:i a');
-  $vars['created'] = '<time class="' . $bem_prefix_component . 'comment__created" datetime="' . $vars['datetime'] . '">' . $vars['date'] . '</time>';
+  $vars['created'] = '<time class="c-comment__created" datetime="' . $vars['datetime'] . '">' . $vars['date'] . '</time>';
 
   // Fix permalink class.
-  $vars['permalink'] = preg_replace('/"permalink"/', '"' . $bem_prefix_component . 'comment__permalink"', $vars['permalink']);
+  $vars['permalink'] = preg_replace('/"permalink"/', '"c-comment__permalink"', $vars['permalink']);
 }

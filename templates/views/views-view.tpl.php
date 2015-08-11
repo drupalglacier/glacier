@@ -12,29 +12,29 @@
   <?php print render($title_suffix); ?>
 
   <?php if ($header): ?>
-    <div class="<?php print $bem_prefix_component; ?>view__header">
+    <div class="c-view__header">
       <?php print $header; ?>
     </div>
   <?php endif; ?>
 
   <?php if ($exposed): ?>
-    <div class="<?php print $bem_prefix_component; ?>view__filters">
+    <div class="c-view__filters">
       <?php print $exposed; ?>
     </div>
   <?php endif; ?>
 
   <?php if ($attachment_before): ?>
-    <div class="<?php print $bem_prefix_component; ?>view__attachment-before">
+    <div class="c-view__attachment-before">
       <?php print $attachment_before; ?>
     </div>
   <?php endif; ?>
 
   <?php if ($rows): ?>
-    <div class="<?php print $bem_prefix_component; ?>view__content">
+    <div class="c-view__content">
       <?php print $rows; ?>
     </div>
   <?php elseif ($empty): ?>
-    <div class="<?php print $bem_prefix_component; ?>view__content is-empty">
+    <div class="c-view__content is-empty">
       <?php print $empty; ?>
     </div>
   <?php endif; ?>
@@ -44,19 +44,19 @@
   <?php endif; ?>
 
   <?php if ($attachment_after): ?>
-    <div class="<?php print $bem_prefix_component; ?>view__attachment-after">
+    <div class="c-view__attachment-after">
       <?php print $attachment_after; ?>
     </div>
   <?php endif; ?>
 
   <?php if ($more): ?>
-    <div class="<?php print $bem_prefix_component; ?>view__more">
+    <div class="c-view__more">
       <?php print $more; ?>
     </div>
   <?php endif; ?>
 
   <?php if ($footer): ?>
-    <div class="<?php print $bem_prefix_component; ?>view__footer">
+    <div class="c-view__footer">
       <?php print $footer; ?>
     </div>
   <?php endif; ?>

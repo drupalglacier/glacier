@@ -6,10 +6,10 @@
 
 $classes = glacier_classes(
   array(
-    // $prefix_component . 'node',
-    // $prefix_component . 'node--' . $node_type_class,
-    // $prefix_component . 'node--' . $view_mode_class,
-    $prefix_component . $node_type_class,
+    // 'c-node',
+    // 'c-node--' . $node_type_class,
+    // 'c-node--' . $view_mode_class,
+    'c-' . $node_type_class,
   ),
   $default_classes,
   $state_classes
@@ -17,16 +17,16 @@ $classes = glacier_classes(
 
 $title_classes = glacier_classes(
   array(
-    // $prefix_component . 'node__title',
-    $prefix_component . $node_type_class . '__title',
+    // 'c-node__title',
+    'c-' . $node_type_class . '__title',
   ),
   $default_title_classes
 );
 
 $content_classes = glacier_classes(
   array(
-    // $prefix_component . 'node__content',
-    $prefix_component . $node_type_class . '__content',
+    // 'c-node__content',
+    'c-' . $node_type_class . '__content',
   ),
   $default_content_classes
 );
@@ -45,11 +45,11 @@ hide($content['links']);
   <?php print render($title_suffix); ?>
 
   <?php if (!$status): ?>
-    <div class="<?php print $prefix_component . $node_type_class; ?>__unpublished"><?php print t('Unpublished'); ?></div>
+    <div class="<?php print 'c-' . $node_type_class; ?>__unpublished"><?php print t('Unpublished'); ?></div>
   <?php endif; ?>
 
   <?php if ($display_submitted): ?>
-    <footer class="<?php print $prefix_component . $node_type_class; ?>__submitted">
+    <footer class="<?php print 'c-' . $node_type_class; ?>__submitted">
       <?php print $user_picture; ?>
       <p><?php print $submitted; ?></p>
     </footer>

@@ -28,7 +28,6 @@ function glacier_link($vars) {
  */
 function glacier_preprocess_links(&$vars) {
   $bem_only = theme_get_setting('bem_only');
-  $bem_prefix_component = theme_get_setting('bem_prefix_component');
 
   // Add theme hook suggestion based on classes.
   if (isset($vars['attributes']['class'])) {
@@ -63,11 +62,11 @@ function glacier_preprocess_links(&$vars) {
       $vars['attributes']['class'][] = 'nav';
     }
 
-    $vars['attributes']['class'][] = $bem_prefix_component . 'menu__list';
-    $vars['attributes']['class'][] = $bem_prefix_component . 'menu__list--level1';
+    $vars['attributes']['class'][] = 'c-menu__list';
+    $vars['attributes']['class'][] = 'c-menu__list--level1';
 
     // Modify classes to follow SMACSS naming convention.
-    $vars['attributes']['class'] = preg_replace('/^inline$/', $bem_prefix_component . 'menu--inline', $vars['attributes']['class']);
+    $vars['attributes']['class'] = preg_replace('/^inline$/', 'c-menu--inline', $vars['attributes']['class']);
   }
 }
 
@@ -79,7 +78,6 @@ function glacier_links($vars) {
   $attributes = $vars['attributes'];
   $heading = $vars['heading'];
   $bem_only = theme_get_setting('bem_only');
-  $bem_prefix_component = theme_get_setting('bem_prefix_component');
   $show_first_last = theme_get_setting('show_first_last');
   $output = '';
 
@@ -121,12 +119,12 @@ function glacier_links($vars) {
 
       // Add extra language switcher classes
       if ($vars['theme_hook_original'] == 'links__locale_block') {
-        $class[] = $bem_prefix_component . 'language-switcher__item';
+        $class[] = 'c-language-switcher__item';
       }
 
-      $class[] = $bem_prefix_component . 'menu__item';
-      $class[] = $bem_prefix_component . 'menu__item--' . $key;
-      $class[] = $bem_prefix_component . 'menu__item--level1';
+      $class[] = 'c-menu__item';
+      $class[] = 'c-menu__item--' . $key;
+      $class[] = 'c-menu__item--level1';
 
       // Make sure link attributes array exists.
       if (!isset($link) || !is_array($link)) {
@@ -144,11 +142,11 @@ function glacier_links($vars) {
       else {
         $link['attributes']['class'] = array();
       }
-      $link['attributes']['class'][] = $bem_prefix_component . 'menu__link';
+      $link['attributes']['class'][] = 'c-menu__link';
 
       // Add first, last, and active classes to the list of links.
       if ($show_first_last && $i == 1) {
-        $class[] = $bem_prefix_component . 'menu__item--first';
+        $class[] = 'c-menu__item--first';
 
         // Add default core class if wanted.
         if (!$bem_only) {
@@ -156,7 +154,7 @@ function glacier_links($vars) {
         }
       }
       if ($show_first_last && $i == $num_links) {
-        $class[] = $bem_prefix_component . 'menu__item--last';
+        $class[] = 'c-menu__item--last';
 
         // Add default core class if wanted.
         if (!$bem_only) {
@@ -194,9 +192,7 @@ function glacier_links($vars) {
 }
 
 function glacier_links__locale_block(&$vars) {
-  $bem_prefix_component = theme_get_setting('bem_prefix_component');
-
-  $vars['attributes']['class'][0] = $bem_prefix_component . 'language-switcher';
+  $vars['attributes']['class'][0] = 'c-language-switcher';
   foreach ($vars['links'] as $lang => $v) {
     $vars['links'][$lang]['attributes']['class'] = array();
   }
@@ -209,12 +205,11 @@ function glacier_links__locale_block(&$vars) {
  * Returns HTML for a menu tree.
  */
 function glacier_menu_tree($vars) {
-  $bem_prefix_component = theme_get_setting('bem_prefix_component');
   if (theme_get_setting('bem_only')) {
-    return '<ul class="' . $bem_prefix_component . '-menu__list ' . $bem_prefix_component . '-menu__list--level1">' . $vars['tree'] . '</ul>';
+    return '<ul class="c--menu__list c--menu__list--level1">' . $vars['tree'] . '</ul>';
   }
   else {
-    return '<ul class="nav menu ' . $bem_prefix_component . '-menu__list ' . $bem_prefix_component . '-menu__list--level1">' . $vars['tree'] . '</ul>';
+    return '<ul class="nav menu c--menu__list c--menu__list--level1">' . $vars['tree'] . '</ul>';
   }
 }
 
@@ -246,7 +241,6 @@ function glacier_preprocess_menu_link(&$vars) {
   $menu = '';
   $mlid = '';
   $bem_only = theme_get_setting('bem_only');
-  $bem_prefix_component = theme_get_setting('bem_prefix_component');
 
   if (isset($element['#original_link'])) {
     $menu = $element['#original_link']['menu_name'];
@@ -298,11 +292,11 @@ function glacier_preprocess_menu_link(&$vars) {
 
   // Update list item classes.
   if (empty($item_classes)) {
-    $item_classes[] = $bem_prefix_component . 'menu__item';
+    $item_classes[] = 'c-menu__item';
   }
   else {
-    if (!in_array($bem_prefix_component . 'menu__item', $item_classes)) {
-      array_unshift($item_classes, $bem_prefix_component . 'menu__item');
+    if (!in_array('c-menu__item', $item_classes)) {
+      array_unshift($item_classes, 'c-menu__item');
     }
 
     if ($bem_only) {
@@ -330,29 +324,29 @@ function glacier_preprocess_menu_link(&$vars) {
 
     if ($show_first_last) {
       if ($bem_only) {
-        $item_classes = preg_replace('/^first$/', $bem_prefix_component . 'menu__item--first', $item_classes);
-        $item_classes = preg_replace('/^last$/', $bem_prefix_component . 'menu__item--last', $item_classes);
+        $item_classes = preg_replace('/^first$/', 'c-menu__item--first', $item_classes);
+        $item_classes = preg_replace('/^last$/', 'c-menu__item--last', $item_classes);
       }
       else {
         if (in_array('first', $item_classes)) {
-          $item_classes[] = $bem_prefix_component . 'menu__item--first';
+          $item_classes[] = 'c-menu__item--first';
         }
 
         if (in_array('last', $item_classes)) {
-          $item_classes[] = $bem_prefix_component . 'menu__item--last';
+          $item_classes[] = 'c-menu__item--last';
         }
       }
     }
   }
-  $item_classes[] = $bem_prefix_component . 'menu__item--level' . $element['#original_link']['depth'];
+  $item_classes[] = 'c-menu__item--level' . $element['#original_link']['depth'];
 
   // Update link classes.
   if (empty($link_classes)) {
-    $link_classes[] = $bem_prefix_component . 'menu__link';
+    $link_classes[] = 'c-menu__link';
   }
   else {
-    if (!in_array($bem_prefix_component . 'menu__link', $link_classes)) {
-      array_unshift($link_classes, $bem_prefix_component . 'menu__link');
+    if (!in_array('c-menu__link', $link_classes)) {
+      array_unshift($link_classes, 'c-menu__link');
     }
 
     if ($bem_only) {
@@ -362,7 +356,7 @@ function glacier_preprocess_menu_link(&$vars) {
       $link_classes[] = 'is-active-trail';
     }
   }
-  $link_classes[] = $bem_prefix_component . 'menu__link--level' . $element['#original_link']['depth'];
+  $link_classes[] = 'c-menu__link--level' . $element['#original_link']['depth'];
 
   // Uncomment if you want to add mlid classes.
   // $item_classes[] = 'menu__item--mlid-' . $mlid;
@@ -453,7 +447,6 @@ function glacier_menu_local_task($vars) {
   $link = $vars['element']['#link'];
   $link_text = $link['title'];
   $link_classes = &$link['localized_options']['attributes']['class'];
-  $bem_prefix_component = theme_get_setting('bem_prefix_component');
 
   if (!empty($vars['element']['#active'])) {
     // Add text to indicate active tab for non-visual users.
@@ -470,10 +463,10 @@ function glacier_menu_local_task($vars) {
 
   // Update link classes.
   if (empty($link_classes)) {
-    $link_classes[] = $bem_prefix_component . 'menu__link';
+    $link_classes[] = 'c-menu__link';
   }
   else {
-    array_unshift($link_classes, $bem_prefix_component . 'menu__link');
+    array_unshift($link_classes, 'c-menu__link');
 
     if (theme_get_setting('bem_only')) {
       $link_classes = preg_replace('/^active$/', 'is-active', $link_classes);
@@ -483,7 +476,7 @@ function glacier_menu_local_task($vars) {
     }
   }
 
-  return '<li class="' . $bem_prefix_component . 'menu__item' . (!empty($vars['element']['#active']) ? ' is-active' : '') . '">' . l($link_text, $link['href'], $link['localized_options']) . "</li>\n";
+  return '<li class="c-menu__item' . (!empty($vars['element']['#active']) ? ' is-active' : '') . '">' . l($link_text, $link['href'], $link['localized_options']) . "</li>\n";
 }
 
 /**

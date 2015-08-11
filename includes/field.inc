@@ -10,8 +10,6 @@
 function glacier_preprocess_field(&$vars) {
   // Add setting variables.
   $vars['classes_default'] = theme_get_setting('classes_default');
-  $vars['prefix_component'] = theme_get_setting('prefix_component');
-  $vars['prefix_utility'] = theme_get_setting('prefix_utility');
 
   // Remove some default field classes.
   if (!$vars['classes_default']) {

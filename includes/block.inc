@@ -14,14 +14,13 @@ function glacier_preprocess_block(&$vars) {
   $delta_class = drupal_html_class($delta);
   $bem_only = theme_get_setting('bem_only');
   $bem_block_classes = theme_get_setting('bem_block_classes');
-  $bem_prefix_component = theme_get_setting('bem_prefix_component');
 
   // Add new default block classes.
   if ($bem_block_classes) {
-    $vars['classes_array'][] = $bem_prefix_component . 'block';
-    $vars['classes_array'][] = $bem_prefix_component . 'block--' . drupal_html_class($module_class);
-    $vars['title_attributes_array']['class'][] = $bem_prefix_component . 'block__title';
-    $vars['content_attributes_array']['class'][] = $bem_prefix_component . 'block__content';
+    $vars['classes_array'][] = 'c-block';
+    $vars['classes_array'][] = 'c-block--' . drupal_html_class($module_class);
+    $vars['title_attributes_array']['class'][] = 'c-block__title';
+    $vars['content_attributes_array']['class'][] = 'c-block__content';
   }
 
   // Add Aria Roles via attributes.
@@ -39,7 +38,7 @@ function glacier_preprocess_block(&$vars) {
 
         default:
           // Any other "system" block is a menu block.
-          $vars['classes_array'][] = $bem_prefix_component . 'menu';
+          $vars['classes_array'][] = 'c-menu';
           $vars['attributes_array']['role'] = 'navigation';
           break;
       }
@@ -61,7 +60,7 @@ function glacier_preprocess_block(&$vars) {
       break;
 
     case 'locale':
-      $vars['classes_array'][] = $bem_prefix_component . 'menu';
+      $vars['classes_array'][] = 'c-menu';
       $vars['attributes_array']['role'] = 'complementary';
       break;
 
@@ -108,9 +107,9 @@ function glacier_preprocess_block(&$vars) {
   }
 
   // Add component classes
-  $vars['classes_array'][] = $bem_prefix_component . drupal_html_class($delta_class);
-  $vars['title_attributes_array']['class'][] =$bem_prefix_component . drupal_html_class($delta_class) . '__title';
-  $vars['content_attributes_array']['class'][] =$bem_prefix_component . drupal_html_class($delta_class) . '__content';
+  $vars['classes_array'][] = 'c-' . drupal_html_class($delta_class);
+  $vars['title_attributes_array']['class'][] ='c-' . drupal_html_class($delta_class) . '__title';
+  $vars['content_attributes_array']['class'][] ='c-' . drupal_html_class($delta_class) . '__content';
 
   // Add attributes if using Clean Markup Blocks module.
   if (module_exists('clean_markup_blocks')) {
@@ -186,7 +185,7 @@ function glacier_preprocess_block(&$vars) {
 
   // Markup for blockify page title block.
   elseif ($delta == 'blockify-page-title') {
-    $vars['classes_array'][0] = $bem_prefix_component . 'page-title';
+    $vars['classes_array'][0] = 'c-page-title';
     $vars['theme_hook_suggestions'][] = 'block__page_title';
 
     $vars['title'] = drupal_get_title();

@@ -80,27 +80,6 @@ function glacier_form_system_theme_settings_alter(&$form, &$form_state, $form_id
     '#default_value' => theme_get_setting('classes_first_last'),
   );
 
-  $form['options_settings']['prefix'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Set prefixes for different types of classes'),
-    '#collapsible' => TRUE,
-    '#collapsed' => TRUE,
-  );
-  $form['options_settings']['prefix']['prefix_component'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Component class prefix'),
-    '#default_value' => theme_get_setting('prefix_component'),
-  );
-  $form['options_settings']['prefix']['prefix_object'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Object class prefix'),
-    '#default_value' => theme_get_setting('prefix_object'),
-  );
-  $form['options_settings']['prefix']['prefix_utility'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Utility class prefix'),
-    '#default_value' => theme_get_setting('prefix_utility'),
-  );
   $form['options_settings']['js_enhancement'] = array(
     '#type' => 'fieldset',
     '#title' => t('JS enhancements'),
