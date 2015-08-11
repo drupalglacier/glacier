@@ -55,7 +55,7 @@ function glacier_form_element($vars) {
   $element_type_class = drupal_html_class($element_type);
   $element_name = !empty($element['#name']) ? $element['#name'] : '';
   $element_name_class = drupal_html_class($element_name);
-  $bem_only = theme_get_setting('bem_only');
+  $classes_default = theme_get_setting('classes_default');
 
   // This function is invoked as theme wrapper, but the rendered form element
   // may not necessarily have been processed by form_builder().
@@ -73,7 +73,7 @@ function glacier_form_element($vars) {
     $attributes['class'][] = 'c-form__item--' . $element_type_class;
 
     // Add default core class if wanted.
-    if (!$bem_only) {
+    if ($classes_default) {
       $attributes['class'][] = 'form-type-' . $element_type_class;
     }
   }
@@ -81,7 +81,7 @@ function glacier_form_element($vars) {
     $attributes['class'][] = 'c-form__item--' . $element_name_class;
 
     // Add default core class if wanted.
-    if (!$bem_only) {
+    if ($classes_default) {
       $attributes['class'][] = 'form-item-' . $element_name_class;
     }
   }
@@ -96,7 +96,7 @@ function glacier_form_element($vars) {
     $attributes['class'][] = 'is-disabled';
 
     // Add default core class if wanted.
-    if (!$bem_only) {
+    if ($classes_default) {
       $attributes['class'][] = 'form-disabled';
     }
   }
@@ -114,7 +114,7 @@ function glacier_form_element($vars) {
   }
 
   // Add prefix and suffix.
-  if ($bem_only) {
+  if (!$classes_default) {
     $prefix = isset($element['#field_prefix']) ? '<span class="c-form__prefix">' . $element['#field_prefix'] . '</span> ' : '';
     $suffix = isset($element['#field_suffix']) ? ' <span class="c-form__suffix">' . $element['#field_suffix'] . '</span>' : '';
   }
@@ -151,7 +151,7 @@ function glacier_form_element($vars) {
   }
 
   if (!empty($element['#description'])) {
-    if ($bem_only) {
+    if (!$classes_default) {
       $output .= '<div class="c-form__description">' . $element['#description'] . "</div>\n";
     }
     else {
@@ -197,7 +197,7 @@ function glacier_form_element_label($vars) {
   $attributes['class'][] = 'c-form__label--' . $vars['element']['#title_display'];
 
   // Style the label as class option to display inline with the element.
-  if (!theme_get_setting('bem_only') && $element['#title_display'] == 'after') {
+  if (theme_get_setting('classes_default') && $element['#title_display'] == 'after') {
     $attributes['class'] = 'option';
   }
 
@@ -223,7 +223,7 @@ function glacier_form_required_marker($vars) {
   $attributes = array('class' => array('c-form__required-marker'));
 
   // Add default class if wanted.
-  if (!theme_get_setting('bem_only')) {
+  if (theme_get_setting('classes_default')) {
     $attributes['class'][] = 'form-required';
   }
 
@@ -237,7 +237,7 @@ function glacier_button($vars) {
   $element = $vars['element'];
   $element['#attributes']['type'] = $element['#button_type'];
   element_set_attributes($element, array('id', 'name', 'value'));
-  $bem_only = theme_get_setting('bem_only');
+  $classes_default = theme_get_setting('classes_default');
 
   // Add button classes.
   $element['#attributes']['class'][] = 'c-button';
@@ -251,7 +251,7 @@ function glacier_button($vars) {
   }
 
   // Add default class if wanted.
-  if (!$bem_only) {
+  if ($classes_default) {
     $element['#attributes']['class'][] = 'form-' . $element['#button_type'];
   }
 
@@ -259,7 +259,7 @@ function glacier_button($vars) {
     $element['#attributes']['class'][] = 'is-disabled';
 
     // Add default class if wanted.
-    if (!$bem_only) {
+    if ($classes_default) {
       $element['#attributes']['class'][] = 'form-button-disabled';
     }
   }
@@ -338,7 +338,7 @@ function glacier_container($vars) {
   $element['#attributes']['class'] = preg_replace('#^field-#', 'c-form__field--', $element['#attributes']['class']);
 
   // Add default class if wanted.
-  if (!theme_get_setting('bem_only')) {
+  if (theme_get_setting('classes_default')) {
     $element['#attributes']['class'][] = 'form-wrapper';
   }
 
@@ -379,7 +379,7 @@ function glacier_date_combo($vars) {
   $field = field_info_field($element['#field_name']);
   $instance = field_info_instance($element['#entity_type'], $element['#field_name'], $element['#bundle']);
   $type = $element['value']['#type'];
-  $bem_only = theme_get_setting('bem_only');
+  $classes_default = theme_get_setting('classes_default');
 
   $title = t($element['#title']) . ' ' . ($element['#delta'] > 0 ? intval($element['#delta'] + 1) : '');
 
@@ -409,7 +409,7 @@ function glacier_date_combo($vars) {
   $required = !empty($element['#required']) ? theme('form_required_marker', array('element' => $element)) : '';
 
   // Set markup for description.
-  if ($bem_only) {
+  if (!$classes_default) {
     $description = !empty($element['#fieldset_description']) ? '<div class="c-form__description">' . $element['#fieldset_description'] . '</div>' : '';
   }
   else {
@@ -427,7 +427,7 @@ function glacier_date_combo($vars) {
 function glacier_fieldset($vars) {
   $element = $vars['element'];
   element_set_attributes($element, array('id'));
-  $bem_only = theme_get_setting('bem_only');
+  $classes_default = theme_get_setting('classes_default');
 
   if (isset($element['#attributes']['class'])) {
     if (!is_array($element['#attributes']['class'])) {
@@ -439,7 +439,7 @@ function glacier_fieldset($vars) {
   }
 
   // Remove default collapsible classes.
-  if ($bem_only) {
+  if (!$classes_default) {
     $element['#attributes']['class'] = array_values(array_diff($element['#attributes']['class'], array(
       'collapsible',
       'collapsed',
@@ -456,7 +456,7 @@ function glacier_fieldset($vars) {
     }
   }
 
-  if ($bem_only) {
+  if (!$classes_default) {
     _glacier_form_set_class($element, array('c-form__fieldset'));
   }
   else {
@@ -467,7 +467,7 @@ function glacier_fieldset($vars) {
   $output = '<fieldset' . drupal_attributes($element['#attributes']) . '>';
   if (!empty($element['#title'])) {
     // Always wrap fieldset legends in a SPAN for CSS positioning.
-    if ($bem_only) {
+    if (!$classes_default) {
       $output .= '<legend class="c-form__fieldset-legend"><span class="c-form__fieldset-text">' . $element['#title'] . '</span></legend>';
     }
     else {
@@ -475,7 +475,7 @@ function glacier_fieldset($vars) {
     }
   }
 
-  if ($bem_only) {
+  if (!$classes_default) {
     $output .= '<div class="c-form__fieldset-content">';
   }
   else {
@@ -483,7 +483,7 @@ function glacier_fieldset($vars) {
   }
 
   if (!empty($element['#description'])) {
-    if ($bem_only) {
+    if (!$classes_default) {
       $output .= '<div class="c-form__fieldset-description">' . $element['#description'] . '</div>';
     }
     else {
@@ -705,7 +705,7 @@ function glacier_textfield($vars) {
  *   Array of new class names to be added.
  */
 function _glacier_form_set_class(&$element, $class = array()) {
-  $bem_only = theme_get_setting('bem_only');
+  $classes_default = theme_get_setting('classes_default');
 
   if (!empty($class)) {
     if (!isset($element['#attributes']['class'])) {
@@ -720,7 +720,7 @@ function _glacier_form_set_class(&$element, $class = array()) {
     $element['#attributes']['class'][] = 'is-required';
 
     // Add default core class if wanted.
-    if (!$bem_only) {
+    if ($classes_default) {
       $element['#attributes']['class'][] = 'required';
     }
   }
@@ -728,7 +728,7 @@ function _glacier_form_set_class(&$element, $class = array()) {
     $element['#attributes']['class'][] = 'is-error';
 
     // Add default core class if wanted.
-    if (!$bem_only) {
+    if ($classes_default) {
       $element['#attributes']['class'][] = 'error';
     }
   }

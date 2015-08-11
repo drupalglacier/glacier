@@ -49,6 +49,5 @@ function glacier_preprocess_views_view_unformatted(&$vars) {
  * Implements hook_preprocess_views_exposed_form().
  */
 function glacier_preprocess_views_exposed_form(&$vars) {
-  // Create variable for SMACSS theme setting.
-  $vars['bem_only'] = theme_get_setting('bem_only');
+  $vars['classes_default'] = theme_get_setting('classes_default');
 }

@@ -11,10 +11,10 @@ function glacier_preprocess_entity(&$vars, $hook) {
   $type_class = drupal_html_class($vars['elements']['#entity_type']);
   $bundle_class = drupal_html_class($vars['elements']['#bundle']);
   $view_mode_class = drupal_html_class($vars['elements']['#view_mode']);
-  $bem_only = theme_get_setting('bem_only');
+  $classes_default = theme_get_setting('classes_default');
 
   // Remove some default entity classes.
-  if ($bem_only) {
+  if (!$classes_default) {
     $vars['classes_array'] = array_values(array_diff($vars['classes_array'], array(
       'entity',
       'entity-' . $type_class,

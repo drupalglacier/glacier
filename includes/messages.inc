@@ -19,11 +19,11 @@ function glacier_status_messages($vars) {
 
   foreach (drupal_get_messages($display) as $type => $messages) {
 
-    if (theme_get_setting('bem_only')) {
-      $output .= "<div class=\"messages messages--$type\" role=\"alertdialog\">\n";
+    if (theme_get_setting('classes_default')) {
+      $output .= "<div class=\"messages messages--$type $type\" role=\"alertdialog\">\n";
     }
     else {
-      $output .= "<div class=\"messages messages--$type $type\" role=\"alertdialog\">\n";
+      $output .= "<div class=\"messages messages--$type\" role=\"alertdialog\">\n";
     }
 
     if (!empty($status_heading[$type])) {

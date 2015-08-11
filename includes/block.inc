@@ -12,7 +12,7 @@ function glacier_preprocess_block(&$vars) {
   $module_class = drupal_html_class($module);
   $delta = $vars['block']->delta;
   $delta_class = drupal_html_class($delta);
-  $bem_only = theme_get_setting('bem_only');
+  $classes_default = theme_get_setting('classes_default');
   $bem_block_classes = theme_get_setting('bem_block_classes');
 
   // Add new default block classes.
@@ -127,7 +127,7 @@ function glacier_preprocess_block(&$vars) {
       $vars['content']['#attributes'] = array_merge_recursive($vars['content']['#attributes'], $vars['content_attributes_array']);
 
       // Remove unwanted classes.
-      if ($bem_only) {
+      if (!$classes_default) {
         $vars['content']['#attributes']['class'] = array_values(array_diff($vars['content']['#attributes']['class'], array(
           'content',
         )));

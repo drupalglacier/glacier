@@ -8,11 +8,11 @@
  * Returns HTML for a link.
  */
 function glacier_link($vars) {
-  $bem_only = theme_get_setting('bem_only');
+  $classes_default = theme_get_setting('classes_default');
 
-  // Modify active class to follow SMACSS naming convention.
+  // Modify active class to follow BEM naming convention.
   if (isset($vars['options']['attributes']['class'])) {
-    if ($bem_only) {
+    if (!$classes_default) {
       $vars['options']['attributes']['class'] = preg_replace('/^active$/', 'is-active', $vars['options']['attributes']['class']);
     }
     else {
@@ -27,7 +27,7 @@ function glacier_link($vars) {
  * Implements hook_preprocess_links().
  */
 function glacier_preprocess_links(&$vars) {
-  $bem_only = theme_get_setting('bem_only');
+  $classes_default = theme_get_setting('classes_default');
 
   // Add theme hook suggestion based on classes.
   if (isset($vars['attributes']['class'])) {
@@ -52,7 +52,7 @@ function glacier_preprocess_links(&$vars) {
     }
 
     // Remove default link class.
-    if ($bem_only) {
+    if (!$classes_default) {
       $vars['attributes']['class'] = array_values(array_diff($vars['attributes']['class'], array(
         'links',
       )));
@@ -77,8 +77,8 @@ function glacier_links($vars) {
   $links = $vars['links'];
   $attributes = $vars['attributes'];
   $heading = $vars['heading'];
-  $bem_only = theme_get_setting('bem_only');
-  $show_first_last = theme_get_setting('show_first_last');
+  $classes_default = theme_get_setting('classes_default');
+  $classes_first_last = theme_get_setting('classes_first_last');
   $output = '';
 
   if (count($links) > 0) {
@@ -113,7 +113,7 @@ function glacier_links($vars) {
     foreach ($links as $key => $link) {
       $class = array();
       // Add default core classes if wanted.
-      if (!$bem_only) {
+      if ($classes_default) {
         $class = array($key);
       }
 
@@ -145,19 +145,19 @@ function glacier_links($vars) {
       $link['attributes']['class'][] = 'c-menu__link';
 
       // Add first, last, and active classes to the list of links.
-      if ($show_first_last && $i == 1) {
+      if ($classes_first_last && $i == 1) {
         $class[] = 'c-menu__item--first';
 
         // Add default core class if wanted.
-        if (!$bem_only) {
+        if ($classes_default) {
           $class[] = 'first';
         }
       }
-      if ($show_first_last && $i == $num_links) {
+      if ($classes_first_last && $i == $num_links) {
         $class[] = 'c-menu__item--last';
 
         // Add default core class if wanted.
-        if (!$bem_only) {
+        if ($classes_default) {
           $class[] = 'last';
         }
       }
@@ -205,11 +205,11 @@ function glacier_links__locale_block(&$vars) {
  * Returns HTML for a menu tree.
  */
 function glacier_menu_tree($vars) {
-  if (theme_get_setting('bem_only')) {
-    return '<ul class="c--menu__list c--menu__list--level1">' . $vars['tree'] . '</ul>';
+  if (theme_get_setting('classes_default')) {
+    return '<ul class="nav menu c--menu__list c--menu__list--level1">' . $vars['tree'] . '</ul>';
   }
   else {
-    return '<ul class="nav menu c--menu__list c--menu__list--level1">' . $vars['tree'] . '</ul>';
+    return '<ul class="c--menu__list c--menu__list--level1">' . $vars['tree'] . '</ul>';
   }
 }
 
@@ -236,11 +236,11 @@ function glacier_preprocess_menu_tree(&$vars) {
  */
 function glacier_preprocess_menu_link(&$vars) {
   $element = $vars['element'];
-  $show_first_last = theme_get_setting('show_first_last');
+  $classes_first_last = theme_get_setting('classes_first_last');
   $show_collapsed_expanded = theme_get_setting('show_collapsed_expanded');
   $menu = '';
   $mlid = '';
-  $bem_only = theme_get_setting('bem_only');
+  $classes_default = theme_get_setting('classes_default');
 
   if (isset($element['#original_link'])) {
     $menu = $element['#original_link']['menu_name'];
@@ -274,7 +274,7 @@ function glacier_preprocess_menu_link(&$vars) {
   $link_classes = &$vars['element']['#localized_options']['attributes']['class'];
 
   // Remove unecessary list item classes.
-  if ($bem_only) {
+  if (!$classes_default) {
     $remove = array('leaf', 'menu-mlid-' . $mlid);
 
     if (!$show_collapsed_expanded) {
@@ -282,7 +282,7 @@ function glacier_preprocess_menu_link(&$vars) {
       $remove[] = 'expanded';
     }
 
-    if (!$show_first_last) {
+    if (!$classes_first_last) {
       $remove[] = 'first';
       $remove[] = 'last';
     }
@@ -299,7 +299,7 @@ function glacier_preprocess_menu_link(&$vars) {
       array_unshift($item_classes, 'c-menu__item');
     }
 
-    if ($bem_only) {
+    if (!$classes_default) {
       $item_classes = preg_replace('/^active-trail$/', 'is-active-trail', $item_classes);
     }
     elseif (in_array('active-trail', $item_classes)) {
@@ -307,7 +307,7 @@ function glacier_preprocess_menu_link(&$vars) {
     }
 
     if ($show_collapsed_expanded) {
-      if ($bem_only) {
+      if (!$classes_default) {
         $item_classes = preg_replace('/^collapsed$/', 'is-collapsed', $item_classes);
         $item_classes = preg_replace('/^expanded$/', 'is-expanded', $item_classes);
       }
@@ -322,8 +322,8 @@ function glacier_preprocess_menu_link(&$vars) {
       }
     }
 
-    if ($show_first_last) {
-      if ($bem_only) {
+    if ($classes_first_last) {
+      if (!$classes_default) {
         $item_classes = preg_replace('/^first$/', 'c-menu__item--first', $item_classes);
         $item_classes = preg_replace('/^last$/', 'c-menu__item--last', $item_classes);
       }
@@ -349,7 +349,7 @@ function glacier_preprocess_menu_link(&$vars) {
       array_unshift($link_classes, 'c-menu__link');
     }
 
-    if ($bem_only) {
+    if (!$classes_default) {
       $link_classes = preg_replace('/^active-trail$/', 'is-active-trail', $link_classes);
     }
     elseif (in_array('active-trail', $link_classes)) {
@@ -369,11 +369,11 @@ function glacier_preprocess_menu_link(&$vars) {
 function glacier_menu_link($vars) {
   $element = $vars['element'];
   $sub_menu = '';
-  $bem_only = theme_get_setting('bem_only');
+  $classes_default = theme_get_setting('classes_default');
 
   // Modify active class to follow SMACSS naming convention.
   if (isset($element['#attributes']['class'])) {
-    if ($bem_only) {
+    if (!$classes_default) {
       $element['#attributes']['class'] = preg_replace('/^active$/', 'is-active', $element['#attributes']['class']);
     }
     else {
@@ -406,13 +406,13 @@ function glacier_menu_link($vars) {
  * Returns HTML for primary and secondary local tasks.
  */
 function glacier_menu_local_tasks($vars) {
-  $bem_only = theme_get_setting('bem_only');
+  $classes_default = theme_get_setting('classes_default');
   $output = '';
 
   if (!empty($vars['primary'])) {
     $vars['primary']['#prefix'] = '<h2 class="element-invisible">' . t('Primary tasks') . '</h2>';
 
-    if ($bem_only) {
+    if (!$classes_default) {
       $vars['primary']['#prefix'] .= '<ul class="nav nav--primary-local-tasks">';
     }
     else {
@@ -426,7 +426,7 @@ function glacier_menu_local_tasks($vars) {
   if (!empty($vars['secondary'])) {
     $vars['secondary']['#prefix'] = '<h2 class="element-invisible">' . t('Secondary tasks') . '</h2>';
 
-    if ($bem_only) {
+    if (!$classes_default) {
       $vars['secondary']['#prefix'] .= '<ul class="nav nav--secondary-local-tasks">';
     }
     else {
@@ -468,7 +468,7 @@ function glacier_menu_local_task($vars) {
   else {
     array_unshift($link_classes, 'c-menu__link');
 
-    if (theme_get_setting('bem_only')) {
+    if (!theme_get_setting('classes_default')) {
       $link_classes = preg_replace('/^active$/', 'is-active', $link_classes);
     }
     elseif (in_array('active', $link_classes)) {
