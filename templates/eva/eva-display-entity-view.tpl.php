@@ -6,21 +6,19 @@
 ?>
 <div class="<?php print $classes; ?>">
   <?php print render($title_prefix); ?>
-
   <?php if ($title): ?>
     <h3><?php print $title; ?></h3>
   <?php endif; ?>
-
   <?php print render($title_suffix); ?>
 
   <?php if ($header): ?>
-    <div class="view__header">
+    <div class="c-view__header">
       <?php print $header; ?>
     </div>
   <?php endif; ?>
 
   <?php if ($attachment_before): ?>
-    <div class="view__attachment-before">
+    <div class="c-view__attachment-before">
       <?php print $attachment_before; ?>
     </div>
   <?php endif; ?>
@@ -36,7 +34,7 @@
   <?php endif; ?>
 
   <?php if ($attachment_after): ?>
-    <div class="view__attachment-after">
+    <div class="c-view__attachment-after">
       <?php print $attachment_after; ?>
     </div>
   <?php endif; ?>
@@ -46,7 +44,7 @@
   <?php endif; ?>
 
   <?php if ($footer): ?>
-    <div class="view__footer">
+    <div class="c-view__footer">
       <?php print $footer; ?>
     </div>
   <?php endif; ?>
@@ -54,5 +52,4 @@
   <?php if ($feed_icon): ?>
     <?php print $feed_icon; ?>
   <?php endif; ?>
-
 </div>
