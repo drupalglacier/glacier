@@ -20,7 +20,7 @@ function glacier_facetapi_accessible_markup($vars) {
  * Implements hook_facetapi_count.
  */
 function glacier_facetapi_count($vars) {
-  return '<span class="facet__count">(' . (int) $vars['count'] . '<span class="element-invisible"> ' . t('items') . '</span>)</span>';
+  return '<span class="c-facet__count">(' . (int) $vars['count'] . '<span class="element-invisible"> ' . t('items') . '</span>)</span>';
 }
 
 /**
@@ -45,7 +45,7 @@ function glacier_facetapi_link_active($vars) {
 
   // Change link classes.
   $vars['options']['attributes']['class'] = array(
-    'facet',
+    'c-facet',
     'is-active',
   );
 
@@ -79,7 +79,7 @@ function glacier_facetapi_link_inactive($vars) {
 
   // Change link classes.
   $vars['options']['attributes']['class'] = array(
-    'facet',
+    'c-facet',
     'is-inactive',
   );
 
