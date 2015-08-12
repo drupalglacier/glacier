@@ -127,14 +127,6 @@ function glacier_ajax_settings_save($form, $form_state) {
 function glacier_recommended_modules() {
   $modules = array();
 
-  if (!module_exists('clean_markup')) {
-    $modules['clean_markup'] = array(
-      'name' => t('Clean Markup'),
-      'description' => t('Allows you to control the markup of blocks, panel regions, and panel panes via the UI.'),
-      'required' => FALSE,
-    );
-  }
-
   if (!module_exists('html5_tools')) {
     $modules['html5_tools'] = array(
       'name' => t('HTML5 Tools'),
