@@ -12,12 +12,19 @@ function glacier_preprocess_comment_wrapper(&$vars) {
   $vars['attributes_array']['id'] = 'comments';
 
   // Add the component class.
-  $vars['attributes_array']['class'][] = 'c-comments';
+  $vars['attributes_array']['class'] = isset($vars['attributes_array']['class']) ? $vars['attributes_array']['class'] : array();
+  $vars['classes_array'] = $vars['attributes_array']['class'];
+  unset($vars['attributes_array']['class']);
 
-  // Add classes to subcomponents.
-  $vars['title_attributes_array']['class'][] = 'c-comments__title';
-  $vars['form_title_attributes_array']['class'][] = 'c-comments__title';
-  $vars['form_title_attributes_array']['class'][] = 'c-comments__title--form';
+  // Add default title classes.
+  $vars['title_attributes_array']['class'] = isset($vars['title_attributes_array']['class']) ? $vars['title_attributes_array']['class'] : array();
+  $vars['title_classes_array'] = $vars['title_attributes_array']['class'];
+  unset($vars['title_attributes_array']['class']);
+
+  // Add default form title classes.
+  $vars['form_title_attributes_array']['class'] = isset($vars['form_title_attributes_array']['class']) ? $vars['form_title_attributes_array']['class'] : array();
+  $vars['form_title_classes_array'] = $vars['form_title_attributes_array']['class'];
+  unset($vars['form_title_attributes_array']['class']);
 }
 
 /**
@@ -37,15 +44,20 @@ function glacier_preprocess_comment(&$vars) {
   // Fix original classes.
   $vars['classes_array'] = preg_replace('/^comment-(?!-)/', 'c-comment--', $vars['classes_array']);
 
-  // Add original classes to attributes array.
-  $vars['attributes_array']['class'] = $vars['classes_array'];
-
   // Set user picture.
   $vars['user_picture'] = theme_get_setting('toggle_comment_user_picture') ? theme('user_picture', array('account' => $comment)) : '';
 
+  // Add default title classes.
+  $vars['title_attributes_array']['class'] = isset($vars['title_attributes_array']['class']) ? $vars['title_attributes_array']['class'] : array();
+  $vars['title_classes_array'] = $vars['title_attributes_array']['class'];
+  unset($vars['title_attributes_array']['class']);
+
+  // Add default content classes.
+  $vars['content_attributes_array']['class'] = isset($vars['content_attributes_array']['class']) ? $vars['content_attributes_array']['class'] : array();
+  $vars['content_classes_array'] = $vars['content_attributes_array']['class'];
+  unset($vars['content_attributes_array']['class']);
+
   // Add sub component classes.
-  $vars['title_attributes_array']['class'][] = 'c-comment__title';
-  $vars['content_attributes_array']['class'][] = 'c-comment__content';
   $vars['content']['links']['#attributes']['class'][] = 'c-nav--comment';
 
   // Format created date.
