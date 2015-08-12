@@ -14,7 +14,7 @@ $classes = glacier_classes(
     // 'c-field--' . $field_type_css,
     'c-' . $bundle_class . '__' . $field_name_css,
   ),
-  $default_classes
+  $classes_array
 );
 
 $label_classes = glacier_classes(
@@ -23,7 +23,7 @@ $label_classes = glacier_classes(
     // 'c-field--' . $field_type_css . '__label',
     'c-' . $bundle_class . '__' . $field_name_css . '__label',
   ),
-  $default_label_classes
+  $label_classes_array
 );
 
 $item_classes = glacier_classes(
@@ -32,7 +32,7 @@ $item_classes = glacier_classes(
     // 'c-field--' . $field_type_css . '__item',
     'c-' . $bundle_class . '__' . $field_name_css . '__item',
   ),
-  $default_item_classes
+  $item_classes_array
 );
 
 ?>

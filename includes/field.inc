@@ -40,18 +40,15 @@ function glacier_preprocess_field(&$vars) {
   // Remove 'field-' prefix from field name css.
   $vars['field_name_css'] = preg_replace('/^field-/', '', $vars['field_name_css']);
 
-  // Add default classes.
-  $vars['default_classes'] = $vars['classes_array'];
-
   // Add default field label classes.
-  $vars['default_label_classes'] = array();
+  $vars['label_classes_array'] = array();
   if ($vars['classes_default']) {
-    $vars['default_label_classes'][] = 'field-label';
+    $vars['label_classes_array'][] = 'field-label';
   }
 
   // Add default field item classes.
-  $vars['default_item_classes'] = array();
+  $vars['item_classes_array'] = array();
   if ($vars['classes_default']) {
-    $vars['default_label_classes'][] = 'field-item';
+    $vars['item_classes_array'][] = 'field-item';
   }
 }
