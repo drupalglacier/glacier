@@ -40,6 +40,11 @@ function glacier_preprocess_field(&$vars) {
   // Remove 'field-' prefix from field name css.
   $vars['field_name_css'] = preg_replace('/^field-/', '', $vars['field_name_css']);
 
+  // Add extra field class on field collections
+  if ($vars['element']['#field_type'] == 'field_collection') {
+    $vars['classes_array'][] = 'c-' . $vars['field_name_css'];
+  }
+
   // Add default field label classes.
   $vars['label_classes_array'] = array();
   if ($vars['classes_default']) {
