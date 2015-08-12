@@ -10,5 +10,5 @@
 function glacier_feed_icon($vars) {
   $text = t('Subscribe to @feed-title', array('@feed-title' => $vars['title']));
 
-  return l($text, $vars['url'], array('html' => TRUE, 'attributes' => array('class' => array('feed-icon'))));
+  return l($text, $vars['url'], array('html' => TRUE, 'attributes' => array('class' => array('c-feed-icon'))));
 }
