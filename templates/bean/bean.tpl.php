@@ -26,6 +26,18 @@
  * @see template_preprocess_entity()
  * @see template_process()
  */
+
+$classes = glacier_classes(
+  array(
+    // 'c-entity',
+    // 'c-entity--' . $type_class,
+    // 'c-entity--' . $bundle_class,
+    // 'c-entity--' . $view_mode_class,
+    'c-' . $bundle_class,
+  ),
+  $classes_array
+);
+
 ?>
 <div class="<?php print $classes; ?>"<?php print $attributes; ?>>
   <?php print render($content); ?>
