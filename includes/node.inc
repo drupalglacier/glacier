@@ -27,32 +27,29 @@ function glacier_preprocess_node(&$vars) {
     )));
   }
 
-  // Add default classes.
-  $vars['default_classes'] = $vars['classes_array'];
-
   // Add state classes.
-  $vars['state_classes'] = array();
+  $vars['state_classes_array'] = array();
   if ($vars['promote']) {
     // Add promoted class.
-    $vars['state_classes']['promoted'] = 'is-promoted';
+    $vars['state_classes_array']['promoted'] = 'is-promoted';
   }
   if ($vars['sticky']) {
     // Add sticky class.
-    $vars['state_classes']['sticky'] = 'is-sticky';
+    $vars['state_classes_array']['sticky'] = 'is-sticky';
   }
   if (!$vars['status']) {
     // Add unpublished class.
-    $vars['state_classes']['unpublished'] = 'is-unpublished';
+    $vars['state_classes_array']['unpublished'] = 'is-unpublished';
   }
   
   // Add defaul title classes.
   $vars['title_attributes_array']['class'] = isset($vars['title_attributes_array']['class']) ? $vars['title_attributes_array']['class'] : array();
-  $vars['default_title_classes'] = $vars['title_attributes_array']['class'];
+  $vars['title_classes_array'] = $vars['title_attributes_array']['class'];
   unset($vars['title_attributes_array']['class']);
 
   // Add defaul content classes.
   $vars['content_attributes_array']['class'] = isset($vars['content_attributes_array']['class']) ? $vars['content_attributes_array']['class'] : array();
-  $vars['default_content_classes'] = $vars['content_attributes_array']['class'];
+  $vars['content_classes_array'] = $vars['content_attributes_array']['class'];
   unset($vars['content_attributes_array']['class']);
 
   // Create submitted info using time element.

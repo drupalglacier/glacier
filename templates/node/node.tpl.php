@@ -11,8 +11,8 @@ $classes = glacier_classes(
     // 'c-node--' . $view_mode_class,
     'c-' . $node_type_class,
   ),
-  $default_classes,
-  $state_classes
+  $classes_array,
+  $state_classes_array
 );
 
 $title_classes = glacier_classes(
@@ -20,7 +20,7 @@ $title_classes = glacier_classes(
     // 'c-node__title',
     'c-' . $node_type_class . '__title',
   ),
-  $default_title_classes
+  $title_classes_array
 );
 
 $content_classes = glacier_classes(
@@ -28,7 +28,7 @@ $content_classes = glacier_classes(
     // 'c-node__content',
     'c-' . $node_type_class . '__content',
   ),
-  $default_content_classes
+  $content_classes_array
 );
 
 hide($content['comments']);
