@@ -20,10 +20,10 @@ function glacier_status_messages($vars) {
   foreach (drupal_get_messages($display) as $type => $messages) {
 
     if (theme_get_setting('classes_default')) {
-      $output .= "<div class=\"messages messages--$type $type\" role=\"alertdialog\">\n";
+      $output .= "<div class=\"messages $type c-message c-message--$type\" role=\"alertdialog\">\n";
     }
     else {
-      $output .= "<div class=\"messages messages--$type\" role=\"alertdialog\">\n";
+      $output .= "<div class=\"c-message c-message--$type\" role=\"alertdialog\">\n";
     }
 
     if (!empty($status_heading[$type])) {
@@ -31,10 +31,10 @@ function glacier_status_messages($vars) {
     }
 
     if (count($messages) > 1) {
-      $output .= "<ul class=\"messages__list\">\n";
+      $output .= "<ul class=\"c-message__list u-list-reset\">\n";
 
       foreach ($messages as $message) {
-        $output .= '  <li class="messages__item">' . $message . "</li>\n";
+        $output .= '  <li class="c-message__item">' . $message . "</li>\n";
       }
 
       $output .= "</ul>\n";
