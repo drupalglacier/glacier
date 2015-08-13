@@ -65,13 +65,13 @@ function glacier_pager($vars) {
   if ($pager_total[$element] > 1) {
     if ($li_first) {
       $items[] = array(
-        'class' => array('pager__item', 'pager__item--first'),
+        'class' => array('c-pager__item', 'c-pager__item--first'),
         'data' => $li_first,
       );
     }
     if ($li_previous) {
       $items[] = array(
-        'class' => array('pager__item', 'pager__item--previous'),
+        'class' => array('c-pager__item', 'c-pager__item--previous'),
         'data' => $li_previous,
       );
     }
@@ -80,7 +80,7 @@ function glacier_pager($vars) {
     if ($i != $pager_max) {
       if ($i > 1) {
         $items[] = array(
-          'class' => array('pager__item', 'pager__item--ellipsis'),
+          'class' => array('c-pager__item', 'c-pager__item--ellipsis'),
           'role' => 'presentation',
           'data' => '…',
         );
@@ -89,7 +89,7 @@ function glacier_pager($vars) {
       for (; $i <= $pager_last && $i <= $pager_max; $i++) {
         if ($i < $pager_current) {
           $items[] = array(
-            'class' => array('pager__item'),
+            'class' => array('c-pager__item'),
             'data' => theme('pager_previous', array(
               'text' => $i,
               'element' => $element,
@@ -100,13 +100,13 @@ function glacier_pager($vars) {
         }
         if ($i == $pager_current) {
           $items[] = array(
-            'class' => array('pager__item', 'pager__item--current'),
+            'class' => array('c-pager__item', 'c-pager__item--current'),
             'data' => '<span class="element-invisible">' . t('Currently on page') . ' </span>' . $i,
           );
         }
         if ($i > $pager_current) {
           $items[] = array(
-            'class' => array('pager__item'),
+            'class' => array('c-pager__item'),
             'data' => theme('pager_next', array(
               'text' => $i,
               'element' => $element,
@@ -118,7 +118,7 @@ function glacier_pager($vars) {
       }
       if ($i < $pager_max) {
         $items[] = array(
-          'class' => array('pager__item', 'pager__item--ellipsis'),
+          'class' => array('c-pager__item', 'c-pager__item--ellipsis'),
           'role' => 'presentation',
           'data' => '…',
         );
@@ -127,19 +127,19 @@ function glacier_pager($vars) {
     // End generation.
     if ($li_next) {
       $items[] = array(
-        'class' => array('pager__item', 'pager__item--next'),
+        'class' => array('c-pager__item', 'c-pager__item--next'),
         'data' => $li_next,
       );
     }
     if ($li_last) {
       $items[] = array(
-        'class' => array('pager__item', 'pager__item--last'),
+        'class' => array('c-pager__item', 'c-pager__item--last'),
         'data' => $li_last,
       );
     }
     return '<nav role="navigation"><h2 class="element-invisible">' . t('Pages') . '</h2>' . theme('item_list', array(
       'items' => $items,
-      'attributes' => array('class' => array('pager')),
+      'attributes' => array('class' => array('c-pager')),
     )) . '</nav>';
   }
 }
@@ -156,7 +156,7 @@ function glacier_pager_link($vars) {
   $classes = &$vars['attributes']['class'];
 
   // Add default link class.
-  $classes[] = 'pager__link';
+  $classes[] = 'c-pager__link';
 
   $page = isset($_GET['page']) ? $_GET['page'] : '';
   if ($new_page = implode(',', pager_load_array($page_new[$element], $element, explode(',', $page)))) {
@@ -193,21 +193,21 @@ function glacier_pager_link($vars) {
   // @todo Add arrows using CSS :before.
   if ($text == '« first') {
     $text = '';
-    $classes[] = 'pager__link--first';
+    $classes[] = 'c-pager__link--first';
   }
   if ($text == '‹ previous') {
     $text = '';
     $attributes['rel'][] = 'prev';
-    $classes[] = 'pager__link--previous';
+    $classes[] = 'c-pager__link--previous';
   }
   if ($text == 'next ›') {
     $text = '';
     $attributes['rel'][] = 'next';
-    $classes[] = 'pager__link--next';
+    $classes[] = 'c-pager__link--next';
   }
   if ($text == 'last »') {
     $text = '';
-    $classes[] = 'pager__link--last';
+    $classes[] = 'c-pager__link--last';
   }
 
   // @todo l() cannot be used here, since it adds an 'active' class based on the
