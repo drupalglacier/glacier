@@ -199,7 +199,7 @@ function glacier_process_html_tag(&$vars) {
       unset($tag['#attributes']['media']);
     }
     // Remove type="text/css"
-    if ($tag['#attributes']['type'] == 'text/css') {
+    if (isset($tag['#attributes']['type']) && $tag['#attributes']['type'] == 'text/css') {
       unset($tag['#attributes']['type']);
     }
   }
