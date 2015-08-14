@@ -189,17 +189,18 @@ function glacier_process_html(&$vars, $hook) {
 function glacier_process_html_tag(&$vars) {
   $tag = &$vars['element'];
 
-  if ($tag['#tag'] == 'script' || $tag['#tag'] == 'style') {
-    // Remove type="text/javascript" and type="text/css".
+  if ($tag['#tag'] == 'script') {
+    // Remove type="text/javascript"
     unset($tag['#attributes']['type']);
-
-    if ($tag['#tag'] == 'style') {
-      // Add rel="stylesheet"
-      $tag['#attributes']['rel'] = 'stylesheet';
-      // Remove media="all" but leave others unaffected.
-      if (isset($tag['#attributes']['media']) && $tag['#attributes']['media'] === 'all') {
-        unset($tag['#attributes']['media']);
-      }
+  }
+  elseif ($tag['#tag'] == 'style' || $tag['#tag'] == 'link') {
+    // Remove media="all" but leave others unaffected.
+    if (isset($tag['#attributes']['media']) && $tag['#attributes']['media'] === 'all') {
+      unset($tag['#attributes']['media']);
+    }
+    // Remove type="text/css"
+    if ($tag['#attributes']['type'] == 'text/css') {
+      unset($tag['#attributes']['type']);
     }
   }
 }
