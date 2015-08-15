@@ -172,6 +172,17 @@ function glacier_preprocess_html(&$vars, $hook) {
     ),
     '#weight' => '-9999',
   ), 'http_equiv');
+
+  // Add 'theme-color'
+  if ($meta_theme_color = theme_get_setting('meta_theme_color')) {
+    drupal_add_html_head(array(
+      '#tag' => 'meta',
+      '#attributes' => array(
+        'name' => 'theme-color',
+        'content' => $meta_theme_color,
+      )
+    ), 'theme_color');
+  }
 }
 
 /**
