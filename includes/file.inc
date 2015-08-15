@@ -14,7 +14,7 @@ function glacier_file_icon($vars) {
   $mime = check_plain($file->filemime);
   $icon_url = file_icon_url($file, $icon_directory);
 
-  return '<img class="file__icon" alt="' . $mime . '" src="' . $icon_url . '">';
+  return '<img class="c-file__icon" alt="' . $mime . '" src="' . $icon_url . '">';
 }
 
 /**
@@ -32,7 +32,7 @@ function glacier_file_link($vars) {
   $options = array(
     'attributes' => array(
       'type' => $file->filemime . '; length=' . $file->filesize,
-      'class' => array('file__link'),
+      'class' => array('c-file__link'),
     ),
   );
 
@@ -45,7 +45,7 @@ function glacier_file_link($vars) {
     $options['attributes']['title'] = check_plain($file->filename);
   }
 
-  return '<div class="file">' . $icon . ' ' . l($link_text, $url, $options) . ' <span class="file__size">(' . format_size($file->filesize) . ')</span></div>';
+  return '<div class="c-file">' . $icon . ' ' . l($link_text, $url, $options) . ' <span class="c-file__size">(' . format_size($file->filesize) . ')</span></div>';
 }
 
 /**
@@ -56,7 +56,7 @@ function glacier_file_widget($vars) {
   $output = '';
 
   // The "form-managed-file" class is required for proper Ajax functionality.
-  $output .= '<div class="file-widget form-managed-file">';
+  $output .= '<div class="file-widget form-managed-file c-file__widget">';
   $output .= drupal_render_children($element);
   $output .= '</div>';
 
@@ -79,7 +79,7 @@ function glacier_file_widget_multiple($vars) {
   if ($element['#display_field']) {
     $headers[] = array(
       'data' => t('Display'),
-      'class' => array('checkbox'),
+      'class' => array('checkbox', 'c-file__checkbox'),
     );
   }
   $headers[] = t('Weight');
@@ -134,7 +134,7 @@ function glacier_file_widget_multiple($vars) {
       unset($widget['display']['#title']);
       $display = array(
         'data' => render($widget['display']),
-        'class' => array('checkbox'),
+        'class' => array('checkbox', 'c-file__checkbox'),
       );
     }
     $widget['_weight']['#attributes']['class'] = array($weight_class);
@@ -150,15 +150,15 @@ function glacier_file_widget_multiple($vars) {
     $row[] = $operations;
     $rows[] = array(
       'data' => $row,
-      'class' => isset($widget['#attributes']['class']) ? array_merge($widget['#attributes']['class'], array('draggable')) : array('draggable'),
+      'class' => isset($widget['#attributes']['class']) ? array_merge($widget['#attributes']['class'], array('draggable', 'is-draggable')) : array('draggable', 'is-draggable'),
     );
   }
 
   drupal_add_tabledrag($table_id, 'order', 'sibling', $weight_class);
 
-  $output = '<div class="form-item form-item--file-widget-multiple">';
-  $output .= '<fieldset class="form-item__fieldset">';
-  $output .= '<legend class="form-item__legend">' . t($element['#title']) . '</legend>';
+  $output = '<div class="form-item c-form__item--file-widget-multiple c-file__widget-multiple">';
+  $output .= '<fieldset class="c-form__fieldset">';
+  $output .= '<legend class="c-form__legend">' . t($element['#title']) . '</legend>';
   $output .= empty($rows) ? '' : theme('table', array('header' => $headers, 'rows' => $rows, 'attributes' => array('id' => $table_id)));
   $output .= drupal_render_children($element) . '</fieldset></div>';
 
