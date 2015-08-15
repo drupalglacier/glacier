@@ -1,0 +1,15 @@
+/**
+ * Element invisible
+ *
+ * Default Drupal content hiding class
+ *
+ * @level X.X.
+ * @markup
+ * <div class="element-invisible">
+ *   Only screenreader users will notice me
+ * </div>
+ */
+
+.element-invisible {
+  @extend .u-visuallyhidden;
+}
