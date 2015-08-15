@@ -1,0 +1,26 @@
+/**
+ * Message
+ *
+ * Simple styles for status messages
+ *
+ * @level X.X.
+ */
+
+.c-message {
+  border: 1px solid;
+  + .c-message {
+    margin-top: $spacing-xs;
+  }
+}
+
+.c-message--status {
+  border-color: $cs-neutral;
+}
+
+.c-message--error {
+  border-color: $cs-negative;
+}
+
+.c-message--warning {
+  border-color: $cs-cautious;
+}

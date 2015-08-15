@@ -18,12 +18,22 @@ function glacier_status_messages($vars) {
   );
 
   foreach (drupal_get_messages($display) as $type => $messages) {
+    $island_class = 'o-island o-island--neutral';
+    switch ($type) {
+      case 'error':
+        $island_class = 'o-island o-island--negative';
+        break;
+
+      case 'warning':
+        $island_class = 'o-island o-island--cautious';
+        break;
+    }
 
     if (theme_get_setting('classes_default')) {
-      $output .= "<div class=\"messages $type c-message c-message--$type\" role=\"alertdialog\">\n";
+      $output .= "<div class=\"messages $type c-message c-message--$type $island_class\" role=\"alertdialog\">\n";
     }
     else {
-      $output .= "<div class=\"c-message c-message--$type\" role=\"alertdialog\">\n";
+      $output .= "<div class=\"c-message c-message--$type $island_class\" role=\"alertdialog\">\n";
     }
 
     if (!empty($status_heading[$type])) {
