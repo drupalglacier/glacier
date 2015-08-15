@@ -96,6 +96,36 @@ function glacier_form_system_theme_settings_alter(&$form, &$form_state, $form_id
     '#title' => t('Normalize skiplink behaviour for all mandatory browsers.'),
     '#default_value' => theme_get_setting('js_enhancement_skiplink'),
   );
+
+  $form['options_settings']['meta'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Meta enhancements'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+  );
+  $form['options_settings']['meta']['meta_format_detection'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Deactivate automatic iOS / Android phone number detection.'),
+    '#default_value' => theme_get_setting('meta_format_detection'),
+  );
+  $form['options_settings']['meta']['meta_viewport'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Add responsive viewport meta tag.'),
+    '#default_value' => theme_get_setting('meta_viewport'),
+  );
+  $form['options_settings']['meta']['meta_ie_compatibility'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Deactivate IE compatibility mode.'),
+    '#default_value' => theme_get_setting('meta_ie_compatibility'),
+  );
+  $form['options_settings']['meta']['meta_theme_color'] = array(
+    '#type' => 'textfield',
+    '#title' => t('theme-color'),
+    '#description' => t('Browsers might color a web app\'s title bar with the specified \'theme-color\' value, or use it as a color highlight in a task switcher.'),
+    '#attributes' => array('placeholder' => 'e.g. #efefef'),
+    '#size' => 15,
+    '#default_value' => theme_get_setting('meta_theme_color'),
+  );
 }
 
 /**

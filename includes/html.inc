@@ -146,32 +146,38 @@ function glacier_preprocess_html(&$vars, $hook) {
   }
 
   // Deactivate automatic iOS / Android phone number detection
-  drupal_add_html_head(array(
-    '#tag' => 'meta',
-    '#attributes' => array(
-      'name' => 'format-detection',
-      'content' => 'telephone=no',
-    )
-  ), 'tel_detection');
+  if (theme_get_setting('meta_format_detection')) {
+    drupal_add_html_head(array(
+      '#tag' => 'meta',
+      '#attributes' => array(
+        'name' => 'format-detection',
+        'content' => 'telephone=no',
+      )
+    ), 'tel_detection');
+  }
 
   // Viewport
-  drupal_add_html_head(array(
-    '#tag' => 'meta',
-    '#attributes' => array(
-      'name' => 'viewport',
-      'content' => 'width=device-width,initial-scale=1',
-    )
-  ), 'viewport');
+  if (theme_get_setting('meta_viewport')) {
+    drupal_add_html_head(array(
+      '#tag' => 'meta',
+      '#attributes' => array(
+        'name' => 'viewport',
+        'content' => 'width=device-width,initial-scale=1',
+      )
+    ), 'viewport');
+  }
 
   // Deactivate IE compatibility mode
-  drupal_add_html_head(array(
-    '#tag' => 'meta',
-    '#attributes' => array(
-      'http-equiv' => 'X-UA-Compatible',
-      'content' => 'IE=edge,chrome=1',
-    ),
-    '#weight' => '-9999',
-  ), 'http_equiv');
+  if (theme_get_setting('meta_ie_compatibility')) {
+    drupal_add_html_head(array(
+      '#tag' => 'meta',
+      '#attributes' => array(
+        'http-equiv' => 'X-UA-Compatible',
+        'content' => 'IE=edge,chrome=1',
+      ),
+      '#weight' => '-9999',
+    ), 'http_equiv');
+  }
 
   // Add 'theme-color'
   if ($meta_theme_color = theme_get_setting('meta_theme_color')) {

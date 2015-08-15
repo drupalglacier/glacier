@@ -52,6 +52,9 @@ settings[js_enhancement_skiplink]  = 1
 settings[classes_default]          = 0
 settings[classes_first_last]       = 0
 
+settings[meta_format_detection]    = 1
+settings[meta_viewport]            = 1
+settings[meta_ie_compatibility]    = 1
 settings[meta_theme_color]         = ''
 
 settings[magic_css_excludes]       = ':all
