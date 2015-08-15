@@ -226,6 +226,13 @@ function glacier_process_html_tag(&$vars) {
  * Implements hook_html_head_alter().
  */
 function glacier_html_head_alter(&$head_elements) {
+  // Simplify the meta tag for character encoding
+  if (isset($head_elements['system_meta_content_type']['#attributes']['content'])) {
+    $head_elements['system_meta_content_type']['#attributes'] = array(
+      'charset' => str_replace('text/html; charset=', '', $head_elements['system_meta_content_type']['#attributes']['content'])
+    );
+  }
+
   foreach ($head_elements as $k => $element) {
     if (strpos($k, 'generator') !== FALSE) {
       // Remove the Drupal generator tag, it's pointless
