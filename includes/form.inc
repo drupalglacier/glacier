@@ -17,7 +17,7 @@ function glacier_form($vars) {
   element_set_attributes($element, array('method', 'id'));
 
   if (empty($element['#attributes']['accept-charset'])) {
-    $element['#attributes']['accept-charset'] = "UTF-8";
+    $element['#attributes']['accept-charset'] = 'UTF-8';
   }
 
   $element['#attributes']['class'] = preg_replace_callback(
@@ -43,6 +43,14 @@ function glacier_form($vars) {
  * Implements hook_form_alter().
  */
 function glacier_form_alter(&$form, &$form_state, $form_id) {
+  // Move hidden build id and form id fields to the bottom.
+  if (isset($form['form_build_id'])) {
+    $form['form_build_id']['#weight'] = 9999;
+  }
+  if (isset($form['form_id'])) {
+    $form['form_id']['#weight'] = 9999;
+  }
+
   $form['#attributes']['class'] = array('c-form');
 }
 
