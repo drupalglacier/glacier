@@ -1,0 +1,40 @@
+/**
+ * System tab
+ *
+ * @level X.X.
+ * @markup
+ * <ul class="c-system-tab">
+ *   <li class="c-system-tab__title">
+ *     <a href="#tab1" class="c-system-tab__link">Tab 1</a>
+ *   </li>
+ *   <li class="c-system-tab__title">
+ *     <a href="#tab2" class="c-system-tab__link">Tab 2</a>
+ *   </li>
+ * </ul>
+ */
+
+.c-system-tab {
+  padding-left: 0;
+  list-style-type: none;
+
+  @include u-clearfix();
+}
+
+.c-system-tab__title {
+  float: left;
+}
+
+.c-system-tab__link {
+  display: inline-block;
+  padding: 0.5em 1em;
+  border: 0 solid $cs-grey-c;
+  border-bottom-width: 1px;
+  text-decoration: none;
+  &:active,
+  &:focus,
+  &.is-active {
+    outline: none;
+    border-width: 1px;
+    border-bottom-width: 0;
+  }
+}

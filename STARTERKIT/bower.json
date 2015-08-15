@@ -15,9 +15,9 @@
     "avalanche_base_form": "^2.0.0",
     "avalanche_base_layout": "^2.0.0",
     "avalanche_base_typography": "^2.0.0",
-    "avalanche_object_island": "^2.0.0",
-    "avalanche_component_tab": "^2.0.0",
+    "avalanche_utility_clearfix": "^2.0.0",
     "avalanche_utility_visibility": "^2.0.0",
+    "avalanche_object_island": "^2.0.0",
     "normalize.css": "~3.0.3"
   }
 }

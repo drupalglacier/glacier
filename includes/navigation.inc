@@ -413,10 +413,10 @@ function glacier_menu_local_tasks($vars) {
     $vars['primary']['#prefix'] = '<h2 class="element-invisible">' . t('Primary tasks') . '</h2>';
 
     if (!$classes_default) {
-      $vars['primary']['#prefix'] .= '<ul class="nav nav--primary-local-tasks">';
+      $vars['primary']['#prefix'] .= '<ul class="c-system-tab c-local-tasks c-local-tasks--primary">';
     }
     else {
-      $vars['primary']['#prefix'] .= '<ul class="nav nav--primary-local-tasks tabs primary">';
+      $vars['primary']['#prefix'] .= '<ul class="c-system-tab c-local-tasks c-local-tasks--primary tabs primary">';
     }
 
     $vars['primary']['#suffix'] = '</ul>';
@@ -427,10 +427,10 @@ function glacier_menu_local_tasks($vars) {
     $vars['secondary']['#prefix'] = '<h2 class="element-invisible">' . t('Secondary tasks') . '</h2>';
 
     if (!$classes_default) {
-      $vars['secondary']['#prefix'] .= '<ul class="nav nav--secondary-local-tasks">';
+      $vars['secondary']['#prefix'] .= '<ul class="c-system-tab c-local-tasks c-local-tasks--secondary">';
     }
     else {
-      $vars['secondary']['#prefix'] .= '<ul class="nav nav--secondary-local-tasks tabs secondary">';
+      $vars['secondary']['#prefix'] .= '<ul class="c-system-tab c-local-tasks c-local-tasks--secondary tabs secondary">';
     }
 
     $vars['secondary']['#suffix'] = '</ul>';
@@ -463,10 +463,10 @@ function glacier_menu_local_task($vars) {
 
   // Update link classes.
   if (empty($link_classes)) {
-    $link_classes[] = 'c-menu__link';
+    $link_classes[] = 'c-system-tab__link';
   }
   else {
-    array_unshift($link_classes, 'c-menu__link');
+    array_unshift($link_classes, 'c-system-tab__link');
 
     if (!theme_get_setting('classes_default')) {
       $link_classes = preg_replace('/^active$/', 'is-active', $link_classes);
@@ -476,7 +476,7 @@ function glacier_menu_local_task($vars) {
     }
   }
 
-  return '<li class="c-menu__item' . (!empty($vars['element']['#active']) ? ' is-active' : '') . '">' . l($link_text, $link['href'], $link['localized_options']) . "</li>\n";
+  return '<li class="c-system-tab__title' . (!empty($vars['element']['#active']) ? ' is-active' : '') . '">' . l($link_text, $link['href'], $link['localized_options']) . "</li>\n";
 }
 
 /**
