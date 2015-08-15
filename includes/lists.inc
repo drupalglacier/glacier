@@ -15,12 +15,11 @@ function glacier_item_list($vars) {
 
   // Change attributes for facetapi links.
   if (isset($attributes['class'][0]) && $attributes['class'][0] == 'facetapi-facetapi-links' && !empty($items)) {
-    $attributes['class'][] = 'nav';
-    $attributes['class'][] = 'nav--facets';
+    $attributes['class'][] = 'c-facetapi-menu';
 
     // Change item classes.
     foreach ($items as $key => $item) {
-      $items[$key]['class'] = array('nav__item');
+      $items[$key]['class'] = array('c-facetapi-menu__item');
     }
   }
 
