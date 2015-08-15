@@ -34,3 +34,16 @@ function STARTERKIT_preprocess_block(&$vars, $hook) {
       break;
   }
 }
+
+/**
+ * Implements hook_preprocess_field().
+ */
+function STARTERKIT_preprocess_field(&$vars, $hook) {
+  // Define patterns that should be removed from the field css class name
+  // you can use this to remove prefixes (like the bundle name) from the field class name.
+  // $patterns = array(
+  //   '/^' . $vars['bundle_class'] . '-/',
+  //   '/^' . 'custom-prefix-/',
+  // );
+  // $vars['field_name_css'] = preg_replace($patterns, '', $vars['field_name_css']);
+}
