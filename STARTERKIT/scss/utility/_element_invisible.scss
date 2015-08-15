@@ -12,4 +12,7 @@
 
 .element-invisible {
   @extend .u-visuallyhidden;
+  + * {
+    margin-top: 0;
+  }
 }
