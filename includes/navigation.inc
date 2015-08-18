@@ -206,10 +206,10 @@ function glacier_links__locale_block(&$vars) {
  */
 function glacier_menu_tree($vars) {
   if (theme_get_setting('classes_default')) {
-    return '<ul class="nav menu c--menu__list c--menu__list--level1">' . $vars['tree'] . '</ul>';
+    return '<ul class="nav menu c-menu__list c-menu__list--level1">' . $vars['tree'] . '</ul>';
   }
   else {
-    return '<ul class="c--menu__list c--menu__list--level1">' . $vars['tree'] . '</ul>';
+    return '<ul class="c-menu__list c-menu__list--level1">' . $vars['tree'] . '</ul>';
   }
 }
 
@@ -290,6 +290,10 @@ function glacier_preprocess_menu_link(&$vars) {
     $item_classes = array_values(array_diff($item_classes, $remove));
   }
 
+  if (!empty($menu)) {
+    $item_classes[] = 'c-' . $menu . '__item';
+  }
+
   // Update list item classes.
   if (empty($item_classes)) {
     $item_classes[] = 'c-menu__item';
@@ -339,6 +343,11 @@ function glacier_preprocess_menu_link(&$vars) {
     }
   }
   $item_classes[] = 'c-menu__item--level' . $element['#original_link']['depth'];
+  $item_classes[] = 'is-level' . $element['#original_link']['depth'];
+
+  if (!empty($menu)) {
+    $link_classes[] = 'c-' . $menu . '__link';
+  }
 
   // Update link classes.
   if (empty($link_classes)) {
@@ -357,6 +366,7 @@ function glacier_preprocess_menu_link(&$vars) {
     }
   }
   $link_classes[] = 'c-menu__link--level' . $element['#original_link']['depth'];
+  $link_classes[] = 'is-level' . $element['#original_link']['depth'];
 
   // Uncomment if you want to add mlid classes.
   // $item_classes[] = 'menu__item--mlid-' . $mlid;
