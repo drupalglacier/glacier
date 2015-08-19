@@ -57,4 +57,9 @@ function glacier_preprocess_field(&$vars) {
   if ($vars['classes_default']) {
     $vars['item_classes_array'][] = 'field-item';
   }
+
+  // Add bundle and view mode theme hook suggestions
+  $vars['theme_hook_suggestions'][] = 'field--' . $vars['bundle_class'] . '--' . $vars['field_name_css'];
+  $vars['theme_hook_suggestions'][] = 'field--' . $vars['view_mode_class'] . '--' . $vars['field_name_css'];
+  $vars['theme_hook_suggestions'][] = 'field--' . $vars['bundle_class'] . '--' . $vars['view_mode_class'] . '--' . $vars['field_name_css'];
 }
