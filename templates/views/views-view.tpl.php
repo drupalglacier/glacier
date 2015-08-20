@@ -12,51 +12,51 @@
   <?php print render($title_suffix); ?>
 
   <?php if ($header): ?>
-    <div class="c-view__header">
+    <div class="<?php print $header_classes; ?>">
       <?php print $header; ?>
     </div>
   <?php endif; ?>
 
   <?php if ($exposed): ?>
-    <div class="c-view__filters">
+    <div class="<?php print $filters_classes; ?>">
       <?php print $exposed; ?>
     </div>
   <?php endif; ?>
 
   <?php if ($attachment_before): ?>
-    <div class="c-view__attachment-before">
+    <div class="<?php print $attachment_before_classes; ?>">
       <?php print $attachment_before; ?>
     </div>
   <?php endif; ?>
 
-  <?php if ($rows): ?>
-    <div class="c-view__content">
+  <div class="<?php print $content_classes; ?>">
+    <?php if ($rows): ?>
       <?php print $rows; ?>
-    </div>
-  <?php elseif ($empty): ?>
-    <div class="c-view__content is-empty">
+    <?php elseif ($empty): ?>
       <?php print $empty; ?>
-    </div>
-  <?php endif; ?>
+    <?php endif; ?>
+  </div>
 
   <?php if ($pager): ?>
-    <?php print $pager; ?>
+    <div class="<?php print $pager_classes; ?>">
+      <?php print $pager; ?>
+    </div>
   <?php endif; ?>
 
   <?php if ($attachment_after): ?>
-    <div class="c-view__attachment-after">
+    <div class="<?php print $attachment_after_classes; ?>">
       <?php print $attachment_after; ?>
     </div>
   <?php endif; ?>
 
   <?php if ($more): ?>
-    <div class="c-view__more">
+    <div class="<?php print $more_classes; ?>">
       <?php print $more; ?>
     </div>
   <?php endif; ?>
 
   <?php if ($footer): ?>
-    <div class="c-view__footer">
+    <div class="<?php print $footer_classes; ?>">
       <?php print $footer; ?>
     </div>
   <?php endif; ?>

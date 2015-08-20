@@ -8,7 +8,7 @@
   <h3><?php print $title; ?></h3>
 <?php endif; ?>
 
-<div class="<?php print $class; ?>"<?php print $attributes; ?>>
+<div class="<?php print $classes; ?>"<?php print $attributes; ?>>
   <?php foreach ($rows as $row_number => $columns): ?>
     <?php foreach ($columns as $column_number => $item): ?>
       <?php if (!empty($item)): ?>
