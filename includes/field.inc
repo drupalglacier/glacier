@@ -29,6 +29,9 @@ function glacier_preprocess_field(&$vars) {
   $bundle_name = preg_replace('/^field_/', '', $vars['element']['#bundle']); // Remove 'field_' prefix from field collection bundles.
   $vars['bundle_class'] = drupal_html_class($bundle_name);
 
+  // Add view mode class variable.
+  $vars['view_mode_class'] = drupal_html_class($vars['element']['#view_mode']);
+
   // Add label display variable.
   $vars['label_display'] = $vars['element']['#label_display'];
 
