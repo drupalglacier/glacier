@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Navigation-related functions.
+ * Menu-related functions.
  */
 
 /**
