@@ -36,7 +36,7 @@ function glacier_preprocess_field(&$vars) {
   );
   // Add extra field class on field collections.
   if ($vars['element']['#field_type'] == 'field_collection') {
-    $vars['glacier_classes_array'][] = 'c-' . $vars['field_name_css'];
+    $vars['glacier_classes_array'][] = 'c-' . $vars['field_name_class'];
   }
 
   // Falback label class if glacier and Drupal default classes are disabled in the theme settings.
