@@ -70,8 +70,8 @@ function glacier_form_system_theme_settings_alter(&$form, &$form_state, $form_id
   );
   $form['options_settings']['classes']['classes_glacier'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Output glacier classes (BEM syntax).'),
-    '#default_value' => theme_get_setting('classes_default'),
+    '#title' => t('Output glacier classes (BEM syntax)'),
+    '#default_value' => theme_get_setting('classes_glacier'),
   );
   $form['options_settings']['classes']['classes_default'] = array(
     '#type' => 'checkbox',
