@@ -8,6 +8,10 @@
  * Implements template_preprocess_field().
  */
 function glacier_preprocess_field(&$vars) {
+  // Add setting variables.
+  $vars['classes_glacier'] = theme_get_setting('classes_glacier');
+  $vars['classes_default'] = theme_get_setting('classes_default');
+
   // Hide the item wrapper by default if the label is hidden
   // and the field is no multi value field.
   $vars['item_wrapper_hidden'] = $vars['label_hidden'] && count($vars['items']) > 1;
@@ -76,11 +80,11 @@ function glacier_preprocess_field(&$vars) {
  * Implements template_process_field().
  */
 function glacier_process_field(&$vars, $hook) {
-  $vars['classes_array'] = glacier_class_merge($vars['glacier_classes_array'], $vars['classes_array'], $vars['classes_fallback']);
+  $vars['classes_array'] = glacier_class_merge($vars['glacier_classes_array'], $vars['classes_array'], $vars['classes_fallback'], $vars['classes_glacier'], $vars['classes_default']);
   $vars['classes'] = implode(' ', $vars['classes_array']);
 
   $label_classes_fallback = array('c-field__label'); // Falback label class if glacier and Drupal default classes are disabled in the theme settings.
-  $vars['label_classes_array'] = glacier_class_merge($vars['glacier_label_classes_array'], $vars['label_classes_array'], $vars['label_classes_fallback']);
+  $vars['label_classes_array'] = glacier_class_merge($vars['glacier_label_classes_array'], $vars['label_classes_array'], $vars['label_classes_fallback'], $vars['classes_glacier'], $vars['classes_default']);
   $vars['label_classes'] = implode(' ', $vars['label_classes_array']);
   if ($vars['label_display'] == 'inline' && $vars['label_display_inline_add_colon']) {
     // Add a colon to inline labels.
@@ -91,6 +95,6 @@ function glacier_process_field(&$vars, $hook) {
   }
 
   $item_classes_fallback = array('c-field__item'); // Falback item class if glacier and Drupal default classes are disabled in the theme settings.
-  $vars['item_classes_array'] = glacier_class_merge($vars['glacier_item_classes_array'], $vars['item_classes_array'], $vars['item_classes_fallback']);
+  $vars['item_classes_array'] = glacier_class_merge($vars['glacier_item_classes_array'], $vars['item_classes_array'], $vars['item_classes_fallback'], $vars['classes_glacier'], $vars['classes_default']);
   $vars['item_classes'] = implode(' ', $vars['item_classes_array']);
 }

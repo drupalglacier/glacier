@@ -18,11 +18,13 @@ function glacier_classes($classes, $default_classes = array(), $state_classes = 
  * @param  array  $glacier_classes_array  glacier default classes (BEM syntax).
  * @param  array  $default_classes_array  Drupal default classes.
  * @param  mixed  $fallback_classes_array Fallback classes in case of glacier and drupal classes are disabled.
+ * @param  bool   $add_glacier_classes
+ * @param  bool   $add_default_classes
  * @return array                          A array of classes for theming
  */
-function glacier_class_merge($glacier_classes_array = array(), $default_classes_array = array(), $fallback_classes_array = array()) {
-  $add_glacier_classes = theme_get_setting('classes_glacier');
-  $add_default_classes = theme_get_setting('classes_default');
+function glacier_class_merge($glacier_classes_array = array(), $default_classes_array = array(), $fallback_classes_array = array(), $add_glacier_classes = NULL, $add_default_classes = NULL) {
+  $add_glacier_classes = isset($add_glacier_classes) ? $add_glacier_classes : theme_get_setting('classes_glacier');
+  $add_default_classes = isset($add_default_classes) ? $add_default_classes : theme_get_setting('classes_default');
 
   $glacier_classes_array = is_array($glacier_classes_array) ? $glacier_classes_array : array($glacier_classes_array);
   $default_classes_array = is_array($default_classes_array) ? $default_classes_array : array($default_classes_array);
