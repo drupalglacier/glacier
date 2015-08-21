@@ -91,11 +91,11 @@ function glacier_process_views_view(&$vars) {
  */
 function glacier_preprocess_views_view_grid(&$vars) {
   // Modify classes to follow SMACSS naming convention.
-  $vars['classes'] = preg_replace(
+  $vars['classes_array'] = array(preg_replace(
     array('/views-view-grid/', '/ cols-(.*?)($|\s)/'),
     array('o-grid', ''),
     $vars['class']
-  );
+  ));
   foreach ($vars['column_classes'] as $key => $value) {
     $vars['column_classes'][$key] = preg_replace('/col-(.*?)($|\s)/', '', $vars['column_classes'][$key]);
   }
