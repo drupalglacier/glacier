@@ -64,13 +64,13 @@ function glacier_form_system_theme_settings_alter(&$form, &$form_state, $form_id
   );
   $form['options_settings']['classes'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Enable or disable the output of some class variations.'),
+    '#title' => t('Enable or disable the output of some class variations'),
     '#collapsible' => TRUE,
     '#collapsed' => TRUE,
   );
   $form['options_settings']['classes']['classes_glacier'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Output glacier classes (BEM syntax)'),
+    '#title' => t('Output glacier classes (BEM syntax).'),
     '#default_value' => theme_get_setting('classes_glacier'),
   );
   $form['options_settings']['classes']['classes_default'] = array(
