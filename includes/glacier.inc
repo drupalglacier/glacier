@@ -8,11 +8,26 @@ function glacier_classes($classes, $default_classes = array(), $state_classes = 
 }
 
 function glacier_vars_alter(&$vars, $alterations, $conditions = array()) {
-  $element = isset($vars['element']) ? $vars['element'] : $vars['elements'];
+  if (isset($vars['element'])) {
+    $element = $vars['element'];
+  } elseif (isset($vars['elements'])) {
+    $element = $vars['elements'];
+  } elseif (isset($vars['view'])) {
+    $element = (array) $vars['view'];
+  } else {
+    return;
+  }
+
+  $condition_array = $element;
+
+  if (isset($element['#block'])) {
+    $condition_array = (array) $element['#block'];
+  }
 
   // Check conditions.
   foreach ($conditions as $condition_type => $value) {
-    if (!isset($element[$condition_type]) || $element[$condition_type] != $value) {
+    $value = is_array($value) ? $value : array($value);
+    if (!isset($condition_array[$condition_type]) || !in_array($condition_array[$condition_type], $value)) {
       // Skip alterations if conditions aren't met.
       return;
     }
