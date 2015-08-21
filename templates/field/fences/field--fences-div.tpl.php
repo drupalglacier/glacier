@@ -6,7 +6,7 @@
  * @see http://developers.whatwg.org/grouping-content.html#the-div-element
  */
 ?>
-<div class="<?php print $classes; ?>">
+<div class="<?php print $classes; ?>"<?php print $attributes; ?>>
   <?php if (!$label_hidden): ?>
     <div class="<?php print $label_classes; ?>"<?php print $title_attributes; ?>><?php print $label; ?></div>
   <?php endif; ?>
