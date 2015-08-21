@@ -14,7 +14,7 @@ function glacier_preprocess_field(&$vars) {
 
   // Hide the item wrapper by default if the label is hidden
   // and the field is no multi value field.
-  $vars['item_wrapper_hidden'] = $vars['label_hidden'] && count($vars['items']) > 1;
+  $vars['item_wrapper_hidden'] = $vars['label_hidden'] && count($vars['items']) <= 1;
 
   // Add label display variable.
   $vars['label_display'] = $vars['element']['#label_display'];
