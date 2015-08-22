@@ -22,6 +22,7 @@ function glacier_preprocess_field(&$vars) {
   // Set class variables to use in the glacier base classes.
   $vars['field_name_class'] = preg_replace('/^field-/', '', $vars['field_name_css']);
   $vars['field_type_class'] = drupal_html_class($vars['element']['#field_type']);
+  $vars['entity_type_class'] = drupal_html_class($vars['element']['#entity_type']);
   $vars['bundle_class'] = drupal_html_class(preg_replace('/^field_/', '', $vars['element']['#bundle'])); // Remove 'field_' prefix from field collection (and possibly other) bundles.
   $vars['view_mode_class'] = drupal_html_class($vars['element']['#view_mode']);
 
@@ -33,9 +34,7 @@ function glacier_preprocess_field(&$vars) {
   // Add glacier classes.
   $vars['glacier_classes_array'] = array(
     'c-field',
-    'c-field--' . $vars['field_name_class'],
-    'c-field--' . $vars['field_type_class'],
-    'c-' . $vars['bundle_class'] . '__' . $vars['field_name_class'],
+    'c-' . $vars['entity_type_class'] . '-' . $vars['bundle_class'] . '__' . $vars['field_name_class'],
   );
   // Add extra field class on field collections.
   if ($vars['element']['#field_type'] == 'field_collection') {
@@ -50,9 +49,7 @@ function glacier_preprocess_field(&$vars) {
   // Add glacier label classes.
   $vars['glacier_label_classes_array'] = array(
     'c-field__label',
-    'c-field--' . $vars['field_name_class'] . '__label',
-    'c-field--' . $vars['field_type_class'] . '__label',
-    'c-' . $vars['bundle_class'] . '__' . $vars['field_name_class'] . '__label',
+    'c-' . $vars['entity_type_class'] . '-' . $vars['bundle_class'] . '__' . $vars['field_name_class'] . '__label',
   );
   // Add variables to control the output of a colon after the label.
   $vars['label_display_above_add_colon'] = FALSE;
@@ -70,9 +67,7 @@ function glacier_preprocess_field(&$vars) {
   // Add glacier item classes.
   $vars['glacier_item_classes_array'] = array(
     'c-field__item',
-    'c-field--' . $vars['field_name_class'] . '__item',
-    'c-field--' . $vars['field_type_class'] . '__item',
-    'c-' . $vars['bundle_class'] . '__' . $vars['field_name_class'] . '__item',
+    'c-' . $vars['entity_type_class'] . '-' . $vars['bundle_class'] . '__' . $vars['field_name_class'] . '__item',
   );
   // Add a utility class to display the field item inline-block
   // if the label is displayed as inline element.

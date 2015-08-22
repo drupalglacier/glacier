@@ -23,7 +23,6 @@ require_once dirname(__FILE__) . '/includes/navigation.inc';
 require_once dirname(__FILE__) . '/includes/node.inc';
 require_once dirname(__FILE__) . '/includes/page.inc';
 require_once dirname(__FILE__) . '/includes/pager.inc';
-require_once dirname(__FILE__) . '/includes/paragraphs.inc';
 require_once dirname(__FILE__) . '/includes/progress-bar.inc';
 require_once dirname(__FILE__) . '/includes/region.inc';
 require_once dirname(__FILE__) . '/includes/taxonomy.inc';

@@ -23,22 +23,6 @@ function glacier_preprocess_entity(&$vars, $hook) {
   $vars['bundle_class'] = drupal_html_class($vars['elements']['#bundle']);
   $vars['view_mode_class'] = drupal_html_class($vars['elements']['#view_mode']);
 
-  // Make it possible to alter the type, bundle and view mode class on a entity type basis.
-  $function = 'glacier_' . $vars['entity_type'] . '_type_class_alter';
-  if (function_exists($function)) {
-    $vars['type_class'] = $function($vars, $hook);
-  }
-
-  $function = 'glacier_' . $vars['entity_type'] . '_bundle_class_alter';
-  if (function_exists($function)) {
-    $vars['bundle_class'] = $function($vars, $hook);
-  }
-
-  $function = 'glacier_' . $vars['entity_type'] . '_view_mode_class_alter';
-  if (function_exists($function)) {
-    $vars['view_mode_class'] = $function($vars, $hook);
-  }
-
   // Create entity type preprocess functions (e.g., field collections).
   $function = 'glacier_preprocess_' . $vars['entity_type'];
   if (function_exists($function)) {
@@ -53,7 +37,7 @@ function glacier_preprocess_entity(&$vars, $hook) {
   // Add glacier classes.
   $vars['glacier_classes_array'] = array(
     'c-entity',
-    'c-' . $vars['bundle_class'] . '-entity',
+    'c-' . $vars['type_class'] . '-' . $vars['bundle_class'],
   );
 
   // Fallback title class if glacier and Drupal default classes are disabled in the theme settings.
@@ -66,7 +50,7 @@ function glacier_preprocess_entity(&$vars, $hook) {
   // Add glacier title classes.
   $vars['glacier_title_classes_array'] = array(
     'c-entity__title',
-    'c-' . $vars['bundle_class'] . '-entity__title',
+    'c-' . $vars['type_class'] . '-' . $vars['bundle_class'] . '__title',
   );
 
   // Fallback content class if glacier and Drupal default classes are disabled in the theme settings.
@@ -79,6 +63,6 @@ function glacier_preprocess_entity(&$vars, $hook) {
   // Add glacier content classes.
   $vars['glacier_content_classes_array'] = array(
     'c-entity__content',
-    'c-' . $vars['bundle_class'] . '-entity__content',
+    'c-' . $vars['type_class'] . '-' . $vars['bundle_class'] . '__content',
   );
 }

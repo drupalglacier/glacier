@@ -214,9 +214,7 @@ function glacier_preprocess_block(&$vars) {
   // Add glacier classes.
   $vars['glacier_classes_array'] = array_merge(array(
     'c-block',
-    'c-block--' . $vars['module_class'],
-    'c-block--' . $vars['delta_class'],
-    'c-' . $vars['delta_class'] . '-block',
+    'c-block-' . $vars['delta_class'],
   ), $vars['glacier_classes_array']);
 
   // Fallback title class if glacier and Drupal default classes are disabled in the theme settings.
@@ -229,7 +227,7 @@ function glacier_preprocess_block(&$vars) {
   // Add glacier title classes.
   $vars['glacier_title_classes_array'] = array(
     'c-block__title',
-    'c-' . $vars['delta_class'] . '-block__title',
+    'c-block-' . $vars['delta_class'] . '__title',
   );
 
   // Fallback content class if glacier and Drupal default classes are disabled in the theme settings.
@@ -242,6 +240,6 @@ function glacier_preprocess_block(&$vars) {
   // Add glacier content classes.
   $vars['glacier_content_classes_array'] = array(
     'c-block__content',
-    'c-' . $vars['delta_class'] . '-block__content',
+    'c-block-' . $vars['delta_class'] . '__content',
   );
 }
