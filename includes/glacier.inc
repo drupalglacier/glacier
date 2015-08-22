@@ -41,14 +41,20 @@ function glacier_vars_alter(&$vars, $alterations = array(), $conditions = array(
 }
 
 /**
- * Merge classes in consideration of the theme settings.
- *
- * If the output of glacier or drupal default classes is disabled
- * the relevant classes will not be merged in the final classes array.
- *
  * Implements template_process().
  */
 function glacier_process(&$vars, $hook) {
+  // Set ARIA role "article" if the wrapper tag is "article".
+  if (isset($vars['wrapper_tag']) && $vars['wrapper_tag'] == 'article') {
+    $vars['attributes_array']['role'] = 'article';
+  }
+
+  /**
+   * Merge classes in consideration of the theme settings.
+   *
+   * If the output of glacier or drupal default classes is disabled
+   * the relevant classes will not be merged in the final classes array.
+   */
   $classes_types = array(
     NULL,
     'title',
