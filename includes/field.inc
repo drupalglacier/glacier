@@ -28,7 +28,7 @@ function glacier_preprocess_field(&$vars) {
   // Move Drupal default classes in a separate array.
   $vars['default_classes_array'] = $vars['classes_array'];
   $vars['classes_array'] = array();
-  // Falback class if glacier and Drupal default classes are disabled in the theme settings.
+  // Fallback class if glacier and Drupal default classes are disabled in the theme settings.
   $vars['fallback_classes_array'] = array('c-field');
   // Add glacier classes.
   $vars['glacier_classes_array'] = array(
@@ -42,7 +42,7 @@ function glacier_preprocess_field(&$vars) {
     $vars['glacier_classes_array'][] = 'c-' . $vars['field_name_class'];
   }
 
-  // Falback label class if glacier and Drupal default classes are disabled in the theme settings.
+  // Fallback label class if glacier and Drupal default classes are disabled in the theme settings.
   $vars['fallback_label_classes_array'] = array('c-field__label');
   // Add default Drupal label classes.
   $vars['default_label_classes_array'] = array('field-label');
@@ -62,7 +62,7 @@ function glacier_preprocess_field(&$vars) {
     $vars['glacier_label_classes_array'][] = 'u-display-inline';
   }
 
-  // Falback item class if glacier and Drupal default classes are disabled in the theme settings.
+  // Fallback item class if glacier and Drupal default classes are disabled in the theme settings.
   $vars['fallback_item_classes_array'] = array('c-field__item');
   // Add default Drupal item classes.
   $vars['default_item_classes_array'] = array('field-item');

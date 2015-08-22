@@ -209,7 +209,7 @@ function glacier_preprocess_block(&$vars) {
       break;
   }
 
-  // Falback class if glacier and Drupal default classes are disabled in the theme settings.
+  // Fallback class if glacier and Drupal default classes are disabled in the theme settings.
   $vars['fallback_classes_array'] = array('c-block');
   // Add glacier classes.
   $vars['glacier_classes_array'] = array_merge(array(
@@ -219,7 +219,7 @@ function glacier_preprocess_block(&$vars) {
     'c-' . $vars['delta_class'] . '-block',
   ), $vars['glacier_classes_array']);
 
-  // Falback title class if glacier and Drupal default classes are disabled in the theme settings.
+  // Fallback title class if glacier and Drupal default classes are disabled in the theme settings.
   $vars['fallback_title_classes_array'] = array('c-block__title');
   // Add default Drupal title classes.
   $vars['title_attributes_array']['class'] = isset($vars['title_attributes_array']['class']) ? $vars['title_attributes_array']['class'] : array();
@@ -232,7 +232,7 @@ function glacier_preprocess_block(&$vars) {
     'c-' . $vars['delta_class'] . '-block__title',
   );
 
-  // Falback content class if glacier and Drupal default classes are disabled in the theme settings.
+  // Fallback content class if glacier and Drupal default classes are disabled in the theme settings.
   $vars['fallback_content_classes_array'] = array('c-block__content');
   // Add default Drupal content classes.
   $vars['content_attributes_array']['class'] = isset($vars['content_attributes_array']['class']) ? $vars['content_attributes_array']['class'] : array();
