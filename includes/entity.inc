@@ -70,7 +70,7 @@ function glacier_preprocess_entity(&$vars, $hook) {
   );
 
   // Fallback content class if glacier and Drupal default classes are disabled in the theme settings.
-  $vars['fallback_content_classes_array'] = array('c-block__content');
+  $vars['fallback_content_classes_array'] = array('c-entity__content');
   // Add default Drupal content classes.
   $vars['content_attributes_array']['class'] = isset($vars['content_attributes_array']['class']) ? $vars['content_attributes_array']['class'] : array();
   $vars['default_content_classes_array'] = $vars['content_attributes_array']['class'];
