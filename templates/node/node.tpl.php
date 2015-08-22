@@ -4,43 +4,16 @@
  * Theme implementation to display a single node.
  */
 
-$classes = glacier_classes(
-  array(
-    // 'c-node',
-    // 'c-node--' . $node_type_class,
-    // 'c-node--' . $view_mode_class,
-    'c-' . $node_type_class,
-  ),
-  $classes_array,
-  $state_classes_array
-);
-
-$title_classes = glacier_classes(
-  array(
-    // 'c-node__title',
-    'c-' . $node_type_class . '__title',
-  ),
-  $title_classes_array
-);
-
-$content_classes = glacier_classes(
-  array(
-    // 'c-node__content',
-    'c-' . $node_type_class . '__content',
-  ),
-  $content_classes_array
-);
-
 hide($content['comments']);
 hide($content['links']);
 
 ?>
-<article class="<?php print $classes; ?>" role="article"<?php print $attributes; ?>>
+<<?php print $wrapper_tag; ?> class="<?php print $classes; ?>"<?php print $attributes; ?>>
   <?php print render($title_prefix); ?>
   <?php if (!$page && !empty($title)): ?>
-    <h2 class="<?php print $title_classes; ?>"<?php print $title_attributes; ?>>
+    <<?php print $title_tag; ?> class="<?php print $title_classes; ?>"<?php print $title_attributes; ?>>
       <a href="<?php print $node_url; ?>" rel="bookmark"><?php print $title; ?></a>
-    </h2>
+    </<?php print $title_tag; ?>>
   <?php endif; ?>
   <?php print render($title_suffix); ?>
 
@@ -55,10 +28,10 @@ hide($content['links']);
     </footer>
   <?php endif; ?>
 
-  <div class="<?php print $content_classes; ?>"<?php print $content_attributes; ?>>
+  <?php if (!$content_wrapper_hidden): ?><div class="<?php print $content_classes; ?>"<?php print $content_attributes; ?>><?php endif; ?>
     <?php print render($content); ?>
-  </div>
+  <?php if (!$content_wrapper_hidden): ?></div><?php endif; ?>
 
   <?php print render($content['links']); ?>
   <?php print render($content['comments']); ?>
-</article>
+</<?php print $wrapper_tag; ?>>
