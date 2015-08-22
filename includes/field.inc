@@ -25,8 +25,11 @@ function glacier_preprocess_field(&$vars) {
   $vars['bundle_class'] = drupal_html_class(preg_replace('/^field_/', '', $vars['element']['#bundle'])); // Remove 'field_' prefix from field collection (and possibly other) bundles.
   $vars['view_mode_class'] = drupal_html_class($vars['element']['#view_mode']);
 
+  // Move Drupal default classes in a separate array.
+  $vars['default_classes_array'] = $vars['classes_array'];
+  $vars['classes_array'] = array();
   // Falback class if glacier and Drupal default classes are disabled in the theme settings.
-  $vars['classes_fallback'] = array('c-field');
+  $vars['fallback_classes_array'] = array('c-field');
   // Add glacier classes.
   $vars['glacier_classes_array'] = array(
     'c-field',
@@ -40,9 +43,10 @@ function glacier_preprocess_field(&$vars) {
   }
 
   // Falback label class if glacier and Drupal default classes are disabled in the theme settings.
-  $vars['label_classes_fallback'] = array('c-field__label');
+  $vars['fallback_label_classes_array'] = array('c-field__label');
   // Add default Drupal label classes.
-  $vars['label_classes_array'] = array('field-label');
+  $vars['default_label_classes_array'] = array('field-label');
+  $vars['label_classes_array'] = array();
   // Add glacier label classes.
   $vars['glacier_label_classes_array'] = array(
     'c-field__label',
@@ -55,13 +59,14 @@ function glacier_preprocess_field(&$vars) {
   $vars['label_display_inline_add_colon'] = TRUE;
   // Add a utility class to display the field label inline.
   if ($vars['label_display'] == 'inline') {
-    $vars['label_classes_array'][] = 'u-display-inline';
+    $vars['glacier_label_classes_array'][] = 'u-display-inline';
   }
 
   // Falback item class if glacier and Drupal default classes are disabled in the theme settings.
-  $vars['item_classes_fallback'] = array('c-field__item');
+  $vars['fallback_item_classes_array'] = array('c-field__item');
   // Add default Drupal item classes.
-  $vars['item_classes_array'] = array('field-item');
+  $vars['default_item_classes_array'] = array('field-item');
+  $vars['item_classes_array'] = array();
   // Add glacier item classes.
   $vars['glacier_item_classes_array'] = array(
     'c-field__item',
@@ -72,7 +77,7 @@ function glacier_preprocess_field(&$vars) {
   // Add a utility class to display the field item inline-block
   // if the label is displayed as inline element.
   if ($vars['label_display'] == 'inline') {
-    $vars['item_classes_array'][] = 'u-display-inline-block';
+    $vars['glacier_item_classes_array'][] = 'u-display-inline-block';
   }
 }
 
@@ -80,12 +85,6 @@ function glacier_preprocess_field(&$vars) {
  * Implements template_process_field().
  */
 function glacier_process_field(&$vars, $hook) {
-  $vars['classes_array'] = glacier_class_merge($vars['glacier_classes_array'], $vars['classes_array'], $vars['classes_fallback'], $vars['classes_glacier'], $vars['classes_default']);
-  $vars['classes'] = implode(' ', $vars['classes_array']);
-
-  $label_classes_fallback = array('c-field__label'); // Falback label class if glacier and Drupal default classes are disabled in the theme settings.
-  $vars['label_classes_array'] = glacier_class_merge($vars['glacier_label_classes_array'], $vars['label_classes_array'], $vars['label_classes_fallback'], $vars['classes_glacier'], $vars['classes_default']);
-  $vars['label_classes'] = implode(' ', $vars['label_classes_array']);
   if ($vars['label_display'] == 'inline' && $vars['label_display_inline_add_colon']) {
     // Add a colon to inline labels.
     $vars['label'] .= ':';
@@ -93,8 +92,4 @@ function glacier_process_field(&$vars, $hook) {
     // Add a colon to above labels.
     $vars['label'] .= ':';
   }
-
-  $item_classes_fallback = array('c-field__item'); // Falback item class if glacier and Drupal default classes are disabled in the theme settings.
-  $vars['item_classes_array'] = glacier_class_merge($vars['glacier_item_classes_array'], $vars['item_classes_array'], $vars['item_classes_fallback'], $vars['classes_glacier'], $vars['classes_default']);
-  $vars['item_classes'] = implode(' ', $vars['item_classes_array']);
 }

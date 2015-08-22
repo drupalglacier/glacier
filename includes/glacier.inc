@@ -10,35 +10,6 @@ function glacier_classes($classes, $default_classes = array(), $state_classes = 
 // DEPR //
 
 /**
- * Merge classes in consideration of the theme settings.
- *
- * If the output of glacier or drupal default classes is disabled
- * the relevant classes will not be merged in the final classes array.
- *
- * @param  array  $glacier_classes_array  glacier default classes (BEM syntax).
- * @param  array  $default_classes_array  Drupal default classes.
- * @param  array  $fallback_classes_array Fallback classes in case of glacier and drupal classes are disabled.
- * @param  bool   $add_glacier_classes
- * @param  bool   $add_default_classes
- * @return array                          A array of classes for theming
- */
-function glacier_class_merge($glacier_classes_array = array(), $default_classes_array = array(), $fallback_classes_array = array(), $add_glacier_classes = NULL, $add_default_classes = NULL) {
-  $add_glacier_classes = isset($add_glacier_classes) ? $add_glacier_classes : theme_get_setting('classes_glacier');
-  $add_default_classes = isset($add_default_classes) ? $add_default_classes : theme_get_setting('classes_default');
-
-  $classes_array = array();
-
-  if ($add_glacier_classes) {
-    $classes_array = $glacier_classes_array;
-  }
-  if ($add_default_classes) {
-    $classes_array = array_merge($classes_array, $default_classes_array);
-  }
-
-  return !empty($classes_array) ? $classes_array : $fallback_classes_array;
-}
-
-/**
  * Helper function to alter $vars arrays.
  *
  * @param  array  &$vars
@@ -75,6 +46,51 @@ function glacier_vars_alter(&$vars, $alterations = array(), $conditions = array(
   foreach ($alterations as $alteration_element => $alteration_value) {
     if (isset($vars[$alteration_element])) {
       $vars[$alteration_element] = is_array($alterations[$alteration_element]) ? array_merge($vars[$alteration_element], $alteration_value) : $alteration_value;
+    }
+  }
+}
+
+/**
+ * Merge classes in consideration of the theme settings.
+ *
+ * If the output of glacier or drupal default classes is disabled
+ * the relevant classes will not be merged in the final classes array.
+ * 
+ * Implements template_process().
+ */
+function glacier_process(&$vars, $hook) {
+  $classes_types = array(
+    NULL,
+    'title',
+    'content',
+    'label',
+    'item',
+  );
+
+  foreach ($classes_types as $classes_type) {
+    $classes_key = (isset($classes_type) ? $classes_type . '_' : NULL) . 'classes';
+    $classes_array_key = $classes_key . '_array';
+    $glacier_classes_array_key = 'glacier_' . $classes_array_key;
+    $default_classes_array_key = 'default_' . $classes_array_key;
+    $fallback_classes_array_key = 'fallback_' . $classes_array_key;
+
+    if (isset($vars[$classes_array_key])) {
+      // Add the glacier classes to the classes array.
+      if (isset($vars[$glacier_classes_array_key]) && isset($vars['classes_glacier']) && $vars['classes_glacier']) {
+        $vars[$classes_array_key] = array_merge($vars[$glacier_classes_array_key], $vars[$classes_array_key]);
+      }
+      // Add the Drupal default classes to the classes array.
+      if (isset($vars[$default_classes_array_key]) && isset($vars['classes_default']) && $vars['classes_default']) {
+        $vars[$classes_array_key] = array_merge($vars[$classes_array_key], $vars[$default_classes_array_key]);
+      }
+
+      // Set the fallback classes if the classes array is empty.
+      if (empty($vars[$classes_array_key]) && isset($vars[$fallback_classes_array_key])) {
+        $vars[$classes_array_key] = $vars[$fallback_classes_array_key];
+      }
+
+      // Generate the classes string to use in tpl files.
+      $vars[$classes_key] = implode(' ', $vars[$classes_array_key]);
     }
   }
 }
