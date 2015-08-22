@@ -4,25 +4,6 @@
  * Theme implementation for comments.
  */
 
-$classes = glacier_classes(
-  array(),
-  $classes_array
-);
-
-$title_classes = glacier_classes(
-  array(
-    'c-comment__title',
-  ),
-  $title_classes_array
-);
-
-$content_classes = glacier_classes(
-  array(
-    'c-comment__content',
-  ),
-  $content_classes_array
-);
-
 hide($content['links']);
 
 ?>
@@ -39,7 +20,7 @@ hide($content['links']);
 
   <?php print render($title_suffix); ?>
 
-  <footer>
+  <footer class="c-comment__meta">
     <?php print $user_picture; ?>
     <p class="c-comment__submitted">
       <cite class="c-comment__author"><?php print $author; ?></cite>

@@ -62,6 +62,7 @@ function glacier_process(&$vars, $hook) {
   $classes_types = array(
     NULL,
     'title',
+    'form_title',
     'content',
     'label',
     'item',
