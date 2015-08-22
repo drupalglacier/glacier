@@ -9,15 +9,12 @@ hide($content['links']);
 ?>
 <article class="<?php print $classes; ?>"<?php print $attributes; ?>>
   <?php print render($title_prefix); ?>
-
   <?php if ($new): ?>
     <mark class="c-comment__new"><?php print $new; ?></mark>
   <?php endif; ?>
-
-  <h3 class="<?php print $title_classes; ?>"<?php print $title_attributes; ?>>
+  <<?php print render($title_tag); ?> class="<?php print $title_classes; ?>"<?php print $title_attributes; ?>>
     <?php print $title; ?>
-  </h3>
-
+  </<?php print render($title_tag); ?>>
   <?php print render($title_suffix); ?>
 
   <footer class="c-comment__meta">

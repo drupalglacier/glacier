@@ -12,6 +12,10 @@ function glacier_preprocess_comment_wrapper(&$vars) {
   $vars['classes_glacier'] = theme_get_setting('classes_glacier');
   $vars['classes_default'] = theme_get_setting('classes_default');
 
+  // Add title tag variables.
+  $vars['title_tag'] = 'h2';
+  $vars['form_title_tag'] = 'h2';
+
   // Add a HTML id so it can be used as an anchor target.
   $vars['attributes_array']['id'] = 'comments';
 
@@ -67,6 +71,9 @@ function glacier_preprocess_comment(&$vars) {
   // Add setting variables.
   $vars['classes_glacier'] = theme_get_setting('classes_glacier');
   $vars['classes_default'] = theme_get_setting('classes_default');
+
+  // Add title tag variable.
+  $vars['title_tag'] = 'h2';
 
   $comment = $vars['elements']['#comment'];
 
