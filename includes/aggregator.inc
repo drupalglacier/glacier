@@ -5,7 +5,7 @@
  */
 
 /**
- * Implements hook_preprocess_aggregator_item().
+ * Implements template_preprocess_aggregator_item().
  */
 function glacier_preprocess_aggregator_item(&$vars) {
   $item = $vars['item'];

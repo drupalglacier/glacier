@@ -5,7 +5,7 @@
  */
 
 /**
- * Implements hook_preprocess_user_profile().
+ * Implements template_preprocess_user_profile().
  */
 function glacier_preprocess_user_profile(&$vars) {
   // Add attributes.
@@ -14,7 +14,7 @@ function glacier_preprocess_user_profile(&$vars) {
 }
 
 /**
- * Implements hook_preprocess_user_profile_category().
+ * Implements template_preprocess_user_profile_category().
  */
 function glacier_preprocess_user_profile_category(&$vars) {
   // Add title & list classes.

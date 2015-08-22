@@ -5,7 +5,7 @@
  */
 
 /**
- * Implements hook_preprocess_page().
+ * Implements template_preprocess_page().
  */
 function glacier_preprocess_page(&$vars, $hook) {
   // Add js enhancements

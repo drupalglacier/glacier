@@ -5,7 +5,7 @@
  */
 
 /**
- * Implements hook_preprocess_region().
+ * Implements template_preprocess_region().
  */
 function glacier_preprocess_region(&$vars) {
   // Remove extraneous region class.

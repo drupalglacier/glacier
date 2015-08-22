@@ -5,7 +5,7 @@
  */
 
 /**
- * Implements hook_preprocess_entity().
+ * Implements template_preprocess_entity().
  */
 function glacier_preprocess_entity(&$vars, $hook) {
   // Add setting variables.

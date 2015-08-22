@@ -5,7 +5,7 @@
  */
 
 /**
- * Implements hook_preprocess_taxonomy_term().
+ * Implements template_preprocess_taxonomy_term().
  */
 function glacier_preprocess_taxonomy_term(&$vars) {
   $classes_default = theme_get_setting('classes_default');

@@ -5,7 +5,7 @@
  */
 
 /**
- * Implements hook_facetapi_accessible_markup.
+ * Implements hook_facetapi_accessible_markup().
  */
 function glacier_facetapi_accessible_markup($vars) {
   $text = ($vars['active']) ? t('Remove filter for') : t('Apply filter for');
@@ -17,14 +17,14 @@ function glacier_facetapi_accessible_markup($vars) {
 }
 
 /**
- * Implements hook_facetapi_count.
+ * Implements hook_facetapi_count().
  */
 function glacier_facetapi_count($vars) {
   return '<span class="c-facet__count">(' . (int) $vars['count'] . '<span class="element-invisible"> ' . t('items') . '</span>)</span>';
 }
 
 /**
- * Implements hook_facetapi_link_active.
+ * Implements hook_facetapi_link_active().
  */
 function glacier_facetapi_link_active($vars) {
   // Builds accessible markup.
@@ -53,7 +53,7 @@ function glacier_facetapi_link_active($vars) {
 }
 
 /**
- * Implements hook_facetapi_link_inactive.
+ * Implements hook_facetapi_link_inactive().
  */
 function glacier_facetapi_link_inactive($vars) {
   // Builds accessible markup.

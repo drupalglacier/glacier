@@ -5,7 +5,7 @@
  */
 
 /**
- * Implements hook_preprocess_node().
+ * Implements template_preprocess_node().
  */
 function glacier_preprocess_node(&$vars) {
   // Add setting variables.

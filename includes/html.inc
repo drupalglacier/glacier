@@ -5,7 +5,7 @@
  */
 
 /**
- * Implements hook_preprocess_maintenance_page().
+ * Implements template_preprocess_maintenance_page().
  */
 function glacier_preprocess_maintenance_page(&$vars, $hook) {
   // While markup for normal pages is split into page.tpl.php and html.tpl.php,
@@ -23,7 +23,7 @@ function glacier_preprocess_maintenance_page(&$vars, $hook) {
 }
 
 /**
- * Implements hook_process_maintenance_page().
+ * Implements template_process_maintenance_page().
  */
 function glacier_process_maintenance_page(&$vars, $hook) {
   // When a variable is manipulated or added in preprocess_html or
@@ -33,7 +33,7 @@ function glacier_process_maintenance_page(&$vars, $hook) {
 }
 
 /**
- * Implements hook_preprocess_html().
+ * Implements template_preprocess_html().
  */
 function glacier_preprocess_html(&$vars, $hook) {
   // Add theme variables.
@@ -192,7 +192,7 @@ function glacier_preprocess_html(&$vars, $hook) {
 }
 
 /**
- * Implements hook_process_html().
+ * Implements template_process_html().
  */
 function glacier_process_html(&$vars, $hook) {
   // Flatten out html_and body_attributes.

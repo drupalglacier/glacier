@@ -24,7 +24,7 @@ function glacier_link($vars) {
 }
 
 /**
- * Implements hook_preprocess_links().
+ * Implements template_preprocess_links().
  */
 function glacier_preprocess_links(&$vars) {
   $classes_default = theme_get_setting('classes_default');
@@ -232,7 +232,7 @@ function glacier_preprocess_menu_tree(&$vars) {
 }
 
 /**
- * Implements hook_preprocess_menu_link().
+ * Implements template_preprocess_menu_link().
  */
 function glacier_preprocess_menu_link(&$vars) {
   $element = $vars['element'];
@@ -490,7 +490,7 @@ function glacier_menu_local_task($vars) {
 }
 
 /**
- * Implements hook_preprocess_menu_block_wrapper().
+ * Implements template_preprocess_menu_block_wrapper().
  */
 function glacier_preprocess_menu_block_wrapper(&$vars) {
   // Replace default classes using the SMACSS naming convention.

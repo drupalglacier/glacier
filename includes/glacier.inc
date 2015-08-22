@@ -1,5 +1,10 @@
 <?php
 /**
+ * @file
+ * glacier system functions.
+ */
+
+/**
  * Helper function to alter $vars arrays.
  *
  * @param  array  &$vars
