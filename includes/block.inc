@@ -5,23 +5,34 @@
  */
 
 /**
- * Implements hook_preprocess_block().
+ * Implements template_preprocess_block().
  */
 function glacier_preprocess_block(&$vars) {
-  $module = $vars['block']->module;
-  $delta = $vars['block']->delta;
-
   // Add setting variables.
+  $vars['classes_glacier'] = theme_get_setting('classes_glacier');
   $vars['classes_default'] = theme_get_setting('classes_default');
 
-  // Add module and delta classes.
-  $vars['module_class'] = drupal_html_class($module);
-  $vars['delta_class'] = drupal_html_class($delta);
+  // Hide the content wrapper by default if the subject is empty.
+  $vars['content_wrapper_hidden'] = empty($vars['elements']['#block']->subject);
+
+  // Add title tag variable.
+  $vars['title_tag'] = 'h2';
+
+  // Set class variables to use in the glacier base classes.
+  $vars['module_class'] = drupal_html_class($vars['block']->module);
+  $vars['delta_class'] = drupal_html_class($vars['block']->delta);
+
+  // Move Drupal default classes in a separate array.
+  $vars['default_classes_array'] = $vars['classes_array'];
+  $vars['classes_array'] = array();
+
+  // Prepare glacier classes array.
+  $vars['glacier_classes_array'] = array();
 
   // Add Aria Roles via attributes.
-  switch ($module) {
+  switch ($vars['block']->module) {
     case 'system':
-      switch ($delta) {
+      switch ($vars['block']->delta) {
         case 'main':
           // Note: the "main" role goes in the page.tpl, not here.
           break;
@@ -33,7 +44,8 @@ function glacier_preprocess_block(&$vars) {
 
         default:
           // Any other "system" block is a menu block.
-          $vars['classes_array'][] = 'c-menu';
+          $vars['fallback_classes_array'][] = 'c-menu';
+          $vars['glacier_classes_array'][] = 'c-menu';
           $vars['attributes_array']['role'] = 'navigation';
           break;
       }
@@ -55,7 +67,8 @@ function glacier_preprocess_block(&$vars) {
       break;
 
     case 'locale':
-      $vars['classes_array'][] = 'c-menu';
+      $vars['fallback_classes_array'][] = 'c-menu';
+      $vars['glacier_classes_array'][] = 'c-menu';
       $vars['attributes_array']['role'] = 'complementary';
       break;
 
@@ -92,16 +105,7 @@ function glacier_preprocess_block(&$vars) {
       break;
   }
 
-  // Remove some default block classes.
-  if (!$vars['classes_default']) {
-    $vars['classes_array'] = array_values(array_diff($vars['classes_array'], array(
-      'block',
-      'block-' . $vars['module_class'],
-      'block-menu',
-    )));
-  }
-
-  switch ($delta) {
+  switch ($vars['block']->delta) {
     // Markup for blockify logo block.
     case 'blockify-logo':
       $vars['theme_hook_suggestions'][] = 'block__logo';
@@ -152,7 +156,7 @@ function glacier_preprocess_block(&$vars) {
 
     // Markup for blockify page title block.
     case 'blockify-page-title':
-      $vars['classes_array'][0] = 'c-page-title';
+      $vars['glacier_classes_array'][] = 'c-page-title';
       $vars['theme_hook_suggestions'][] = 'block__page_title';
 
       $vars['title'] = drupal_get_title();
@@ -205,13 +209,39 @@ function glacier_preprocess_block(&$vars) {
       break;
   }
 
-  // Add defaul title classes.
-  $vars['title_attributes_array']['class'] = isset($vars['title_attributes_array']['class']) ? $vars['title_attributes_array']['class'] : array();
-  $vars['title_classes_array'] = $vars['title_attributes_array']['class'];
-  unset($vars['title_attributes_array']['class']);
+  // Falback class if glacier and Drupal default classes are disabled in the theme settings.
+  $vars['fallback_classes_array'] = array('c-block');
+  // Add glacier classes.
+  $vars['glacier_classes_array'] = array_merge(array(
+    'c-block',
+    'c-block--' . $vars['module_class'],
+    'c-block--' . $vars['delta_class'],
+    'c-' . $vars['delta_class'] . '-block',
+  ), $vars['glacier_classes_array']);
 
-  // Add defaul content classes.
+  // Falback title class if glacier and Drupal default classes are disabled in the theme settings.
+  $vars['fallback_title_classes_array'] = array('c-block__title');
+  // Add default Drupal title classes.
+  $vars['title_attributes_array']['class'] = isset($vars['title_attributes_array']['class']) ? $vars['title_attributes_array']['class'] : array();
+  $vars['default_title_classes_array'] = $vars['title_attributes_array']['class'];
+  unset($vars['title_attributes_array']['class']);
+  $vars['title_classes_array'] = array();
+  // Add glacier title classes.
+  $vars['glacier_title_classes_array'] = array(
+    'c-block__title',
+    'c-' . $vars['delta_class'] . '-block__title',
+  );
+
+  // Falback content class if glacier and Drupal default classes are disabled in the theme settings.
+  $vars['fallback_content_classes_array'] = array('c-block__content');
+  // Add default Drupal content classes.
   $vars['content_attributes_array']['class'] = isset($vars['content_attributes_array']['class']) ? $vars['content_attributes_array']['class'] : array();
-  $vars['content_classes_array'] = $vars['content_attributes_array']['class'];
+  $vars['default_content_classes_array'] = $vars['content_attributes_array']['class'];
   unset($vars['content_attributes_array']['class']);
+  $vars['content_classes_array'] = array();
+  // Add glacier content classes.
+  $vars['glacier_content_classes_array'] = array(
+    'c-block__content',
+    'c-' . $vars['delta_class'] . '-block__content',
+  );
 }
