@@ -55,7 +55,7 @@ function glacier_vars_alter(&$vars, $alterations = array(), $conditions = array(
  *
  * If the output of glacier or drupal default classes is disabled
  * the relevant classes will not be merged in the final classes array.
- * 
+ *
  * Implements template_process().
  */
 function glacier_process(&$vars, $hook) {
