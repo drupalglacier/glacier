@@ -73,12 +73,14 @@
  * Implements template_preprocess_block().
  */
 // function STARTERKIT_preprocess_block(&$vars, $hook) {
-//   // switch ($vars['elements']['#block']->delta) {
-//   //   case 'main-menu':
-//   //     $vars['classes_array'][] = 'c-menu--horizontal-responsive';
-//   //     $vars['classes_array'][] = 'c-menu--horizontal-responsive--dropdown';
-//   //     break;
-//   // }
+//   // Add glacier responsive menu classes to the main menu.
+//   // $alterations = array(
+//   //   'classes_array' => array('c-menu--horizontal-responsive', 'c-menu--horizontal-responsive--dropdown'),
+//   // );
+//   // $conditions = array(
+//   //   'delta' => 'main-menu',
+//   // );
+//   // glacier_vars_alter($vars, $alterations, $conditions);
 // }
 
 /**
