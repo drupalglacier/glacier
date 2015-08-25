@@ -4,16 +4,13 @@
  * Theme implementation to display a single taxonomy term.
  */
 ?>
-<article<?php print $attributes; ?>>
-
+<<?php print $wrapper_tag; ?> class="<?php print $classes; ?>"<?php print $attributes; ?>>
   <?php if (!$page): ?>
-    <h2<?php print $title_attributes; ?>>
+    <<?php print $title_tag; ?> class="<?php print $title_classes; ?>"<?php print $title_attributes; ?>>
       <a href="<?php print $term_url; ?>"><?php print $term_name; ?></a>
-    </h2>
+    </<?php print $title_tag; ?>>
   <?php endif; ?>
-
-  <div<?php print $content_attributes; ?>>
+  <?php if (!$content_wrapper_hidden): ?><div class="<?php print $content_classes; ?>"<?php print $content_attributes; ?>><?php endif; ?>
     <?php print render($content); ?>
-  </div>
-
-</article>
+  <?php if (!$content_wrapper_hidden): ?></div><?php endif; ?>
+</<?php print $wrapper_tag; ?>>
