@@ -67,6 +67,13 @@ function glacier_process(&$vars, $hook) {
     'content',
     'label',
     'item',
+    'header',
+    'filters',
+    'attachment_before',
+    'attachment_after',
+    'pager',
+    'more',
+    'footer',
   );
 
   foreach ($classes_types as $classes_type) {
@@ -85,7 +92,6 @@ function glacier_process(&$vars, $hook) {
       if (isset($vars[$default_classes_array_key]) && isset($vars['classes_default']) && $vars['classes_default']) {
         $vars[$classes_array_key] = array_merge($vars[$classes_array_key], $vars[$default_classes_array_key]);
       }
-
       // Set the fallback classes if the classes array is empty.
       if (empty($vars[$classes_array_key]) && isset($vars[$fallback_classes_array_key])) {
         $vars[$classes_array_key] = $vars[$fallback_classes_array_key];
