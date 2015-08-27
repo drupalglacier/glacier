@@ -4,6 +4,10 @@
  * Simple styles for status messages
  *
  * @level X.X.
+ * @markup
+ * <div class="c-message">
+ *   Message
+ * </div>
  */
 .c-message {
   border: 1px solid;
@@ -12,14 +16,47 @@
   }
 }
 
+
+
+/**
+ * Status message
+ *
+ * @level X.X.X.
+ * @markup
+ * <div class="c-message c-message--status">
+ *   Status message
+ * </div>
+ */
 .c-message--status {
   border-color: $cs-neutral;
 }
 
+
+
+/**
+ * Error message
+ *
+ * @level X.X.X.
+ * @markup
+ * <div class="c-message c-message--error">
+ *   Error message
+ * </div>
+ */
 .c-message--error {
   border-color: $cs-negative;
 }
 
+
+
+/**
+ * Warning message
+ *
+ * @level X.X.X.
+ * @markup
+ * <div class="c-message c-message--warning">
+ *   Warning message
+ * </div>
+ */
 .c-message--warning {
   border-color: $cs-cautious;
 }
