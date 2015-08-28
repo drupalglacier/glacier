@@ -25,8 +25,6 @@
  * @see template_preprocess_entity()
  * @see template_process()
  */
-);
-
 ?>
 <div class="<?php print $classes; ?>"<?php print $attributes; ?>>
   <?php print render($content); ?>
