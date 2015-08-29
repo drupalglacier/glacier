@@ -28,7 +28,15 @@ function glacier_preprocess_field(&$vars) {
 
   // Move Drupal default classes in a separate array.
   $vars['default_classes_array'] = $vars['classes_array'];
-  $vars['classes_array'] = array();
+  $vars['classes_array'] = array_values(array_diff($vars['classes_array'], array(
+    $vars['field_name_css'],
+    'field-name-' . $vars['field_name_css'],
+    'field-type-' . $vars['field_type_css'],
+    'field-label-above',
+    'field-label-hidden',
+    'field-label-inline',
+    'inline',
+  )));
   // Fallback class if glacier and Drupal default classes are disabled in the theme settings.
   $vars['fallback_classes_array'] = array('c-field');
   // Add glacier classes.

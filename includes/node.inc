@@ -30,7 +30,14 @@ function glacier_preprocess_node(&$vars) {
 
   // Move Drupal default classes in a separate array.
   $vars['default_classes_array'] = $vars['classes_array'];
-  $vars['classes_array'] = array();
+  $vars['classes_array'] = array_values(array_diff($vars['classes_array'], array(
+    'node',
+    'node-' . $vars['node_type_class'],
+    'node-' . $vars['view_mode_class'],
+    'node-promoted',
+    'node-sticky',
+    'node-unpublished',
+  )));
   // Fallback class if glacier and Drupal default classes are disabled in the theme settings.
   $vars['fallback_classes_array'] = array('c-node');
   // Add glacier classes.

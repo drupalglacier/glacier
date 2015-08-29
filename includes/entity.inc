@@ -31,7 +31,11 @@ function glacier_preprocess_entity(&$vars, $hook) {
 
   // Move Drupal default classes in a separate array.
   $vars['default_classes_array'] = $vars['classes_array'];
-  $vars['classes_array'] = array();
+  $vars['classes_array'] = array_values(array_diff($vars['classes_array'], array(
+    'entity',
+    'entity-' . $vars['type_class'],
+    $vars['type_class'] . '-' . $vars['bundle_class'],
+  )));
   // Fallback class if glacier and Drupal default classes are disabled in the theme settings.
   $vars['fallback_classes_array'] = array('c-entity');
   // Add glacier classes.

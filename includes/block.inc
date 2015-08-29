@@ -24,7 +24,11 @@ function glacier_preprocess_block(&$vars) {
 
   // Move Drupal default classes in a separate array.
   $vars['default_classes_array'] = $vars['classes_array'];
-  $vars['classes_array'] = array();
+  $vars['classes_array'] = array_values(array_diff($vars['classes_array'], array(
+    'block',
+    'block-' . $vars['module_class'],
+    'block-menu',
+  )));
 
   // Prepare glacier classes array.
   $vars['glacier_classes_array'] = array();
