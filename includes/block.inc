@@ -219,6 +219,7 @@ function glacier_preprocess_block(&$vars) {
   $vars['glacier_classes_array'] = array_merge(array(
     'c-block',
     'c-block-' . $vars['delta_class'],
+    'c-' . $vars['delta_class'],
   ), $vars['glacier_classes_array']);
 
   // Fallback title class if glacier and Drupal default classes are disabled in the theme settings.
