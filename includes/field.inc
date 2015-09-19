@@ -30,6 +30,7 @@ function glacier_preprocess_field(&$vars) {
   $vars['default_classes_array'] = $vars['classes_array'];
   $vars['classes_array'] = array_values(array_diff($vars['classes_array'], array(
     $vars['field_name_css'],
+    'field-' . $vars['field_name_css'],
     'field-name-' . $vars['field_name_css'],
     'field-type-' . $vars['field_type_css'],
     'field-label-above',
