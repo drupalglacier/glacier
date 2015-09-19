@@ -214,7 +214,7 @@ function glacier_preprocess_block(&$vars) {
   }
 
   // Fallback class if glacier and Drupal default classes are disabled in the theme settings.
-  $vars['fallback_classes_array'] = isset($vars['fallback_classes_array'] ? $vars['fallback_classes_array'] : array('c-block'));
+  $vars['fallback_classes_array'] = isset($vars['fallback_classes_array']) ? $vars['fallback_classes_array'] : array('c-block');
   // Add glacier classes.
   $vars['glacier_classes_array'] = array_merge(array(
     'c-block',
