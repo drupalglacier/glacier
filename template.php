@@ -8,6 +8,7 @@ require_once dirname(__FILE__) . '/includes/aggregator.inc';
 require_once dirname(__FILE__) . '/includes/block.inc';
 require_once dirname(__FILE__) . '/includes/breadcrumb.inc';
 require_once dirname(__FILE__) . '/includes/comments.inc';
+require_once dirname(__FILE__) . '/includes/ds.inc';
 require_once dirname(__FILE__) . '/includes/entity.inc';
 require_once dirname(__FILE__) . '/includes/facetapi.inc';
 require_once dirname(__FILE__) . '/includes/feed-icon.inc';
