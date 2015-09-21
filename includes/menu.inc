@@ -62,11 +62,10 @@ function glacier_preprocess_links(&$vars) {
       $vars['attributes']['class'][] = 'nav';
     }
 
-    $vars['attributes']['class'][] = 'c-menu__list';
-    $vars['attributes']['class'][] = 'c-menu__list--level1';
+    $vars['attributes']['class'][] = 'c-link-list';
 
     // Modify classes to follow SMACSS naming convention.
-    $vars['attributes']['class'] = preg_replace('/^inline$/', 'c-menu--inline', $vars['attributes']['class']);
+    $vars['attributes']['class'] = preg_replace('/^inline$/', 'c-list-inline', $vars['attributes']['class']);
   }
 }
 
@@ -122,9 +121,8 @@ function glacier_links($vars) {
         $class[] = 'c-language-switcher__item';
       }
 
-      $class[] = 'c-menu__item';
-      $class[] = 'c-menu__item--' . $key;
-      $class[] = 'c-menu__item--level1';
+      $class[] = 'c-link-list__item';
+      $class[] = 'c-link-list__item--' . $key;
 
       // Make sure link attributes array exists.
       if (!isset($link) || !is_array($link)) {
@@ -142,11 +140,11 @@ function glacier_links($vars) {
       else {
         $link['attributes']['class'] = array();
       }
-      $link['attributes']['class'][] = 'c-menu__link';
+      $link['attributes']['class'][] = 'c-link-list__link';
 
       // Add first, last, and active classes to the list of links.
       if ($classes_first_last && $i == 1) {
-        $class[] = 'c-menu__item--first';
+        $class[] = 'c-link-list__item--first';
 
         // Add default core class if wanted.
         if ($classes_default) {
@@ -154,7 +152,7 @@ function glacier_links($vars) {
         }
       }
       if ($classes_first_last && $i == $num_links) {
-        $class[] = 'c-menu__item--last';
+        $class[] = 'c-link-list__item--last';
 
         // Add default core class if wanted.
         if ($classes_default) {
