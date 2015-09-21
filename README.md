@@ -1,5 +1,5 @@
 # glacier
-glacier is a highly opinionated base theme for Drupal. This theme is build upon the [avalanche](https://github.com/avalanchesass/avalanche) SASS framework. 
+glacier is a highly opinionated base theme for Drupal. This theme is built upon the [avalanche](https://github.com/avalanchesass/avalanche) SASS framework. 
 
 ## About
 Github: https://github.com/maoberlehner/glacier
