@@ -12,7 +12,7 @@
 <?php endif; ?>
 
 <?php if (render($page['content'])): ?>
-  <main id="main" class="c-main-content" role="main" tabindex="-1">
+  <main id="main" class="c-main-content u-outline-none" role="main" tabindex="-1">
     <?php print render($page['content']); ?>
   </main>
 <?php endif; ?>
