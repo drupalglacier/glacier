@@ -1,0 +1,17 @@
+/**
+ * Display
+ *
+ * Helper classes to set different display properties on elements.
+ *
+ * @level X.X.
+ * @markup
+ * <div class="u-display-inline">Lorem Ipsum</div>
+ * <div class="u-display-inline-block">Lorem Ipsum</div>
+ */
+.u-display-inline {
+  display: inline;
+}
+
+.u-display-inline-block {
+  display: inline-block;
+}
