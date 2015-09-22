@@ -23,7 +23,8 @@ function glacier_preprocess_views_view(&$vars) {
 
   // Move Drupal default classes in a separate array.
   $vars['default_classes_array'] = $vars['classes_array'];
-  $vars['classes_array'] = array();
+  // Add custom classes (entered in the UI) to the classes array.
+  $vars['classes_array'] = explode(' ', $vars['css_class']);
   // Fallback class if glacier and Drupal default classes are disabled in the theme settings.
   $vars['fallback_classes_array'] = array('c-view');
   // Add glacier classes.
