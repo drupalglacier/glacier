@@ -163,10 +163,10 @@ function glacier_form_element($vars) {
 
   if (!empty($element['#description'])) {
     if (!$classes_default) {
-      $output .= '<div class="c-form__description u-fonz-size-s">' . $element['#description'] . "</div>\n";
+      $output .= '<div class="c-form__description u-font-size-s">' . $element['#description'] . "</div>\n";
     }
     else {
-      $output .= '<div class="c-form__description description u-fonz-size-s">' . $element['#description'] . "</div>\n";
+      $output .= '<div class="c-form__description description u-font-size-s">' . $element['#description'] . "</div>\n";
     }
   }
 
