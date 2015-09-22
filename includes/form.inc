@@ -36,9 +36,6 @@ function glacier_form($vars) {
     $element['#attributes']['class']
   );
 
-  // Add a spacing wrap utility class to add whitespace between form items.
-  $element['#attributes']['class'][] = 'u-spacing-wrap';
-
   return '<form' . drupal_attributes($element['#attributes']) . '>' . $element['#children'] . '</form>';
 }
 
@@ -55,6 +52,8 @@ function glacier_form_alter(&$form, &$form_state, $form_id) {
   }
 
   $form['#attributes']['class'] = array('c-form');
+  // Add a spacing wrap utility class to add whitespace between form items.
+  $form['#attributes']['class'][] = 'u-spacing-wrap';
 }
 
 /**
