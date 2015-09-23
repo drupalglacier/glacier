@@ -102,3 +102,28 @@ function glacier_process(&$vars, $hook) {
     }
   }
 }
+
+/**
+ * Fix double hyphens (converted from double underscores).
+ */
+function _glacier_fix_double_underscore_classes($classes_array = array()) {
+  // If there is only one class it's safe to just convert
+  // the double hyphens to underscores because a modifier class
+  // always needs a base class, if there is no base class there
+  // can't be a modifier class.
+  if (count($classes_array) == 1) {
+    return str_replace('--', '__', $classes_array);
+  }
+
+  // Search for a matching base class, convert hyphens if none is found.
+  foreach ($classes_array as $k => $class) {
+    if (strpos($class, '--') !== FALSE) {
+      $test_class = preg_replace('/--(.*?)$/', '', $class);
+      if (!in_array($test_class, $classes_array)) {
+        $class = str_replace('--', '__', $class);
+      }
+    }
+    $classes_array[$k] = $class;
+  }
+  return $classes_array;
+}
