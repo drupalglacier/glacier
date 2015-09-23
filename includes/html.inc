@@ -251,7 +251,9 @@ function glacier_html_head_alter(&$head_elements) {
 
     // Fix canonical urls for taxonomy terms when using the tvi module.
     if (strpos($k, 'canonical') !== FALSE && isset($element['#value'])) {
-      $head_elements[$k]['#value'] = url(drupal_get_path_alias(str_replace('http://' . $_SERVER['SERVER_NAME'] . base_path(), '', $head_elements['metatag_shortlink']['#value'])), array('absolute' => TRUE));
+      if (isset($head_elements['metatag_shortlink'])) {
+        $head_elements[$k]['#value'] = url(drupal_get_path_alias(str_replace('http://' . $_SERVER['SERVER_NAME'] . base_path(), '', $head_elements['metatag_shortlink']['#value'])), array('absolute' => TRUE));
+      }
     }
   }
 }
