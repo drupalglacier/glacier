@@ -152,6 +152,7 @@ function glacier_preprocess_block(&$vars) {
     // Markup for  blockify site slogan block.
     case 'blockify-site-slogan':
       $vars['theme_hook_suggestions'][] = 'block__site_slogan';
+      $vars['glacier_classes_array'][] = 'c-site-slogan';
 
       $slogan = filter_xss_admin(variable_get('site_slogan', 'Drupal'));
 
@@ -199,6 +200,7 @@ function glacier_preprocess_block(&$vars) {
     // Markup for blockify actions block.
     case 'blockify-actions':
       $vars['theme_hook_suggestions'][] = 'block__actions';
+      $vars['glacier_classes_array'][] = 'c-action-links';
 
       $actions = menu_local_actions();
       $vars['actions'] = $actions;

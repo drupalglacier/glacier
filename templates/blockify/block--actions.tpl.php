@@ -5,7 +5,7 @@
  */
 ?>
 <?php if (!empty($actions)): ?>
-  <ul class="c-action-links">
+  <ul class="<?php print $classes; ?>">
     <?php print render($actions); ?>
   </ul>
 <?php endif; ?>
