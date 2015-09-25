@@ -191,7 +191,5 @@ function glacier_preprocess_views_view_unformatted(&$vars) {
 function glacier_preprocess_views_exposed_form(&$vars) {
   // Add setting variables.
   $vars['classes_glacier'] = theme_get_setting('classes_glacier');
-  // We keep the default Views classes, regardless of theme setting,
-  // if ajax is enabled in the view.
-  $vars['classes_default'] = theme_get_setting('classes_default') || $vars['view']->use_ajax;
+  $vars['classes_default'] = theme_get_setting('classes_default');
 }
