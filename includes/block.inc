@@ -48,8 +48,8 @@ function glacier_preprocess_block(&$vars) {
 
         default:
           // Any other "system" block is a menu block.
-          $vars['fallback_classes_array'][] = 'c-menu';
-          $vars['glacier_classes_array'][] = 'c-menu';
+          $vars['classes_array'][] = 'c-menu';
+          $vars['classes_array'][] = 'c-' . $vars['delta_class'];
           $vars['attributes_array']['role'] = 'navigation';
           break;
       }
@@ -71,8 +71,8 @@ function glacier_preprocess_block(&$vars) {
       break;
 
     case 'locale':
-      $vars['fallback_classes_array'][] = 'c-menu';
-      $vars['glacier_classes_array'][] = 'c-menu';
+      $vars['classes_array'][] = 'c-menu';
+      $vars['classes_array'][] = 'c-' . $vars['delta_class'];
       $vars['attributes_array']['role'] = 'complementary';
       break;
 
@@ -221,7 +221,6 @@ function glacier_preprocess_block(&$vars) {
   $vars['glacier_classes_array'] = array_merge(array(
     'c-block',
     'c-block-' . $vars['delta_class'],
-    'c-' . $vars['delta_class'],
   ), $vars['glacier_classes_array']);
 
   // Fallback title class if glacier and Drupal default classes are disabled in the theme settings.
