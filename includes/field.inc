@@ -65,7 +65,7 @@ function glacier_preprocess_field(&$vars) {
   $vars['label_display_inline_add_colon'] = TRUE;
   // Add a utility class to display the field label inline.
   if ($vars['label_display'] == 'inline') {
-    $vars['glacier_label_classes_array'][] = 'u-display-inline';
+    $vars['label_classes_array'][] = 'u-display-inline';
   }
 
   // Fallback item class if glacier and Drupal default classes are disabled in the theme settings.
@@ -81,7 +81,7 @@ function glacier_preprocess_field(&$vars) {
   // Add a utility class to display the field item inline-block
   // if the label is displayed as inline element.
   if ($vars['label_display'] == 'inline') {
-    $vars['glacier_item_classes_array'][] = 'u-display-inline-block';
+    $vars['item_classes_array'][] = 'u-display-inline-block';
   }
 }
 
