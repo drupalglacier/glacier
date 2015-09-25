@@ -139,7 +139,7 @@ function glacier_pager($vars) {
     }
     return '<nav role="navigation"><h2 class="element-invisible">' . t('Pages') . '</h2>' . theme('item_list', array(
       'items' => $items,
-      'attributes' => array('class' => array('c-pager')),
+      'attributes' => array('class' => array('c-pager', 'pager')),
     )) . '</nav>';
   }
 }
