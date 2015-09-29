@@ -26,11 +26,9 @@ function glacier_form($vars) {
       switch ($match[0]) {
         case 'entityform':
           return 'c-' . $match[0];
-          break;
 
         default:
           return str_replace('_', '-', 'c-' . $match[1]);
-          break;
       }
     },
     $element['#attributes']['class']
@@ -133,7 +131,7 @@ function glacier_form_element($vars) {
     $suffix = isset($element['#field_suffix']) ? ' <span class="c-form__suffix field-suffix">' . $element['#field_suffix'] . '</span>' : '';
   }
 
-  // Set title display for a date field if todate is set
+  // Set title display for a date field if todate is set.
   if (isset($element['#field']) && $element['#field']['settings']['todate']) {
     $element['#title_display'] = 'before';
     if (empty($vars['element']['#title'])) {
@@ -203,7 +201,7 @@ function glacier_form_element_label($vars) {
   // Add default label class.
   $attributes['class'][] = 'c-form__label';
 
-  // Add label position class
+  // Add label position class.
   $attributes['class'][] = 'c-form__label--' . $vars['element']['#title_display'];
 
   // Style the label as class option to display inline with the element.
@@ -284,8 +282,8 @@ function glacier_checkbox($vars) {
   $element = $vars['element'];
   $element['#attributes']['type'] = 'checkbox';
   element_set_attributes($element, array(
-    'id',
-    'name',
+    0 => 'id',
+    1 => 'name',
     '#return_value' => 'value',
   ));
 
@@ -329,7 +327,7 @@ function glacier_checkboxes($vars) {
 
 /**
  * Returns HTML to wrap child elements in a container.
- * 
+ *
  * Implements theme_container().
  */
 function glacier_container($vars) {
@@ -473,7 +471,6 @@ function glacier_fieldset($vars) {
     _form_set_class($element, array('c-form__fieldset', 'form-wrapper'));
   }
 
-
   $output = '<fieldset' . drupal_attributes($element['#attributes']) . '>';
   if (!empty($element['#title'])) {
     // Always wrap fieldset legends in a SPAN for CSS positioning.
@@ -548,8 +545,8 @@ function glacier_radio($vars) {
   $element = $vars['element'];
   $element['#attributes']['type'] = 'radio';
   element_set_attributes($element, array(
-    'id',
-    'name',
+    0 => 'id',
+    1 => 'name',
     '#return_value' => 'value',
   ));
 
@@ -714,7 +711,7 @@ function glacier_textfield($vars) {
  * @param array $class
  *   Array of new class names to be added.
  */
-function _glacier_form_set_class(&$element, $class = array()) {
+function _glacier_form_set_class(&$element = array(), $class = array()) {
   $classes_default = theme_get_setting('classes_default');
 
   if (!empty($class)) {

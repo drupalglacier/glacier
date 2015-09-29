@@ -4,6 +4,9 @@
  * Display Suite related functions.
  */
 
+/**
+ * Implements hook_ds_pre_render_alter().
+ */
 function glacier_ds_pre_render_alter(&$layout_render_array, $context, &$vars) {
   // Remove empty array items.
   $vars['classes_array'] = array_filter($vars['classes_array']);

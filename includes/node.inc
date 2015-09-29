@@ -38,7 +38,8 @@ function glacier_preprocess_node(&$vars) {
     'node-sticky',
     'node-unpublished',
   )));
-  // Fallback class if glacier and Drupal default classes are disabled in the theme settings.
+  // Fallback class if glacier and Drupal default classes
+  // are disabled in the theme settings.
   $vars['fallback_classes_array'] = array('c-node');
   // Add glacier classes.
   $vars['glacier_classes_array'] = array(
@@ -58,8 +59,9 @@ function glacier_preprocess_node(&$vars) {
     // Add unpublished class.
     $vars['glacier_classes_array'][] = 'is-unpublished';
   }
-  
-  // Fallback title class if glacier and Drupal default classes are disabled in the theme settings.
+
+  // Fallback title class if glacier and Drupal default
+  // classes are disabled in the theme settings.
   $vars['fallback_title_classes_array'] = array('c-node__title');
   // Add default Drupal title classes.
   $vars['title_attributes_array']['class'] = isset($vars['title_attributes_array']['class']) ? $vars['title_attributes_array']['class'] : array();
@@ -72,7 +74,8 @@ function glacier_preprocess_node(&$vars) {
     'c-node-' . $vars['node_type_class'] . '__title',
   );
 
-  // Fallback content class if glacier and Drupal default classes are disabled in the theme settings.
+  // Fallback content class if glacier and Drupal default
+  // classes are disabled in the theme settings.
   $vars['fallback_content_classes_array'] = array('c-node__content');
   // Add default Drupal content classes.
   $vars['content_attributes_array']['class'] = isset($vars['content_attributes_array']['class']) ? $vars['content_attributes_array']['class'] : array();
@@ -102,5 +105,5 @@ function glacier_preprocess_node(&$vars) {
 
   // Add theme hook suggestions based on view mode.
   $vars['theme_hook_suggestions'][] = 'node__' . $vars['view_mode'];
-  $vars['theme_hook_suggestions'][] = 'node__' . $vars['type']  . '__' . $vars['view_mode'];
+  $vars['theme_hook_suggestions'][] = 'node__' . $vars['type'] . '__' . $vars['view_mode'];
 }

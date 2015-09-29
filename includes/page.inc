@@ -8,7 +8,7 @@
  * Implements template_preprocess_page().
  */
 function glacier_preprocess_page(&$vars, $hook) {
-  // Add js enhancements
+  // Add js enhancements.
   if (theme_get_setting('js_enhancement_console')) {
     drupal_add_js(drupal_get_path('theme', 'glacier') . '/js/console.js', array('every_page' => TRUE, 'weight' => -100));
   }
@@ -54,17 +54,17 @@ function glacier_preprocess_page(&$vars, $hook) {
   }
 
   // Remove wrapper from taxonomy term pages.
-  if  (arg(0) == 'taxonomy' && arg(1) == 'term' && is_numeric(arg(2))) {
+  if (arg(0) == 'taxonomy' && arg(1) == 'term' && is_numeric(arg(2))) {
     unset($vars['page']['content']['system_main']['term_heading']['#prefix']);
     unset($vars['page']['content']['system_main']['term_heading']['#suffix']);
   }
 
-  // Uncomment the following if you want to change page.tpl.php variables based
-  // on node type.
-  //if (isset($vars['node'])) {
-  //  switch ($vars['node']->type) {
-  //    case 'page':
-  //      break;
-  //  }
-  //}
+  // Uncomment the following if you want to change page.tpl.php
+  // variables based on node type.
+  // if (isset($vars['node'])) {
+  //   switch ($vars['node']->type) {
+  //     case 'page':
+  //       break;
+  //   }
+  // }
 }

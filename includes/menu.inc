@@ -116,7 +116,7 @@ function glacier_links($vars) {
         $class = array($key);
       }
 
-      // Add extra language switcher classes
+      // Add extra language switcher classes.
       if ($vars['theme_hook_original'] == 'links__locale_block') {
         $class[] = 'c-language-switcher__item';
       }
@@ -189,6 +189,9 @@ function glacier_links($vars) {
   return $output;
 }
 
+/**
+ * Implements theme_links().
+ */
 function glacier_links__locale_block(&$vars) {
   $vars['attributes']['class'][0] = 'c-language-switcher';
   foreach ($vars['links'] as $lang => $v) {
@@ -223,7 +226,7 @@ function glacier_menu_tree__menu_block($vars) {
  * Implements template_preprocess_menu_tree().
  */
 function glacier_preprocess_menu_tree(&$vars) {
-  // Add a level variable to the menu
+  // Add a level variable to the menu.
   if (preg_match('#menu__item--level([0-9])#', $vars['tree'], $match)) {
     $vars['menu_level'] = $match[1];
   }

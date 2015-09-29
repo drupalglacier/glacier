@@ -25,7 +25,8 @@ function glacier_preprocess_views_view(&$vars) {
   $vars['default_classes_array'] = $vars['classes_array'];
   // Add custom classes (entered in the UI) to the classes array.
   $vars['classes_array'] = explode(' ', $vars['css_class']);
-  // Fallback class if glacier and Drupal default classes are disabled in the theme settings.
+  // Fallback class if glacier and Drupal default
+  // classes are disabled in the theme settings.
   $vars['fallback_classes_array'] = array('c-view');
   // Add glacier classes.
   $vars['glacier_classes_array'] = array(
@@ -34,7 +35,8 @@ function glacier_preprocess_views_view(&$vars) {
     'c-view-' . $vars['name_class'] . '--' . $vars['current_display_class'],
   );
 
-  // Fallback header class if glacier and Drupal default classes are disabled in the theme settings.
+  // Fallback header class if glacier and Drupal
+  // default classes are disabled in the theme settings.
   $vars['fallback_header_classes_array'] = array('c-view__header');
   // Add default Drupal header classes.
   $vars['default_header_classes_array'] = array('view-header');
@@ -45,7 +47,8 @@ function glacier_preprocess_views_view(&$vars) {
     'c-view-' . $vars['name_class'] . '__header',
   );
 
-  // Fallback filters class if glacier and Drupal default classes are disabled in the theme settings.
+  // Fallback filters class if glacier and Drupaldefault
+  // classes are disabled in the theme settings.
   $vars['fallback_filters_classes_array'] = array('c-view__filters');
   // Add default Drupal filters classes.
   $vars['default_filters_classes_array'] = array('view-filters');
@@ -56,7 +59,8 @@ function glacier_preprocess_views_view(&$vars) {
     'c-view-' . $vars['name_class'] . '__filters',
   );
 
-  // Fallback attachment before class if glacier and Drupal default classes are disabled in the theme settings.
+  // Fallback attachment before class if glacier and Drupal default
+  // classes are disabled in the theme settings.
   $vars['fallback_attachment_before_classes_array'] = array('c-view__attachment-before');
   // Add default Drupal attachment before classes.
   $vars['default_attachment_before_classes_array'] = array('attachment', 'attachment-before');
@@ -67,7 +71,8 @@ function glacier_preprocess_views_view(&$vars) {
     'c-view-' . $vars['name_class'] . '__attachment-before',
   );
 
-  // Fallback content class if glacier and Drupal default classes are disabled in the theme settings.
+  // Fallback content class if glacier and Drupal default
+  // classes are disabled in the theme settings.
   $vars['fallback_content_classes_array'] = array('c-view__content');
   // Add default Drupal content classes.
   $vars['default_content_classes_array'] = array('view-content');
@@ -83,7 +88,8 @@ function glacier_preprocess_views_view(&$vars) {
     $vars['default_content_classes_array'] = array('view-empty');
   }
 
-  // Fallback pager class if glacier and Drupal default classes are disabled in the theme settings.
+  // Fallback pager class if glacier and Drupal default classes
+  // are disabled in the theme settings.
   $vars['fallback_pager_classes_array'] = array('c-view__pager');
   // Add default Drupal pager classes.
   $vars['default_pager_classes_array'] = array('view-pager');
@@ -94,7 +100,8 @@ function glacier_preprocess_views_view(&$vars) {
     'c-view-' . $vars['name_class'] . '__pager',
   );
 
-  // Fallback attachment after class if glacier and Drupal default classes are disabled in the theme settings.
+  // Fallback attachment after class if glacier and Drupal
+  // defaultclasses are disabled in the theme settings.
   $vars['fallback_attachment_after_classes_array'] = array('c-view__attachment-after');
   // Add default Drupal attachment after classes.
   $vars['default_attachment_after_classes_array'] = array('attachment', 'attachment-after');
@@ -105,7 +112,8 @@ function glacier_preprocess_views_view(&$vars) {
     'c-view-' . $vars['name_class'] . '__attachment-after',
   );
 
-  // Fallback more class if glacier and Drupal default classes are disabled in the theme settings.
+  // Fallback more class if glacier and Drupal default
+  // classes are disabled in the theme settings.
   $vars['fallback_more_classes_array'] = array('c-view__more');
   // Add default Drupal more classes.
   $vars['default_more_classes_array'] = array('view-more');
@@ -116,7 +124,8 @@ function glacier_preprocess_views_view(&$vars) {
     'c-view-' . $vars['name_class'] . '__more',
   );
 
-  // Fallback footer class if glacier and Drupal default classes are disabled in the theme settings.
+  // Fallback footer class if glacier and Drupal default
+  // classes are disabled in the theme settings.
   $vars['fallback_footer_classes_array'] = array('c-view__footer');
   // Add default Drupal footer classes.
   $vars['default_footer_classes_array'] = array('view-footer');
@@ -138,17 +147,20 @@ function glacier_preprocess_views_view_grid(&$vars) {
   // if ajax is enabled in the view.
   $vars['classes_default'] = theme_get_setting('classes_default') || $vars['view']->use_ajax;
 
-  // Fallback class if glacier and Drupal default classes are disabled in the theme settings.
+  // Fallback class if glacier and Drupal default classes
+  // are disabled in the theme settings.
   $vars['fallback_classes_array'] = array('o-grid');
   // Add default Drupal classes.
   $vars['default_classes_array'] = array($vars['class']);
   $vars['classes_array'] = array();
   // Add glacier classes.
-  $vars['glacier_classes_array'] = array(preg_replace(
-    array('/views-view-grid/', '/ cols-(.*?)($|\s)/'),
-    array('o-grid', ''),
-    $vars['class']
-  ));
+  $vars['glacier_classes_array'] = array(
+    preg_replace(
+      array('/views-view-grid/', '/ cols-(.*?)($|\s)/'),
+      array('o-grid', ''),
+      $vars['class']
+    ),
+  );
 
   foreach ($vars['column_classes'] as $key => $value) {
     $vars['column_classes'][$key] = preg_replace('/col-(.*?)($|\s)/', '', $vars['column_classes'][$key]);

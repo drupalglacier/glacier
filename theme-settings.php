@@ -93,7 +93,7 @@ function glacier_form_system_theme_settings_alter(&$form, &$form_state, $form_id
   );
   $form['options_settings']['js_enhancement']['js_enhancement_console'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Avoid \'console\' errors in browsers that lack a console.'),
+    '#title' => t('Avoid "console" errors in browsers that lack a console.'),
     '#default_value' => theme_get_setting('js_enhancement_console'),
   );
   $form['options_settings']['js_enhancement']['js_enhancement_skiplink'] = array(
@@ -126,7 +126,7 @@ function glacier_form_system_theme_settings_alter(&$form, &$form_state, $form_id
   $form['options_settings']['meta']['meta_theme_color'] = array(
     '#type' => 'textfield',
     '#title' => t('theme-color'),
-    '#description' => t('Browsers might color a web app\'s title bar with the specified \'theme-color\' value, or use it as a color highlight in a task switcher.'),
+    '#description' => t('Browsers might color a web apps title bar with the specified "theme-color" value, or use it as a color highlight in a task switcher.'),
     '#attributes' => array('placeholder' => 'e.g. #efefef'),
     '#size' => 15,
     '#default_value' => theme_get_setting('meta_theme_color'),
@@ -143,7 +143,7 @@ function glacier_form_system_theme_settings_alter(&$form, &$form_state, $form_id
  *   that drupal_get_form() was originally called with are available in the
  *   array $form_state['build_info']['args'].
  */
-function glacier_ajax_settings_save($form, $form_state) {
+function glacier_ajax_settings_save($form = array(), $form_state = array()) {
   $theme = isset($form_state['build_info']['args'][0]) ? $form_state['build_info']['args'][0] : '';
   $theme_settings = variable_get('theme_' . $theme . '_settings', array());
   $trigger = $form_state['triggering_element']['#name'];

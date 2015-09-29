@@ -159,7 +159,11 @@ function glacier_file_widget_multiple($vars) {
   $output = '<div class="form-item c-form__item--file-widget-multiple c-file__widget-multiple">';
   $output .= '<fieldset class="c-form__fieldset">';
   $output .= '<legend class="c-form__legend">' . t($element['#title']) . '</legend>';
-  $output .= empty($rows) ? '' : theme('table', array('header' => $headers, 'rows' => $rows, 'attributes' => array('id' => $table_id)));
+  $output .= empty($rows) ? '' : theme('table', array(
+    'header' => $headers,
+    'rows' => $rows,
+    'attributes' => array('id' => $table_id),
+  ));
   $output .= drupal_render_children($element) . '</fieldset></div>';
 
   return $output;

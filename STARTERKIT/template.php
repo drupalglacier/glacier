@@ -1,4 +1,8 @@
 <?php
+/**
+ * @file
+ * Contains functions to alter Drupal's markup.
+ */
 
 /**
  * Implements template_preprocess_html().
