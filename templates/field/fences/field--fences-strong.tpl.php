@@ -1,6 +1,6 @@
 <?php
 /**
- * @file field--fences-strong.tpl.php
+ * @file
  * Wrap each field value in the <strong> element.
  *
  * @see http://developers.whatwg.org/text-level-semantics.html#the-strong-element

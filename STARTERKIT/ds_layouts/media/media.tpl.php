@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * card.tpl.php
+ * Media display suite layout template.
  */
 ?>
 <<?php print $layout_wrapper; ?> class="<?php print $classes; ?>"<?php print $attributes; ?>>

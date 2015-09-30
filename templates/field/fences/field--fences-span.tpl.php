@@ -1,6 +1,6 @@
 <?php
 /**
- * @file field--fences-span.tpl.php
+ * @file
  * Wrap each field value in the <span> element.
  *
  * @see http://developers.whatwg.org/text-level-semantics.html#the-span-element

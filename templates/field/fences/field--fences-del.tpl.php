@@ -1,6 +1,6 @@
 <?php
 /**
- * @file field--fences-del.tpl.php
+ * @file
  * Wrap each field value in the <del> element.
  *
  * @see http://developers.whatwg.org/edits.html#the-del-element

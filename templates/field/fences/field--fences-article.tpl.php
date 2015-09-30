@@ -1,6 +1,6 @@
 <?php
 /**
- * @file field--fences-article.tpl.php
+ * @file
  * Wrap each field value in the <article> element.
  *
  * @see http://developers.whatwg.org/sections.html#the-article-element

@@ -1,6 +1,6 @@
 <?php
 /**
- * @file field--fences-ins.tpl.php
+ * @file
  * Wrap each field value in the <ins> element.
  *
  * @see http://developers.whatwg.org/edits.html#the-ins-element

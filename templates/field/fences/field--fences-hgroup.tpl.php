@@ -1,6 +1,6 @@
 <?php
 /**
- * @file field--fences-hgroup.tpl.php
+ * @file
  * Wrap each field value in the <hgroup> element.
  *
  * @see http://developers.whatwg.org/sections.html#the-hgroup-element

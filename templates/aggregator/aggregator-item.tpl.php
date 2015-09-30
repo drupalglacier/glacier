@@ -1,8 +1,7 @@
 <?php
 /**
  * @file
- * Theme implementation to format an individual feed item for display
- * on the aggregator page.
+ * Theme implementation to format an individual feed item for display on the aggregator page.
  */
 ?>
 <article class="c-feed-item">

@@ -1,6 +1,6 @@
 <?php
 /**
- * @file field--fences-u.tpl.php
+ * @file
  * Wrap each field value in the <u> element.
  *
  * @see http://developers.whatwg.org/text-level-semantics.html#the-u-element

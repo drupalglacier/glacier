@@ -1,6 +1,6 @@
 <?php
 /**
- * @file field--fences-h4.tpl.php
+ * @file
  * Wrap each field value in the <h4> element.
  *
  * @see http://developers.whatwg.org/sections.html#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements

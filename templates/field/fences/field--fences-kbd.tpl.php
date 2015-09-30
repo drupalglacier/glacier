@@ -1,6 +1,6 @@
 <?php
 /**
- * @file field--fences-kbd.tpl.php
+ * @file
  * Wrap each field value in the <kbd> element.
  *
  * @see http://developers.whatwg.org/text-level-semantics.html#the-kbd-element

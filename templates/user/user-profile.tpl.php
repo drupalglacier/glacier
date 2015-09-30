@@ -3,7 +3,6 @@
  * @file
  * Theme implementation to present all user profile data.
  *
- *
  * Use render($user_profile) to print all profile items, or print a subset
  * such as render($user_profile['user_picture']). Always call
  * render($user_profile) at the end in order to print all remaining items. If

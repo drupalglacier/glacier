@@ -1,6 +1,6 @@
 <?php
 /**
- * @file field--fences-footer.tpl.php
+ * @file
  * Wrap each field value in the <footer> element.
  *
  * @see http://developers.whatwg.org/sections.html#the-footer-element

@@ -1,6 +1,6 @@
 <?php
 /**
- * @file field--fences-cite.tpl.php
+ * @file
  * Wrap each field value in the <cite> element.
  *
  * @see http://developers.whatwg.org/text-level-semantics.html#the-cite-element

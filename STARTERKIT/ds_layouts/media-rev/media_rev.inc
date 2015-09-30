@@ -4,6 +4,9 @@
  * Display Suite media-rev layout configuration.
  */
 
+/**
+ * Reversed media layout.
+ */
 function ds_media_rev() {
   return array(
     'label' => t('Media reversed'),

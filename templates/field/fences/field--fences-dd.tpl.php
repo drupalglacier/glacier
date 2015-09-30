@@ -1,6 +1,6 @@
 <?php
 /**
- * @file field--fences-dd.tpl.php
+ * @file
  * Wrap each field value in the <dd> element.
  *
  * @see http://developers.whatwg.org/grouping-content.html#the-dd-element

@@ -1,6 +1,6 @@
 <?php
 /**
- * @file field--fences-sub.tpl.php
+ * @file
  * Wrap each field value in the <sub> element.
  *
  * @see http://developers.whatwg.org/text-level-semantics.html#the-sub-and-sup-elements

@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * card.tpl.php
+ * Reversed media display suite layout template.
  */
 ?>
 <<?php print $layout_wrapper; ?> class="<?php print $classes; ?>"<?php print $attributes; ?>>

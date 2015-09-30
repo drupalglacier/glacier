@@ -1,6 +1,6 @@
 <?php
 /**
- * @file field--fences-nav.tpl.php
+ * @file
  * Wrap each field value in the <nav> element.
  *
  * @see http://developers.whatwg.org/sections.html#the-nav-element

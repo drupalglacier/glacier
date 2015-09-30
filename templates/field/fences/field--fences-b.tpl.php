@@ -1,6 +1,6 @@
 <?php
 /**
- * @file field--fences-b.tpl.php
+ * @file
  * Wrap each field value in the <b> element.
  *
  * @see http://developers.whatwg.org/text-level-semantics.html#the-b-element

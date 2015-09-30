@@ -1,6 +1,6 @@
 <?php
 /**
- * @file field--fences-blockquote.tpl.php
+ * @file
  * Wrap each field value in the <blockquote> element.
  *
  * @see http://developers.whatwg.org/sections.html#the-blockquote-element

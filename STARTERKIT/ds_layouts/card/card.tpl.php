@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * card.tpl.php
+ * Card display suite layout template.
  */
 ?>
 <<?php print $layout_wrapper; ?> class="c-card <?php print $classes; ?>"<?php print $attributes; ?>>

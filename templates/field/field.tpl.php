@@ -14,4 +14,3 @@
     <?php if (!$item_wrapper_hidden): ?></div><?php endif; ?>
   <?php endforeach; ?>
 </div>
-

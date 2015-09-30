@@ -1,6 +1,6 @@
 <?php
 /**
- * @file field--fences-p.tpl.php
+ * @file
  * Wrap each field value in the <p> element.
  *
  * @see http://developers.whatwg.org/grouping-content.html#the-p-element

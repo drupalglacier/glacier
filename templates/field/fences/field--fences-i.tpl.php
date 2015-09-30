@@ -1,6 +1,6 @@
 <?php
 /**
- * @file field--fences-i.tpl.php
+ * @file
  * Wrap each field value in the <i> element.
  *
  * @see http://developers.whatwg.org/text-level-semantics.html#the-i-element
