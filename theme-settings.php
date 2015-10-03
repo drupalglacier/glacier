@@ -30,7 +30,7 @@ function glacier_form_system_theme_settings_alter(&$form, &$form_state, $form_id
       '#title' => t('Recommended modules'),
       '#collapsible' => TRUE,
       '#collapsed' => $hide,
-      '#description' => t('This theme was built in conjunction with several other modules to help streamline development. Some of these modules are not downloaded or enabled on your site. Modules marked as required should be download and enabled in order to get the most out of this theme.'),
+      '#description' => t('Modules marked as required should be download and enabled in order to get the most out of this theme.'),
       '#weight' => -1000,
       '#attributes' => array('class' => array('recommended-modules')),
       '#prefix' => '<div class="messages warning">',
@@ -49,7 +49,7 @@ function glacier_form_system_theme_settings_alter(&$form, &$form_state, $form_id
     foreach ($recommended_modules as $id => $module) {
       $form['recommended_modules'][$id] = array(
         '#type' => 'item',
-        '#title' => l($module['name'], 'http://drupal.org/project/' . $id, array('attributes' => array('target' => '_blank'))),
+        '#title' => l($module['name'], $module['link'], array('attributes' => array('target' => '_blank'))),
         '#description' => $module['description'],
         '#required' => $module['required'],
       );
@@ -162,44 +162,12 @@ function glacier_ajax_settings_save($form = array(), $form_state = array()) {
 function glacier_recommended_modules() {
   $modules = array();
 
-  if (!module_exists('html5_tools')) {
-    $modules['html5_tools'] = array(
-      'name' => t('HTML5 Tools'),
-      'description' => t('Provides HTML5 elements for use in fields and forms, updates Drupal core markup to match HTML5 standards, and streamlines CSS and JavaScript tags.'),
+  if (!module_exists('glacier_system')) {
+    $modules['glacier_system'] = array(
+      'name' => t('Glacier System'),
+      'description' => t('The glacier_system feature is the basis for a wide variety of features which make site building with Drupal faster an easier.'),
+      'link' => 'https://github.com/maoberlehnerdrupal/glacier_system',
       'required' => TRUE,
-    );
-  }
-
-  if (!module_exists('magic')) {
-    $modules['magic'] = array(
-      'name' => t('Magic'),
-      'description' => t('Provides advanced CSS/JavaScript handling and includes theme development enhancements.'),
-      'required' => TRUE,
-    );
-  }
-
-  if (!module_exists('blockify')) {
-    $modules['blockify'] = array(
-      'name' => t('Blockify'),
-      'description' => t('Exposes a number of core Drupal elements, traditionally found in page.tpl.php, as blocks. This theme does not include these items in page.tpl.php to allow greater flexibility in where to place them.'),
-      'required' => FALSE,
-    );
-  }
-
-  if (!module_exists('modernizr')) {
-    $modules['modernizr'] = array(
-      'name' => t('Modernizr'),
-      'description' => t(
-        'Provides deep integration with the !modernizr JS library, allowing modules and themes to register tests and load additional assets as needed.',
-        array(
-          '!modernizr' => l(
-            t('Modernizr'),
-            'http://modernizr.com/',
-            array('attributes' => array('target' => '_blank'))
-          ),
-        )
-      ),
-      'required' => FALSE,
     );
   }
 
