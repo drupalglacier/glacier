@@ -702,6 +702,31 @@ function glacier_textfield($vars) {
 }
 
 /**
+ * Returns HTML for a image upload form element.
+ */
+function glacier_image_widget($vars) {
+  $element = $vars['element'];
+  $output = '';
+  $output .= '<div class="c-image-widget image-widget form-managed-file">';
+
+  if (isset($element['preview'])) {
+    $output .= '<div class="c-image-widget__preview image-preview">';
+    $output .= drupal_render($element['preview']);
+    $output .= '</div>';
+  }
+
+  $output .= '<div class="c-image-widget__data image-widget-data">';
+  if ($element['fid']['#value'] != 0) {
+    $element['filename']['#markup'] .= ' <span class="c-image-widget__file-size">(' . format_size($element['#file']->filesize) . ')</span> ';
+  }
+  $output .= drupal_render_children($element);
+  $output .= '</div>';
+  $output .= '</div>';
+
+  return $output;
+}
+
+/**
  * Sets a form element's class attribute.
  *
  * Adds 'is-required' and 'is-error' classes as needed.
