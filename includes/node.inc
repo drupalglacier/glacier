@@ -12,7 +12,8 @@ function glacier_preprocess_node(&$vars) {
   $vars['classes_glacier'] = theme_get_setting('classes_glacier');
   $vars['classes_default'] = theme_get_setting('classes_default');
 
-  // Hide the content wrapper by default if the subject is empty.
+  // Hide the content wrapper by default if the
+  // node is rendered as page or the title is empty.
   $vars['content_wrapper_hidden'] = $vars['page'] || empty($vars['title']);
 
   // Add wrapper tag variable.
