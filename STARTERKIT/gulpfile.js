@@ -64,7 +64,7 @@ gulp.task('move', ['bower'], function () {
         .replace('/scss', '');
       path.dirname = '/' + packageType;
     }))
-    .pipe(conflict('scss'))
+    .pipe(conflict('scss', { defaultChoice: 'n' }))
     .pipe(gulp.dest('scss'));
 });
 
