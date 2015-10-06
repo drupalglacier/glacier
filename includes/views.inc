@@ -93,7 +93,7 @@ function glacier_preprocess_views_view(&$vars) {
   $vars['fallback_pager_classes_array'] = array('c-view__pager');
   // Add default Drupal pager classes.
   $vars['default_pager_classes_array'] = array('view-pager');
-  $vars['pager_classes_array'] = array();
+  $vars['pager_classes_array'] = array('u-spacing-top-xl');
   // Add glacier pager classes.
   $vars['glacier_pager_classes_array'] = array(
     'c-view__pager',
