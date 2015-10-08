@@ -17,7 +17,7 @@
  */
 ?>
 <div class="c-view__grouping">
-  <h2 class="c-view__grouping-header"><?php print $title; ?></h2>
+  <h2 class="c-view__grouping-header"><?php print trim($title); ?></h2>
   <div class="c-view__grouping-content">
     <?php print $content; ?>
   </div>

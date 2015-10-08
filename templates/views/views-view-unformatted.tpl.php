@@ -5,7 +5,7 @@
  */
 ?>
 <?php if (!empty($title)): ?>
-  <h3><?php print $title; ?></h3>
+  <h3><?php print trim($title); ?></h3>
 <?php endif; ?>
 
 <?php foreach ($rows as $id => $row): ?>
