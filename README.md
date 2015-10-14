@@ -3,7 +3,7 @@ glacier is a highly opinionated base theme for Drupal. This theme is built upon
 the [avalanche](https://github.com/avalanchesass/avalanche) SASS framework.
 
 ## About
-Github: https://github.com/maoberlehnerdrupal/glacier
+Github: https://github.com/drupalglacier/glacier
 
 ### Author
 Markus Oberlehner  
