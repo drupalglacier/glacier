@@ -198,6 +198,20 @@ function glacier_preprocess_views_view_unformatted(&$vars) {
 }
 
 /**
+ * Implements template_preprocess_views_view_list().
+ */
+function glacier_preprocess_views_view_list(&$vars) {
+  // Fix double hyphens (converted from double underscores).
+  if (strpos(implode(' ', $vars['classes_array']), '--') !== FALSE) {
+    foreach ($vars['classes_array'] as $k => $class_string) {
+      $classes_array = explode(' ', $class_string);
+      $classes_array = _glacier_fix_double_underscore_classes($classes_array);
+      $vars['classes_array'][$k] = implode(' ', $classes_array);
+    }
+  }
+}
+
+/**
  * Implements template_preprocess_views_exposed_form().
  */
 function glacier_preprocess_views_exposed_form(&$vars) {
