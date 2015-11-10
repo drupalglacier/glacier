@@ -272,7 +272,8 @@ function glacier_button($vars) {
     }
   }
 
-  return '<input' . drupal_attributes($element['#attributes']) . '>';
+  $element['#attributes']['value'] = strip_tags($element['#value']);
+  return '<button' . drupal_attributes($element['#attributes']) . '>' . $element['#value'] . '</button>';
 }
 
 /**
