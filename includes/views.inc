@@ -152,13 +152,7 @@ function glacier_preprocess_views_view_grid(&$vars) {
   $vars['fallback_classes_array'] = array('o-grid');
   // Add default Drupal classes.
   $vars['default_classes_array'] = array($vars['class']);
-  $vars['classes_array'] = array(
-    preg_replace(
-      array('/views-view-grid/', '/ cols-(.*?)($|\s)/'),
-      array('o-grid', ''),
-      $vars['class']
-    ),
-  );
+  $vars['classes_array'] = array('o-grid');
   // Add glacier classes.
   $vars['glacier_classes_array'] = array();
 
