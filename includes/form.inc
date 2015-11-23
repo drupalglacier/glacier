@@ -184,6 +184,7 @@ function glacier_form_element($vars) {
  * Returns HTML for a form element label and required marker.
  */
 function glacier_form_element_label($vars) {
+  global $theme;
   $element = $vars['element'];
 
   // This is also used in the installer, pre-database setup.
@@ -224,6 +225,13 @@ function glacier_form_element_label($vars) {
 
   if (!empty($element['#id'])) {
     $attributes['for'] = $element['#id'];
+  }
+
+  // Run custom form element label attributes alter
+  // function if the current theme implements one.
+  $alter_function_name = $theme . '_form_element_label_attributes_alter';
+  if (function_exists($alter_function_name)) {
+    $alter_function_name($attributes);
   }
 
   // The leading whitespace helps visually separate fields from inline labels.

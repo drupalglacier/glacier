@@ -142,9 +142,16 @@
 // }
 
 /**
- * glacier custom function to alter form elements.
+ * glacier custom hook to alter form elements.
  */
 // function STARTERKIT_form_element_alter(&$vars) {
+
+// }
+
+/**
+ * glacier custom hook to alter form element label attributes.
+ */
+// function STARTERKIT_form_element_label_attributes_alter(&$attributes) {
 
 // }
 
