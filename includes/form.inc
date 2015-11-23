@@ -121,16 +121,6 @@ function glacier_form_element($vars) {
     $element['#title_display'] = 'none';
   }
 
-  // Add prefix and suffix.
-  if (!$classes_default) {
-    $prefix = isset($element['#field_prefix']) ? '<span class="c-form__prefix">' . $element['#field_prefix'] . '</span> ' : '';
-    $suffix = isset($element['#field_suffix']) ? ' <span class="c-form__suffix">' . $element['#field_suffix'] . '</span>' : '';
-  }
-  else {
-    $prefix = isset($element['#field_prefix']) ? '<span class="c-form__prefix field-prefix">' . $element['#field_prefix'] . '</span> ' : '';
-    $suffix = isset($element['#field_suffix']) ? ' <span class="c-form__suffix field-suffix">' . $element['#field_suffix'] . '</span>' : '';
-  }
-
   // Set title display for a date field if todate is set.
   if (isset($element['#field']) && $element['#field']['settings']['todate']) {
     $element['#title_display'] = 'before';
@@ -143,6 +133,16 @@ function glacier_form_element($vars) {
   $alter_function_name = $theme . '_form_element_alter';
   if (function_exists($alter_function_name)) {
     $alter_function_name($element);
+  }
+
+  // Add prefix and suffix.
+  if (!$classes_default) {
+    $prefix = isset($element['#field_prefix']) ? '<span class="c-form__prefix">' . $element['#field_prefix'] . '</span> ' : '';
+    $suffix = isset($element['#field_suffix']) ? ' <span class="c-form__suffix">' . $element['#field_suffix'] . '</span>' : '';
+  }
+  else {
+    $prefix = isset($element['#field_prefix']) ? '<span class="c-form__prefix field-prefix">' . $element['#field_prefix'] . '</span> ' : '';
+    $suffix = isset($element['#field_suffix']) ? ' <span class="c-form__suffix field-suffix">' . $element['#field_suffix'] . '</span>' : '';
   }
 
   $output = '<div' . drupal_attributes($element['#attributes']) . '>' . "\n";
