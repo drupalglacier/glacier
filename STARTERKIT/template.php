@@ -135,6 +135,13 @@
 // }
 
 /**
+ * Implements hook_form_alter().
+ */
+// function STARTERKIT_form_alter(&$form, &$form_state, $form_id) {
+
+// }
+
+/**
  * glacier custom function to alter form elements.
  */
 // function STARTERKIT_form_element_alter(&$vars) {
