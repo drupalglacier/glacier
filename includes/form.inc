@@ -58,6 +58,8 @@ function glacier_form_alter(&$form, &$form_state, $form_id) {
  * Returns HTML for a form element.
  */
 function glacier_form_element($vars) {
+  global $theme;
+
   $element = &$vars['element'];
   $element_type = !empty($element['#type']) ? $element['#type'] : '';
   $element_type_class = drupal_html_class($element_type);
@@ -73,48 +75,46 @@ function glacier_form_element($vars) {
 
   // Add element #id for #type 'item'.
   if (isset($element['#markup']) && !empty($element['#id'])) {
-    $attributes['id'] = $element['#id'];
+    $element['#attributes']['id'] = $element['#id'];
   }
   // Add element's #type and #name as class to aid with JS/CSS selectors.
-  $attributes['class'] = array('c-form__item');
+  $element['#attributes']['class'] = array('c-form__item');
   if (!empty($element['#type'])) {
-    $attributes['class'][] = 'c-form__item--' . $element_type_class;
+    $element['#attributes']['class'][] = 'c-form__item--' . $element_type_class;
 
     // Add default core class if wanted.
     if ($classes_default) {
-      $attributes['class'][] = 'form-type-' . $element_type_class;
+      $element['#attributes']['class'][] = 'form-type-' . $element_type_class;
     }
   }
   if (!empty($element['#name']) && $element_type_class !== $element_name_class) {
-    $attributes['class'][] = 'c-form__item--' . $element_name_class;
+    $element['#attributes']['class'][] = 'c-form__item--' . $element_name_class;
 
     // Add default core class if wanted.
     if ($classes_default) {
-      $attributes['class'][] = 'form-item-' . $element_name_class;
+      $element['#attributes']['class'][] = 'form-item-' . $element_name_class;
     }
   }
 
   // Add date-related classes.
   if (isset($element['#theme']) && $element['#theme'] == 'date_select_element') {
-    $attributes['class'][] = 'form__item--date-select';
+    $element['#attributes']['class'][] = 'form__item--date-select';
   }
 
   // Add a class for disabled elements to facilitate cross-browser styling.
   if (!empty($element['#attributes']['disabled'])) {
-    $attributes['class'][] = 'is-disabled';
+    $element['#attributes']['class'][] = 'is-disabled';
 
     // Add default core class if wanted.
     if ($classes_default) {
-      $attributes['class'][] = 'form-disabled';
+      $element['#attributes']['class'][] = 'form-disabled';
     }
   }
 
   // Add class for required form items.
   if (isset($element['#required']) && $element['#required']) {
-    $attributes['class'][] = 'is-required';
+    $element['#attributes']['class'][] = 'is-required';
   }
-
-  $output = '<div' . drupal_attributes($attributes) . '>' . "\n";
 
   // If #title is not set, we don't display any label or required marker.
   if (!isset($element['#title'])) {
@@ -138,6 +138,14 @@ function glacier_form_element($vars) {
       $vars['element']['#title'] = t('from:');
     }
   }
+
+  // Run custom form element alter function if the current theme implements one.
+  $alter_function_name = $theme . '_form_element_alter';
+  if (function_exists($alter_function_name)) {
+    $alter_function_name($element);
+  }
+
+  $output = '<div' . drupal_attributes($element['#attributes']) . '>' . "\n";
 
   switch ($element['#title_display']) {
     case 'before':

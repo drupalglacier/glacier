@@ -135,6 +135,13 @@
 // }
 
 /**
+ * glacier custom function to alter form elements.
+ */
+// function STARTERKIT_form_element_alter(&$vars) {
+
+// }
+
+/**
  * Implements theme_menu_tree().
  */
 // function STARTERKIT_menu_tree__main_menu(&$vars) {
