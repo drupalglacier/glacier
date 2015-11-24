@@ -55,6 +55,16 @@ function glacier_form_alter(&$form, &$form_state, $form_id) {
 }
 
 /**
+ * Implements hook_field_widget_form_alter().
+ */
+function glacier_field_widget_form_alter(&$element, &$form_state, $context) {
+  // Remove default theme wrapper if using file_widget_multiple.
+  if (isset($element['#theme']) && $element['#theme'] == 'file_widget_multiple') {
+    unset($element['#theme_wrappers']);
+  }
+}
+
+/**
  * Returns HTML for a form element.
  */
 function glacier_form_element($vars) {

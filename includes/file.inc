@@ -168,13 +168,3 @@ function glacier_file_widget_multiple($vars) {
 
   return $output;
 }
-
-/**
- * Implements hook_field_widget_form_alter().
- */
-function glacier_field_widget_form_alter(&$element, &$form_state, $context) {
-  // Remove default theme wrapper if using file_widget_multiple.
-  if (isset($element['#theme']) && $element['#theme'] == 'file_widget_multiple') {
-    unset($element['#theme_wrappers']);
-  }
-}
