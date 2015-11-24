@@ -212,4 +212,13 @@ function glacier_preprocess_views_exposed_form(&$vars) {
   // Add setting variables.
   $vars['classes_glacier'] = theme_get_setting('classes_glacier');
   $vars['classes_default'] = theme_get_setting('classes_default');
+
+  $form = &$vars['form'];
+  foreach ($form['#info'] as $id => $info) {
+    $form[$info['value']]['#printed'] = FALSE;
+    $form[$info['value']]['#title'] = $vars['widgets'][$id]->label;
+    $form[$info['value']]['#description'] = $vars['widgets'][$id]->description;
+
+    $vars['widgets'][$id]->widget = drupal_render($form[$info['value']]);
+  }
 }
