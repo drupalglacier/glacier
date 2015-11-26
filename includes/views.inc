@@ -206,6 +206,49 @@ function glacier_preprocess_views_view_list(&$vars) {
 }
 
 /**
+ * Implements template_preprocess_views_view_table().
+ */
+function glacier_preprocess_views_view_table(&$vars) {
+  // Add setting variables.
+  $vars['classes_glacier'] = theme_get_setting('classes_glacier');
+  // We keep the default Views classes, regardless of theme setting,
+  // if ajax is enabled in the view.
+  $vars['classes_default'] = theme_get_setting('classes_default') || $vars['view']->use_ajax;
+
+  // Add classes.
+  $vars['classes_array'] = str_replace(
+    array('views-table', 'cols-'),
+    array('c-view__table', 'c-view__cols-'),
+    $vars['classes_array']
+  );
+  // Field classes.
+  foreach ($vars['field_classes'] as &$field_classes) {
+    $field_classes = str_replace(
+      array('views-field-', 'views-field'),
+      array('c-view__field--', 'c-view__field'),
+      $field_classes
+    );
+  }
+  // Header classes.
+  foreach ($vars['header_classes'] as &$header_classes) {
+    $header_classes = str_replace(
+      array('views-field-', 'views-field'),
+      array('c-view__field--', 'c-view__field'),
+      $header_classes
+    );
+  }
+  // Row classes.
+  foreach ($vars['row_classes'] as &$row_classes) {
+    $row_classes = str_replace(
+      array('odd', 'even', 'views-row-'),
+      array('is-odd', 'is-even', 'is-'),
+      $row_classes
+    );
+    $row_classes[] = 'c-view__table-row';
+  }
+}
+
+/**
  * Implements template_preprocess_views_exposed_form().
  */
 function glacier_preprocess_views_exposed_form(&$vars) {
