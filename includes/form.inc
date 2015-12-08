@@ -26,11 +26,9 @@ function glacier_form($vars) {
       switch ($match[0]) {
         case 'entityform':
           return 'c-' . $match[0];
-          break;
 
         default:
           return str_replace('_', '-', 'c-' . $match[1]);
-          break;
       }
     },
     $element['#attributes']['class']
@@ -52,12 +50,26 @@ function glacier_form_alter(&$form, &$form_state, $form_id) {
   }
 
   $form['#attributes']['class'] = array('c-form');
+  // Add a spacing wrap utility class to add whitespace between form items.
+  $form['#attributes']['class'][] = 'u-spacing-wrap';
+}
+
+/**
+ * Implements hook_field_widget_form_alter().
+ */
+function glacier_field_widget_form_alter(&$element, &$form_state, $context) {
+  // Remove default theme wrapper if using file_widget_multiple.
+  if (isset($element['#theme']) && $element['#theme'] == 'file_widget_multiple') {
+    unset($element['#theme_wrappers']);
+  }
 }
 
 /**
  * Returns HTML for a form element.
  */
 function glacier_form_element($vars) {
+  global $theme;
+
   $element = &$vars['element'];
   $element_type = !empty($element['#type']) ? $element['#type'] : '';
   $element_type_class = drupal_html_class($element_type);
@@ -73,52 +85,64 @@ function glacier_form_element($vars) {
 
   // Add element #id for #type 'item'.
   if (isset($element['#markup']) && !empty($element['#id'])) {
-    $attributes['id'] = $element['#id'];
+    $element['#attributes']['id'] = $element['#id'];
   }
   // Add element's #type and #name as class to aid with JS/CSS selectors.
-  $attributes['class'] = array('c-form__item');
+  $element['#attributes']['class'] = array('c-form__item');
   if (!empty($element['#type'])) {
-    $attributes['class'][] = 'c-form__item--' . $element_type_class;
+    $element['#attributes']['class'][] = 'c-form__item--' . $element_type_class;
 
     // Add default core class if wanted.
     if ($classes_default) {
-      $attributes['class'][] = 'form-type-' . $element_type_class;
+      $element['#attributes']['class'][] = 'form-type-' . $element_type_class;
     }
   }
   if (!empty($element['#name']) && $element_type_class !== $element_name_class) {
-    $attributes['class'][] = 'c-form__item--' . $element_name_class;
+    $element['#attributes']['class'][] = 'c-form__item--' . $element_name_class;
 
     // Add default core class if wanted.
     if ($classes_default) {
-      $attributes['class'][] = 'form-item-' . $element_name_class;
+      $element['#attributes']['class'][] = 'form-item-' . $element_name_class;
     }
   }
 
   // Add date-related classes.
   if (isset($element['#theme']) && $element['#theme'] == 'date_select_element') {
-    $attributes['class'][] = 'form__item--date-select';
+    $element['#attributes']['class'][] = 'form__item--date-select';
   }
 
   // Add a class for disabled elements to facilitate cross-browser styling.
   if (!empty($element['#attributes']['disabled'])) {
-    $attributes['class'][] = 'is-disabled';
+    $element['#attributes']['class'][] = 'is-disabled';
 
     // Add default core class if wanted.
     if ($classes_default) {
-      $attributes['class'][] = 'form-disabled';
+      $element['#attributes']['class'][] = 'form-disabled';
     }
   }
 
   // Add class for required form items.
   if (isset($element['#required']) && $element['#required']) {
-    $attributes['class'][] = 'is-required';
+    $element['#attributes']['class'][] = 'is-required';
   }
-
-  $output = '<div' . drupal_attributes($attributes) . '>' . "\n";
 
   // If #title is not set, we don't display any label or required marker.
   if (!isset($element['#title'])) {
     $element['#title_display'] = 'none';
+  }
+
+  // Set title display for a date field if todate is set.
+  if (isset($element['#field']) && $element['#field']['settings']['todate']) {
+    $element['#title_display'] = 'before';
+    if (empty($vars['element']['#title'])) {
+      $vars['element']['#title'] = t('from:');
+    }
+  }
+
+  // Run custom form element alter function if the current theme implements one.
+  $alter_function_name = $theme . '_form_element_alter';
+  if (function_exists($alter_function_name)) {
+    $alter_function_name($element);
   }
 
   // Add prefix and suffix.
@@ -131,13 +155,7 @@ function glacier_form_element($vars) {
     $suffix = isset($element['#field_suffix']) ? ' <span class="c-form__suffix field-suffix">' . $element['#field_suffix'] . '</span>' : '';
   }
 
-  // Set title display for a date field if todate is set
-  if (isset($element['#field']) && $element['#field']['settings']['todate']) {
-    $element['#title_display'] = 'before';
-    if (empty($vars['element']['#title'])) {
-      $vars['element']['#title'] = t('from:');
-    }
-  }
+  $output = '<div' . drupal_attributes($element['#attributes']) . '>' . "\n";
 
   switch ($element['#title_display']) {
     case 'before':
@@ -160,10 +178,10 @@ function glacier_form_element($vars) {
 
   if (!empty($element['#description'])) {
     if (!$classes_default) {
-      $output .= '<div class="c-form__description">' . $element['#description'] . "</div>\n";
+      $output .= '<div class="c-form__description u-font-size-s">' . $element['#description'] . "</div>\n";
     }
     else {
-      $output .= '<div class="c-form__description description">' . $element['#description'] . "</div>\n";
+      $output .= '<div class="c-form__description description u-font-size-s">' . $element['#description'] . "</div>\n";
     }
   }
 
@@ -176,6 +194,7 @@ function glacier_form_element($vars) {
  * Returns HTML for a form element label and required marker.
  */
 function glacier_form_element_label($vars) {
+  global $theme;
   $element = $vars['element'];
 
   // This is also used in the installer, pre-database setup.
@@ -201,7 +220,7 @@ function glacier_form_element_label($vars) {
   // Add default label class.
   $attributes['class'][] = 'c-form__label';
 
-  // Add label position class
+  // Add label position class.
   $attributes['class'][] = 'c-form__label--' . $vars['element']['#title_display'];
 
   // Style the label as class option to display inline with the element.
@@ -216,6 +235,13 @@ function glacier_form_element_label($vars) {
 
   if (!empty($element['#id'])) {
     $attributes['for'] = $element['#id'];
+  }
+
+  // Run custom form element label attributes alter
+  // function if the current theme implements one.
+  $alter_function_name = $theme . '_form_element_label_attributes_alter';
+  if (function_exists($alter_function_name)) {
+    $alter_function_name($attributes);
   }
 
   // The leading whitespace helps visually separate fields from inline labels.
@@ -272,7 +298,8 @@ function glacier_button($vars) {
     }
   }
 
-  return '<input' . drupal_attributes($element['#attributes']) . '>';
+  $element['#attributes']['value'] = strip_tags($element['#value']);
+  return '<button' . drupal_attributes($element['#attributes']) . '>' . $element['#value'] . '</button>';
 }
 
 /**
@@ -282,8 +309,8 @@ function glacier_checkbox($vars) {
   $element = $vars['element'];
   $element['#attributes']['type'] = 'checkbox';
   element_set_attributes($element, array(
-    'id',
-    'name',
+    0 => 'id',
+    1 => 'name',
     '#return_value' => 'value',
   ));
 
@@ -327,7 +354,7 @@ function glacier_checkboxes($vars) {
 
 /**
  * Returns HTML to wrap child elements in a container.
- * 
+ *
  * Implements theme_container().
  */
 function glacier_container($vars) {
@@ -471,7 +498,6 @@ function glacier_fieldset($vars) {
     _form_set_class($element, array('c-form__fieldset', 'form-wrapper'));
   }
 
-
   $output = '<fieldset' . drupal_attributes($element['#attributes']) . '>';
   if (!empty($element['#title'])) {
     // Always wrap fieldset legends in a SPAN for CSS positioning.
@@ -546,8 +572,8 @@ function glacier_radio($vars) {
   $element = $vars['element'];
   $element['#attributes']['type'] = 'radio';
   element_set_attributes($element, array(
-    'id',
-    'name',
+    0 => 'id',
+    1 => 'name',
     '#return_value' => 'value',
   ));
 
@@ -703,6 +729,31 @@ function glacier_textfield($vars) {
 }
 
 /**
+ * Returns HTML for a image upload form element.
+ */
+function glacier_image_widget($vars) {
+  $element = $vars['element'];
+  $output = '';
+  $output .= '<div class="c-image-widget image-widget form-managed-file">';
+
+  if (isset($element['preview'])) {
+    $output .= '<div class="c-image-widget__preview image-preview">';
+    $output .= drupal_render($element['preview']);
+    $output .= '</div>';
+  }
+
+  $output .= '<div class="c-image-widget__data image-widget-data">';
+  if ($element['fid']['#value'] != 0) {
+    $element['filename']['#markup'] .= ' <span class="c-image-widget__file-size">(' . format_size($element['#file']->filesize) . ')</span> ';
+  }
+  $output .= drupal_render_children($element);
+  $output .= '</div>';
+  $output .= '</div>';
+
+  return $output;
+}
+
+/**
  * Sets a form element's class attribute.
  *
  * Adds 'is-required' and 'is-error' classes as needed.
@@ -712,7 +763,7 @@ function glacier_textfield($vars) {
  * @param array $class
  *   Array of new class names to be added.
  */
-function _glacier_form_set_class(&$element, $class = array()) {
+function _glacier_form_set_class(&$element = array(), $class = array()) {
   $classes_default = theme_get_setting('classes_default');
 
   if (!empty($class)) {

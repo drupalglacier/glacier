@@ -1,6 +1,6 @@
 <?php
 /**
- * @file field--fences-aside.tpl.php
+ * @file
  * Wrap each field value in the <aside> element.
  *
  * @see http://developers.whatwg.org/sections.html#the-aside-element

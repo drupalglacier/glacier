@@ -1,6 +1,6 @@
 <?php
 /**
- * @file field--fences-header.tpl.php
+ * @file
  * Wrap each field value in the <header> element.
  *
  * @see http://developers.whatwg.org/sections.html#the-header-element

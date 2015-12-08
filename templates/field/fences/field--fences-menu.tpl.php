@@ -1,6 +1,6 @@
 <?php
 /**
- * @file field--fences-menu.tpl.php
+ * @file
  * Wrap each field value in the <li> element and all of them in the <menu> element.
  *
  * @see http://developers.whatwg.org/interactive-elements.html#the-menu-element

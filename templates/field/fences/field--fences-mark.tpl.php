@@ -1,6 +1,6 @@
 <?php
 /**
- * @file field--fences-mark.tpl.php
+ * @file
  * Wrap each field value in the <mark> element.
  *
  * @see http://developers.whatwg.org/text-level-semantics.html#the-mark-element

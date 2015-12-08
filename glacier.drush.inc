@@ -1,12 +1,11 @@
 <?php
-
 /**
  * @file
  * Contains functions only needed for drush integration.
  */
 
 /**
- * Implementation of hook_drush_command().
+ * Implements hook_drush_command().
  */
 function glacier_drush_command() {
   $items = array();
@@ -48,9 +47,11 @@ function drush_glacier($name = NULL, $machine_name = NULL) {
     $machine_name = $name;
   }
   $machine_name = str_replace(' ', '_', strtolower($machine_name));
+  // Remove characters not valid in function names.
+  // Functions must begin with an alpha character.
   $search = array(
-    '/[^a-z0-9_]/', // Remove characters not valid in function names.
-    '/^[^a-z]+/',   // Functions must begin with an alpha character.
+    '/[^a-z0-9_]/',
+    '/^[^a-z]+/',
   );
   $machine_name = preg_replace($search, '', $machine_name);
 
@@ -76,7 +77,8 @@ function drush_glacier($name = NULL, $machine_name = NULL) {
   }
   drush_op('glacier_file_str_replace', $subtheme_info_file, array_keys($alterations), $alterations);
 
-  // Replace all occurrences of 'STARTERKIT' with the machine name of our sub theme.
+  // Replace all occurrences of "STARTERKIT"
+  // with the machine name of our sub theme.
   drush_op('glacier_file_str_replace', $subtheme_path . '/template.php', 'STARTERKIT', $machine_name);
   drush_op('glacier_file_str_replace', $subtheme_path . '/' . $machine_name . '.info', 'STARTERKIT', $machine_name);
   drush_op('glacier_file_str_replace', $subtheme_path . '/js/script.js', 'STARTERKIT', $machine_name);
@@ -100,7 +102,7 @@ function glacier_copy($source_dir, $target_dir, $ignore = '/^(\.(\.)?|CVS|\.svn|
   }
   $dir = opendir($source_dir);
   @mkdir($target_dir);
-  while($file = readdir($dir)) {
+  while ($file = readdir($dir)) {
     if (!preg_match($ignore, $file)) {
       if (is_dir($source_dir . '/' . $file)) {
         glacier_copy($source_dir . '/' . $file, $target_dir . '/' . $file, $ignore);

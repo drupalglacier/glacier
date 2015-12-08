@@ -1,6 +1,6 @@
 <?php
 /**
- * @file field--fences-address.tpl.php
+ * @file
  * Wrap each field value in the <address> element.
  *
  * @see http://developers.whatwg.org/sections.html#the-address-element

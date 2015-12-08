@@ -1,4 +1,9 @@
-// Load plugins
+/**
+ * @file
+ * Glacier build tool.
+ */
+
+// Load plugins.
 var del              = require('del');
 var gulp             = require('gulp');
 var autoprefixer     = require('gulp-autoprefixer');
@@ -12,7 +17,7 @@ var rename           = require('gulp-rename');
 var sass             = require('gulp-sass');
 var sourcemaps       = require('gulp-sourcemaps');
 
-// Styles
+// Styles.
 gulp.task('styles', function () {
   return gulp.src('scss/**/*.scss')
     .pipe(cssGlobbing({
@@ -30,7 +35,7 @@ gulp.task('styles', function () {
     .pipe(livereload());
 });
 
-// Minify
+// Minify.
 gulp.task('minify', ['styles'], function () {
   return gulp.src('css/style.css')
     .pipe(csso())
@@ -42,13 +47,13 @@ gulp.task('minify', ['styles'], function () {
     .pipe(livereload());
 });
 
-// Bower
+// Bower.
 gulp.task('bower', function () {
   gulp.start('move');
   return bower();
 });
 
-// Inject
+// Inject.
 gulp.task('move', ['bower'], function () {
   gulp.start('clean:vendor');
   return gulp.src('vendor/avalanche_*/scss/*.scss')
@@ -59,14 +64,15 @@ gulp.task('move', ['bower'], function () {
         .replace('/scss', '');
       path.dirname = '/' + packageType;
     }))
-    .pipe(conflict('scss'))
+    .pipe(conflict('scss', { defaultChoice: 'n' }))
     .pipe(gulp.dest('scss'));
 });
 
-// Clean:vendor
+// Clean:vendor.
 gulp.task('clean:vendor', ['move'], function () {
   // Remove avalanche packages from the vendor folder
-  // the timeput function is a ugly hack to prevent to early deleting of the package files
+  // the timeput function is a ugly hack to prevent to
+  // early deleting of the package files.
   setTimeout(function () {
     del([
       'vendor/avalanche_*'
@@ -74,12 +80,12 @@ gulp.task('clean:vendor', ['move'], function () {
   }, 2000);
 });
 
-// Watch
+// Watch.
 gulp.task('watch', function () {
   gulp.watch('scss/**/*', ['styles', 'minify']);
 });
 
-// Default
+// Default.
 gulp.task('default', function () {
   livereload.listen();
   gulp.start('watch');

@@ -145,29 +145,29 @@ function glacier_preprocess_html(&$vars, $hook) {
     }
   }
 
-  // Deactivate automatic iOS / Android phone number detection
+  // Deactivate automatic iOS / Android phone number detection.
   if (theme_get_setting('meta_format_detection')) {
     drupal_add_html_head(array(
       '#tag' => 'meta',
       '#attributes' => array(
         'name' => 'format-detection',
         'content' => 'telephone=no',
-      )
+      ),
     ), 'tel_detection');
   }
 
-  // Viewport
+  // Viewport.
   if (theme_get_setting('meta_viewport')) {
     drupal_add_html_head(array(
       '#tag' => 'meta',
       '#attributes' => array(
         'name' => 'viewport',
         'content' => 'width=device-width,initial-scale=1',
-      )
+      ),
     ), 'viewport');
   }
 
-  // Deactivate IE compatibility mode
+  // Deactivate IE compatibility mode.
   if (theme_get_setting('meta_ie_compatibility')) {
     drupal_add_html_head(array(
       '#tag' => 'meta',
@@ -186,7 +186,7 @@ function glacier_preprocess_html(&$vars, $hook) {
       '#attributes' => array(
         'name' => 'theme-color',
         'content' => $meta_theme_color,
-      )
+      ),
     ), 'theme_color');
   }
 }
@@ -226,27 +226,34 @@ function glacier_process_html_tag(&$vars) {
  * Implements hook_html_head_alter().
  */
 function glacier_html_head_alter(&$head_elements) {
-  // Simplify the meta tag for character encoding
+  // Simplify the meta tag for character encoding.
   if (isset($head_elements['system_meta_content_type']['#attributes']['content'])) {
     $head_elements['system_meta_content_type']['#attributes'] = array(
-      'charset' => str_replace('text/html; charset=', '', $head_elements['system_meta_content_type']['#attributes']['content'])
+      'charset' => str_replace('text/html; charset=', '', $head_elements['system_meta_content_type']['#attributes']['content']),
     );
   }
 
   foreach ($head_elements as $k => $element) {
     if (strpos($k, 'generator') !== FALSE) {
-      // Remove the Drupal generator tag, it's pointless
+      // Remove the Drupal generator tag, it's pointless.
       unset($head_elements[$k]);
     }
-    else if (strpos($k, 'fix_blocking_css_ie') !== FALSE) {
-      // Remove empty conditional comment that is added by advagg
-      // we don't care about IE
+    elseif (strpos($k, 'fix_blocking_css_ie') !== FALSE) {
+      // Remove empty conditional comment that is
+      // added by advagg, we don't care about IE.
       unset($head_elements[$k]);
     }
-    else if (drupal_is_front_page() && (strpos($k, 'canonical') !== FALSE || strpos($k, 'shortlink') !== FALSE)) {
+    elseif (drupal_is_front_page() && (strpos($k, 'canonical') !== FALSE || strpos($k, 'shortlink') !== FALSE)) {
       // Remove the canonical and shortlink tags
-      // they aren't necessary on the front page
+      // they aren't necessary on the front page.
       unset($head_elements[$k]);
+    }
+
+    // Fix canonical urls for taxonomy terms when using the tvi module.
+    if (strpos($k, 'canonical') !== FALSE && isset($element['#value'])) {
+      if (isset($head_elements['metatag_shortlink'])) {
+        $head_elements[$k]['#value'] = url(drupal_get_path_alias(str_replace('http://' . $_SERVER['SERVER_NAME'] . base_path(), '', $head_elements['metatag_shortlink']['#value'])), array('absolute' => TRUE));
+      }
     }
   }
 }

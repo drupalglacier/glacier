@@ -1,6 +1,6 @@
 <?php
 /**
- * @file field--fences-section.tpl.php
+ * @file
  * Wrap each field value in the <section> element.
  *
  * @see http://developers.whatwg.org/sections.html#the-section-element

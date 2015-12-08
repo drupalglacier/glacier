@@ -1,6 +1,6 @@
 <?php
 /**
- * @file field--fences-samp.tpl.php
+ * @file
  * Wrap each field value in the <samp> element.
  *
  * @see http://developers.whatwg.org/text-level-semantics.html#the-samp-element

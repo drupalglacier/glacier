@@ -56,7 +56,7 @@ function glacier_file_widget($vars) {
   $output = '';
 
   // The "form-managed-file" class is required for proper Ajax functionality.
-  $output .= '<div class="file-widget form-managed-file c-file__widget">';
+  $output .= '<div class="c-file__widget file-widget form-managed-file">';
   $output .= drupal_render_children($element);
   $output .= '</div>';
 
@@ -156,21 +156,15 @@ function glacier_file_widget_multiple($vars) {
 
   drupal_add_tabledrag($table_id, 'order', 'sibling', $weight_class);
 
-  $output = '<div class="form-item c-form__item--file-widget-multiple c-file__widget-multiple">';
+  $output = '<div class="c-form__item c-form__item--file-widget-multiple c-file__widget-multiple form-item">';
   $output .= '<fieldset class="c-form__fieldset">';
   $output .= '<legend class="c-form__legend">' . t($element['#title']) . '</legend>';
-  $output .= empty($rows) ? '' : theme('table', array('header' => $headers, 'rows' => $rows, 'attributes' => array('id' => $table_id)));
+  $output .= empty($rows) ? '' : theme('table', array(
+    'header' => $headers,
+    'rows' => $rows,
+    'attributes' => array('id' => $table_id),
+  ));
   $output .= drupal_render_children($element) . '</fieldset></div>';
 
   return $output;
-}
-
-/**
- * Implements hook_field_widget_form_alter().
- */
-function glacier_field_widget_form_alter(&$element, &$form_state, $context) {
-  // Remove default theme wrapper if using file_widget_multiple.
-  if (isset($element['#theme']) && $element['#theme'] == 'file_widget_multiple') {
-    unset($element['#theme_wrappers']);
-  }
 }

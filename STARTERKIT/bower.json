@@ -13,6 +13,7 @@
   "dependencies": {
     "avalanche_base_default": "^2.0.0",
     "avalanche_base_form": "^2.0.0",
+    "avalanche_base_image": "^2.0.0",
     "avalanche_base_layout": "^2.0.0",
     "avalanche_base_typography": "^2.0.0",
     "avalanche_utility_clearfix": "^2.0.0",

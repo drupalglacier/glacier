@@ -36,7 +36,8 @@ function glacier_preprocess_entity(&$vars, $hook) {
     'entity-' . $vars['type_class'],
     $vars['type_class'] . '-' . $vars['bundle_class'],
   )));
-  // Fallback class if glacier and Drupal default classes are disabled in the theme settings.
+  // Fallback class if glacier and Drupal default
+  // classes are disabled in the theme settings.
   $vars['fallback_classes_array'] = array('c-entity');
   // Add glacier classes.
   $vars['glacier_classes_array'] = array(
@@ -44,7 +45,8 @@ function glacier_preprocess_entity(&$vars, $hook) {
     'c-' . $vars['type_class'] . '-' . $vars['bundle_class'],
   );
 
-  // Fallback title class if glacier and Drupal default classes are disabled in the theme settings.
+  // Fallback title class if glacier and Drupal default
+  // classes are disabled in the theme settings.
   $vars['fallback_title_classes_array'] = array('c-entity__title');
   // Add default Drupal title classes.
   $vars['title_attributes_array']['class'] = isset($vars['title_attributes_array']['class']) ? $vars['title_attributes_array']['class'] : array();
@@ -57,7 +59,8 @@ function glacier_preprocess_entity(&$vars, $hook) {
     'c-' . $vars['type_class'] . '-' . $vars['bundle_class'] . '__title',
   );
 
-  // Fallback content class if glacier and Drupal default classes are disabled in the theme settings.
+  // Fallback content class if glacier and Drupal
+  // default classes are disabled in the theme settings.
   $vars['fallback_content_classes_array'] = array('c-entity__content');
   // Add default Drupal content classes.
   $vars['content_attributes_array']['class'] = isset($vars['content_attributes_array']['class']) ? $vars['content_attributes_array']['class'] : array();

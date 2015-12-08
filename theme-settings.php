@@ -30,7 +30,7 @@ function glacier_form_system_theme_settings_alter(&$form, &$form_state, $form_id
       '#title' => t('Recommended modules'),
       '#collapsible' => TRUE,
       '#collapsed' => $hide,
-      '#description' => t('This theme was built in conjunction with several other modules to help streamline development. Some of these modules are not downloaded or enabled on your site. Modules marked as required should be download and enabled in order to get the most out of this theme.'),
+      '#description' => t('Modules marked as required should be download and enabled in order to get the most out of this theme.'),
       '#weight' => -1000,
       '#attributes' => array('class' => array('recommended-modules')),
       '#prefix' => '<div class="messages warning">',
@@ -49,7 +49,7 @@ function glacier_form_system_theme_settings_alter(&$form, &$form_state, $form_id
     foreach ($recommended_modules as $id => $module) {
       $form['recommended_modules'][$id] = array(
         '#type' => 'item',
-        '#title' => l($module['name'], 'http://drupal.org/project/' . $id, array('attributes' => array('target' => '_blank'))),
+        '#title' => l($module['name'], $module['link'], array('attributes' => array('target' => '_blank'))),
         '#description' => $module['description'],
         '#required' => $module['required'],
       );
@@ -93,7 +93,7 @@ function glacier_form_system_theme_settings_alter(&$form, &$form_state, $form_id
   );
   $form['options_settings']['js_enhancement']['js_enhancement_console'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Avoid \'console\' errors in browsers that lack a console.'),
+    '#title' => t('Avoid "console" errors in browsers that lack a console.'),
     '#default_value' => theme_get_setting('js_enhancement_console'),
   );
   $form['options_settings']['js_enhancement']['js_enhancement_skiplink'] = array(
@@ -126,7 +126,7 @@ function glacier_form_system_theme_settings_alter(&$form, &$form_state, $form_id
   $form['options_settings']['meta']['meta_theme_color'] = array(
     '#type' => 'textfield',
     '#title' => t('theme-color'),
-    '#description' => t('Browsers might color a web app\'s title bar with the specified \'theme-color\' value, or use it as a color highlight in a task switcher.'),
+    '#description' => t('Browsers might color a web apps title bar with the specified "theme-color" value, or use it as a color highlight in a task switcher.'),
     '#attributes' => array('placeholder' => 'e.g. #efefef'),
     '#size' => 15,
     '#default_value' => theme_get_setting('meta_theme_color'),
@@ -143,7 +143,7 @@ function glacier_form_system_theme_settings_alter(&$form, &$form_state, $form_id
  *   that drupal_get_form() was originally called with are available in the
  *   array $form_state['build_info']['args'].
  */
-function glacier_ajax_settings_save($form, $form_state) {
+function glacier_ajax_settings_save($form = array(), $form_state = array()) {
   $theme = isset($form_state['build_info']['args'][0]) ? $form_state['build_info']['args'][0] : '';
   $theme_settings = variable_get('theme_' . $theme . '_settings', array());
   $trigger = $form_state['triggering_element']['#name'];
@@ -162,44 +162,12 @@ function glacier_ajax_settings_save($form, $form_state) {
 function glacier_recommended_modules() {
   $modules = array();
 
-  if (!module_exists('html5_tools')) {
-    $modules['html5_tools'] = array(
-      'name' => t('HTML5 Tools'),
-      'description' => t('Provides HTML5 elements for use in fields and forms, updates Drupal core markup to match HTML5 standards, and streamlines CSS and JavaScript tags.'),
+  if (!module_exists('glacier_system')) {
+    $modules['glacier_system'] = array(
+      'name' => t('Glacier System'),
+      'description' => t('The glacier_system feature is the basis for a wide variety of features which make site building with Drupal faster an easier.'),
+      'link' => 'https://github.com/maoberlehnerdrupal/glacier_system',
       'required' => TRUE,
-    );
-  }
-
-  if (!module_exists('magic')) {
-    $modules['magic'] = array(
-      'name' => t('Magic'),
-      'description' => t('Provides advanced CSS/JavaScript handling and includes theme development enhancements.'),
-      'required' => TRUE,
-    );
-  }
-
-  if (!module_exists('blockify')) {
-    $modules['blockify'] = array(
-      'name' => t('Blockify'),
-      'description' => t('Exposes a number of core Drupal elements, traditionally found in page.tpl.php, as blocks. This theme does not include these items in page.tpl.php to allow greater flexibility in where to place them.'),
-      'required' => FALSE,
-    );
-  }
-
-  if (!module_exists('modernizr')) {
-    $modules['modernizr'] = array(
-      'name' => t('Modernizr'),
-      'description' => t(
-        'Provides deep integration with the !modernizr JS library, allowing modules and themes to register tests and load additional assets as needed.',
-        array(
-          '!modernizr' => l(
-            t('Modernizr'),
-            'http://modernizr.com/',
-            array('attributes' => array('target' => '_blank'))
-          ),
-        )
-      ),
-      'required' => FALSE,
     );
   }
 

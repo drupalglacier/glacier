@@ -1,6 +1,6 @@
 <?php
 /**
- * @file field--fences-bdi.tpl.php
+ * @file
  * Wrap each field value in the <bdi> element.
  *
  * @see http://developers.whatwg.org/text-level-semantics.html#the-bdi-element

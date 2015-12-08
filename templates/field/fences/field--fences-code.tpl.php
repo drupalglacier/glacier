@@ -1,6 +1,6 @@
 <?php
 /**
- * @file field--fences-code.tpl.php
+ * @file
  * Wrap each field value in the <code> element.
  *
  * @see http://developers.whatwg.org/text-level-semantics.html#the-code-element

@@ -1,6 +1,6 @@
 <?php
 /**
- * @file field--fences-dl.tpl.php
+ * @file
  * Wrap all field values in a single <dl> element.
  *
  * @see http://developers.whatwg.org/grouping-content.html#the-dl-element

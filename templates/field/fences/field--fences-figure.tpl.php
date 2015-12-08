@@ -1,6 +1,6 @@
 <?php
 /**
- * @file field--fences-figure.tpl.php
+ * @file
  * Wrap each field value in the <figure> element.
  *
  * @see http://developers.whatwg.org/grouping-content.html#the-figure-element

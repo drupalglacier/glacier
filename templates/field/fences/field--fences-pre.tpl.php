@@ -1,6 +1,6 @@
 <?php
 /**
- * @file field--fences-pre.tpl.php
+ * @file
  * Wrap each field value in the <pre> element.
  *
  * @see http://developers.whatwg.org/grouping-content.html#the-pre-element

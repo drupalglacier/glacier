@@ -1,6 +1,6 @@
 <?php
 /**
- * @file field--fences-details.tpl.php
+ * @file
  * Wrap each field value in the <details> element.
  *
  * @see http://developers.whatwg.org/interactive-elements.html#the-details-element

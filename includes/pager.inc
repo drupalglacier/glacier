@@ -139,7 +139,7 @@ function glacier_pager($vars) {
     }
     return '<nav role="navigation"><h2 class="element-invisible">' . t('Pages') . '</h2>' . theme('item_list', array(
       'items' => $items,
-      'attributes' => array('class' => array('c-pager')),
+      'attributes' => array('class' => array('c-pager', 'pager')),
     )) . '</nav>';
   }
 }
@@ -174,14 +174,6 @@ function glacier_pager_link($vars) {
   // Set accessible description for each pager link.
   static $a11y_text = NULL;
   static $titles = NULL;
-  if (!isset($titles)) {
-    $titles = array(
-      t('« first') => t('First page'),
-      t('‹ previous') => t('Previous page'),
-      t('next ›') => t('Next page'),
-      t('last »') => t('Last page'),
-    );
-  }
   if (isset($titles[$text])) {
     $a11y_text = $titles[$text];
   }
@@ -190,7 +182,6 @@ function glacier_pager_link($vars) {
   }
 
   // Change text and link attributes for first, previous, next, & last links.
-  // @todo Add arrows using CSS :before.
   if ($text == '« first') {
     $text = '';
     $classes[] = 'c-pager__link--first';
@@ -216,5 +207,5 @@ function glacier_pager_link($vars) {
   //   possible to use l() here.
   // @see http://drupal.org/node/1410574
   $attributes['href'] = url($_GET['q'], array('query' => $query));
-  return '<a' . drupal_attributes($attributes) . '><span class="element-invisible">' . check_plain($a11y_text) . '</span>' . check_plain($text) . '</a>';
+  return '<a' . drupal_attributes($attributes) . '>' . ($a11y_text ? '<span class="element-invisible">' . check_plain($a11y_text) . '</span>' : '') . check_plain($text) . '</a>';
 }

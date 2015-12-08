@@ -1,4 +1,8 @@
 <?php
+/**
+ * @file
+ * Contains functions to alter Drupal's markup.
+ */
 
 /**
  * Implements template_preprocess_html().
@@ -25,6 +29,12 @@
  * Implements template_preprocess_node().
  */
 // function STARTERKIT_preprocess_node(&$vars) {
+//   // $view_mode_id = $vars['type'] . '|' . $vars['view_mode'];
+//   // switch ($view_mode_id) {
+//   //   case 'articel|full';
+//   //     break;
+//   // }
+
 //   // Alter node $vars array based on conditions.
 //   // $alterations = array(
 //   //   'classes_array' => array('class1', 'class2'),
@@ -42,6 +52,26 @@
  * Implements template_preprocess_field().
  */
 // function STARTERKIT_preprocess_field(&$vars, $hook) {
+//  // $element = $vars['element'];
+
+//  // $entity_type_id = $element['#field_name'] . '|' . $element['#entity_type'];
+//  // switch ($entity_type_id) {
+//  //   case 'title_field|node';
+//  //     break;
+//  // }
+
+//  // $entity_bundle_id = $element['#field_name'] . '|' . $element['#bundle'];
+//  // switch ($entity_bundle_id) {
+//  //   case 'title_field|article';
+//  //     break;
+//  // }
+
+//  // $view_mode_id = $element['#field_name'] . '|' . $element['#view_mode'];
+//  // switch ($view_mode_id) {
+//  //   case 'title_field|full';
+//  //     break;
+//  // }
+
 //   // Alter field $vars array based on conditions.
 //   // $alterations = array(
 //   //   'classes_array' => array('class1', 'class2'),
@@ -101,6 +131,27 @@
  * Implements template_preprocess_views_view_unformatted().
  */
 // function STARTERKIT_preprocess_views_view_unformatted(&$vars) {
+
+// }
+
+/**
+ * Implements hook_form_alter().
+ */
+// function STARTERKIT_form_alter(&$form, &$form_state, $form_id) {
+
+// }
+
+/**
+ * glacier custom hook to alter form elements.
+ */
+// function STARTERKIT_form_element_alter(&$vars) {
+
+// }
+
+/**
+ * glacier custom hook to alter form element label attributes.
+ */
+// function STARTERKIT_form_element_label_attributes_alter(&$attributes) {
 
 // }
 

@@ -1,25 +1,30 @@
 <?php
 /**
  * @file
- * glacier system functions.
+ * Glacier system functions.
  */
 
 /**
  * Helper function to alter $vars arrays.
  *
- * @param  array  &$vars
- * @param  array  $alterations A list of alterations to apply to $vars.
- * @param  array  $conditions  Conditions that must be met to apply the alterations.
- * @return mixed               void if no match or $vars type not supported / no return otherwise.
+ * @param array &$vars
+ *   Default variables.
+ * @param array $alterations
+ *   A list of alterations to apply to $vars.
+ * @param array $conditions
+ *   Conditions that must be met to apply the alterations.
  */
-function glacier_vars_alter(&$vars, $alterations = array(), $conditions = array()) {
+function glacier_vars_alter(&$vars = array(), $alterations = array(), $conditions = array()) {
   if (isset($vars['element'])) {
     $element = $vars['element'];
-  } elseif (isset($vars['elements'])) {
+  }
+  elseif (isset($vars['elements'])) {
     $element = $vars['elements'];
-  } elseif (isset($vars['view'])) {
+  }
+  elseif (isset($vars['view'])) {
     $element = (array) $vars['view'];
-  } else {
+  }
+  else {
     return;
   }
 
@@ -54,12 +59,9 @@ function glacier_process(&$vars, $hook) {
     $vars['attributes_array']['role'] = 'article';
   }
 
-  /**
-   * Merge classes in consideration of the theme settings.
-   *
-   * If the output of glacier or drupal default classes is disabled
-   * the relevant classes will not be merged in the final classes array.
-   */
+  // Merge classes in consideration of the theme settings.
+  // If the output of glacier or drupal default classes is disabled
+  // the relevant classes will not be merged in the final classes array.
   $classes_types = array(
     NULL,
     'title',
@@ -101,4 +103,29 @@ function glacier_process(&$vars, $hook) {
       $vars[$classes_key] = implode(' ', $vars[$classes_array_key]);
     }
   }
+}
+
+/**
+ * Fix double hyphens (converted from double underscores).
+ */
+function _glacier_fix_double_underscore_classes($classes_array = array()) {
+  // If there is only one class it's safe to just convert
+  // the double hyphens to underscores because a modifier class
+  // always needs a base class, if there is no base class there
+  // can't be a modifier class.
+  if (count($classes_array) == 1) {
+    return str_replace('--', '__', $classes_array);
+  }
+
+  // Search for a matching base class, convert hyphens if none is found.
+  foreach ($classes_array as $k => $class) {
+    if (strpos($class, '--') !== FALSE) {
+      $test_class = preg_replace('/--(.*?)$/', '', $class);
+      if (!in_array($test_class, $classes_array)) {
+        $class = str_replace('--', '__', $class);
+      }
+    }
+    $classes_array[$k] = $class;
+  }
+  return $classes_array;
 }

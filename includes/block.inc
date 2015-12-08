@@ -48,8 +48,8 @@ function glacier_preprocess_block(&$vars) {
 
         default:
           // Any other "system" block is a menu block.
-          $vars['fallback_classes_array'][] = 'c-menu';
-          $vars['glacier_classes_array'][] = 'c-menu';
+          $vars['classes_array'][] = 'c-menu';
+          $vars['classes_array'][] = 'c-' . $vars['delta_class'];
           $vars['attributes_array']['role'] = 'navigation';
           break;
       }
@@ -71,8 +71,8 @@ function glacier_preprocess_block(&$vars) {
       break;
 
     case 'locale':
-      $vars['fallback_classes_array'][] = 'c-menu';
-      $vars['glacier_classes_array'][] = 'c-menu';
+      $vars['classes_array'][] = 'c-menu';
+      $vars['classes_array'][] = 'c-' . $vars['delta_class'];
       $vars['attributes_array']['role'] = 'complementary';
       break;
 
@@ -152,6 +152,7 @@ function glacier_preprocess_block(&$vars) {
     // Markup for  blockify site slogan block.
     case 'blockify-site-slogan':
       $vars['theme_hook_suggestions'][] = 'block__site_slogan';
+      $vars['glacier_classes_array'][] = 'c-site-slogan';
 
       $slogan = filter_xss_admin(variable_get('site_slogan', 'Drupal'));
 
@@ -165,7 +166,7 @@ function glacier_preprocess_block(&$vars) {
 
       $vars['title'] = drupal_get_title();
       break;
-    
+
     case 'blockify-messages':
       $vars['theme_hook_suggestions'][] = 'block__messages';
       break;
@@ -199,6 +200,7 @@ function glacier_preprocess_block(&$vars) {
     // Markup for blockify actions block.
     case 'blockify-actions':
       $vars['theme_hook_suggestions'][] = 'block__actions';
+      $vars['glacier_classes_array'][] = 'c-action-links';
 
       $actions = menu_local_actions();
       $vars['actions'] = $actions;
@@ -213,15 +215,17 @@ function glacier_preprocess_block(&$vars) {
       break;
   }
 
-  // Fallback class if glacier and Drupal default classes are disabled in the theme settings.
-  $vars['fallback_classes_array'] = array('c-block');
+  // Fallback class if glacier and Drupal default
+  // classes are disabled in the theme settings.
+  $vars['fallback_classes_array'] = isset($vars['fallback_classes_array']) ? $vars['fallback_classes_array'] : array('c-block');
   // Add glacier classes.
   $vars['glacier_classes_array'] = array_merge(array(
     'c-block',
     'c-block-' . $vars['delta_class'],
   ), $vars['glacier_classes_array']);
 
-  // Fallback title class if glacier and Drupal default classes are disabled in the theme settings.
+  // Fallback title class if glacier and Drupal default
+  // classes are disabled in the theme settings.
   $vars['fallback_title_classes_array'] = array('c-block__title');
   // Add default Drupal title classes.
   $vars['title_attributes_array']['class'] = isset($vars['title_attributes_array']['class']) ? $vars['title_attributes_array']['class'] : array();
@@ -234,7 +238,8 @@ function glacier_preprocess_block(&$vars) {
     'c-block-' . $vars['delta_class'] . '__title',
   );
 
-  // Fallback content class if glacier and Drupal default classes are disabled in the theme settings.
+  // Fallback content class if glacier and Drupal default
+  // classes are disabled in the theme settings.
   $vars['fallback_content_classes_array'] = array('c-block__content');
   // Add default Drupal content classes.
   $vars['content_attributes_array']['class'] = isset($vars['content_attributes_array']['class']) ? $vars['content_attributes_array']['class'] : array();

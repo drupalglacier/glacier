@@ -19,7 +19,8 @@ function glacier_preprocess_comment_wrapper(&$vars) {
   // Add a HTML id so it can be used as an anchor target.
   $vars['attributes_array']['id'] = 'comments';
 
-  // Fallback class if glacier and Drupal default classes are disabled in the theme settings.
+  // Fallback class if glacier and Drupal default
+  // classes are disabled in the theme settings.
   $vars['fallback_classes_array'] = array('c-comment');
   // Add default Drupal classes.
   $vars['attributes_array']['class'] = isset($vars['attributes_array']['class']) ? $vars['attributes_array']['class'] : array();
@@ -31,7 +32,8 @@ function glacier_preprocess_comment_wrapper(&$vars) {
     'c-comment',
   );
 
-  // Fallback title class if glacier and Drupal default classes are disabled in the theme settings.
+  // Fallback title class if glacier and Drupal default
+  // classes are disabled in the theme settings.
   $vars['fallback_title_classes_array'] = array('c-comment__main-title');
   // Add default Drupal title classes.
   $vars['title_attributes_array']['class'] = isset($vars['title_attributes_array']['class']) ? $vars['title_attributes_array']['class'] : array();
@@ -43,7 +45,8 @@ function glacier_preprocess_comment_wrapper(&$vars) {
     'c-comment__main-title',
   );
 
-  // Fallback form title class if glacier and Drupal default classes are disabled in the theme settings.
+  // Fallback form title class if glacier and Drupal
+  // default classes are disabled in the theme settings.
   $vars['fallback_form_title_classes_array'] = array('c-comment__form-title');
   // Add default Drupal form title classes.
   $vars['form_title_attributes_array']['class'] = isset($vars['form_title_attributes_array']['class']) ? $vars['form_title_attributes_array']['class'] : array();
@@ -83,14 +86,16 @@ function glacier_preprocess_comment(&$vars) {
   // Move Drupal default classes in a separate array.
   $vars['default_classes_array'] = $vars['classes_array'];
   $vars['classes_array'] = array();
-  // Fallback class if glacier and Drupal default classes are disabled in the theme settings.
+  // Fallback class if glacier and Drupal default classes
+  // are disabled in the theme settings.
   $vars['fallback_classes_array'] = array('c-comment__comment');
   // Add glacier classes.
   $vars['glacier_classes_array'] = array(
     'c-comment__comment',
   );
 
-  // Fallback title class if glacier and Drupal default classes are disabled in the theme settings.
+  // Fallback title class if glacier and Drupal default
+  // classes are disabled in the theme settings.
   $vars['fallback_title_classes_array'] = array('c-comment__title');
   // Add default Drupal title classes.
   $vars['title_attributes_array']['class'] = isset($vars['title_attributes_array']['class']) ? $vars['title_attributes_array']['class'] : array();
@@ -102,7 +107,8 @@ function glacier_preprocess_comment(&$vars) {
     'c-comment__title',
   );
 
-  // Fallback content class if glacier and Drupal default classes are disabled in the theme settings.
+  // Fallback content class if glacier and Drupal
+  // default classes are disabled in the theme settings.
   $vars['fallback_content_classes_array'] = array('c-comment__content');
   // Add default Drupal content classes.
   $vars['content_attributes_array']['class'] = isset($vars['content_attributes_array']['class']) ? $vars['content_attributes_array']['class'] : array();
@@ -115,7 +121,7 @@ function glacier_preprocess_comment(&$vars) {
   );
 
   // Add sub component classes.
-  //$vars['content']['links']['#attributes']['class'][] = 'c-nav--comment';
+  // $vars['content']['links']['#attributes']['class'][] = 'c-nav--comment';
 
   // Format created date.
   $vars['datetime'] = format_date($vars['comment']->created, 'custom', 'c');

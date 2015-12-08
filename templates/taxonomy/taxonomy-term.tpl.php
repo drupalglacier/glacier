@@ -5,7 +5,7 @@
  */
 ?>
 <<?php print $wrapper_tag; ?> class="<?php print $classes; ?>"<?php print $attributes; ?>>
-  <?php if (!$page): ?>
+  <?php if (!$page && !empty($term_name)): ?>
     <<?php print $title_tag; ?> class="<?php print $title_classes; ?>"<?php print $title_attributes; ?>>
       <a href="<?php print $term_url; ?>"><?php print $term_name; ?></a>
     </<?php print $title_tag; ?>>

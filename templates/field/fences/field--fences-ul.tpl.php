@@ -1,6 +1,6 @@
 <?php
 /**
- * @file field--fences-ul.tpl.php
+ * @file
  * Wrap each field value in the <li> element and all of them in the <ul> element.
  *
  * @see http://developers.whatwg.org/grouping-content.html#the-ul-element

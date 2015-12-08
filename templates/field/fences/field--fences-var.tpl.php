@@ -1,6 +1,6 @@
 <?php
 /**
- * @file field--fences-var.tpl.php
+ * @file
  * Wrap each field value in the <var> element.
  *
  * @see http://developers.whatwg.org/text-level-semantics.html#the-var-element

@@ -23,13 +23,16 @@ function glacier_preprocess_field(&$vars) {
   $vars['field_name_class'] = preg_replace('/^field-/', '', $vars['field_name_css']);
   $vars['field_type_class'] = drupal_html_class($vars['element']['#field_type']);
   $vars['entity_type_class'] = drupal_html_class($vars['element']['#entity_type']);
-  $vars['bundle_class'] = drupal_html_class(preg_replace('/^field_/', '', $vars['element']['#bundle'])); // Remove 'field_' prefix from field collection (and possibly other) bundles.
+  // Remove "field_" prefix from field collection
+  // (and possibly other) bundles.
+  $vars['bundle_class'] = drupal_html_class(preg_replace('/^field_/', '', $vars['element']['#bundle']));
   $vars['view_mode_class'] = drupal_html_class($vars['element']['#view_mode']);
 
   // Move Drupal default classes in a separate array.
   $vars['default_classes_array'] = $vars['classes_array'];
   $vars['classes_array'] = array_values(array_diff($vars['classes_array'], array(
     $vars['field_name_css'],
+    'field-' . $vars['field_name_css'],
     'field-name-' . $vars['field_name_css'],
     'field-type-' . $vars['field_type_css'],
     'field-label-above',
@@ -37,7 +40,8 @@ function glacier_preprocess_field(&$vars) {
     'field-label-inline',
     'inline',
   )));
-  // Fallback class if glacier and Drupal default classes are disabled in the theme settings.
+  // Fallback class if glacier and Drupal default
+  // classes are disabled in the theme settings.
   $vars['fallback_classes_array'] = array('c-field');
   // Add glacier classes.
   $vars['glacier_classes_array'] = array(
@@ -49,7 +53,8 @@ function glacier_preprocess_field(&$vars) {
     $vars['glacier_classes_array'][] = 'c-' . $vars['field_name_class'];
   }
 
-  // Fallback label class if glacier and Drupal default classes are disabled in the theme settings.
+  // Fallback label class if glacier and Drupal default
+  // classes are disabled in the theme settings.
   $vars['fallback_label_classes_array'] = array('c-field__label');
   // Add default Drupal label classes.
   $vars['default_label_classes_array'] = array('field-label');
@@ -64,10 +69,11 @@ function glacier_preprocess_field(&$vars) {
   $vars['label_display_inline_add_colon'] = TRUE;
   // Add a utility class to display the field label inline.
   if ($vars['label_display'] == 'inline') {
-    $vars['glacier_label_classes_array'][] = 'u-display-inline';
+    $vars['label_classes_array'][] = 'u-display-inline';
   }
 
-  // Fallback item class if glacier and Drupal default classes are disabled in the theme settings.
+  // Fallback item class if glacier and Drupal default
+  // classes are disabled in the theme settings.
   $vars['fallback_item_classes_array'] = array('c-field__item');
   // Add default Drupal item classes.
   $vars['default_item_classes_array'] = array('field-item');
@@ -80,7 +86,7 @@ function glacier_preprocess_field(&$vars) {
   // Add a utility class to display the field item inline-block
   // if the label is displayed as inline element.
   if ($vars['label_display'] == 'inline') {
-    $vars['glacier_item_classes_array'][] = 'u-display-inline-block';
+    $vars['item_classes_array'][] = 'u-display-inline-block';
   }
 }
 
@@ -91,7 +97,8 @@ function glacier_process_field(&$vars, $hook) {
   if ($vars['label_display'] == 'inline' && $vars['label_display_inline_add_colon']) {
     // Add a colon to inline labels.
     $vars['label'] .= ':';
-  } elseif ($vars['label_display'] == 'above' && $vars['label_display_above_add_colon']) {
+  }
+  elseif ($vars['label_display'] == 'above' && $vars['label_display_above_add_colon']) {
     // Add a colon to above labels.
     $vars['label'] .= ':';
   }

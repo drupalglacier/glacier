@@ -1,6 +1,6 @@
 <?php
 /**
- * @file field--fences-no-wrapper.tpl.php
+ * @file
  * Render each field value with no wrapper element.
  */
 ?>

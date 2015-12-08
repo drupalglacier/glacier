@@ -1,6 +1,6 @@
 <?php
 /**
- * @file field--fences-small.tpl.php
+ * @file
  * Wrap each field value in the <small> element.
  *
  * @see http://developers.whatwg.org/text-level-semantics.html#the-small-element
