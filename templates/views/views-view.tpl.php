@@ -4,7 +4,7 @@
  * Main view template.
  */
 ?>
-<div class="<?php print $classes; ?>">
+<div class="<?php print $classes; ?>"<?php print $attributes; ?>>
   <?php print render($title_prefix); ?>
   <?php if ($title): ?>
     <?php print $title; ?>
