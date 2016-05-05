@@ -140,6 +140,9 @@ function glacier_links($vars) {
       else {
         $link['attributes']['class'] = array();
       }
+      if ($vars['theme_hook_original'] == 'links__locale_block') {
+        $link['attributes']['class'][] = 'c-language-switcher__link';
+      }
       $link['attributes']['class'][] = 'c-link-list__link';
 
       // Add first, last, and active classes to the list of links.
