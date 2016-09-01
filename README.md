@@ -1,4 +1,4 @@
-# glacier
+# glacier DEPRECATED!
 glacier is a highly opinionated base theme for Drupal. This theme is built upon
 the [avalanche](https://github.com/avalanchesass/avalanche) SASS framework.
 
